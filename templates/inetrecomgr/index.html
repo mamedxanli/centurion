@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    <title>Main Page | Shop</title>
+{% endblock %}
+
+{% block main %}
+    <div class="wrapper wrapper-content">
+
+        <div class="row">
+            <div class="col-lg-offset-2 col-lg-8">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Товары</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-xs-7 content">
+                                <h1 class="no-margins text-navy">{{ clothes_stock }}</h1>
+                                <i class="fa fa-level-up font-bold text-navy"></i>
+                                <small>На складе</small>
+                            </div>
+                            <div class="col-xs-7 content">
+                                <h1 class="no-margins text-navy">{{ clothes_stock_amount }}</h1>
+                                <i class="fa fa-level-up font-bold text-navy"></i>
+                                <small>На сумму</small>
+                            </div>
+                            <div class="col-xs-3 content">
+                                <h1 class="no-margins text-warning">{{ clothes_sold.count }}</h1>
+                                <i class="fa fa-level-up font-bold text-warning"></i>
+                                <small>Продано</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-offset-2 col-lg-8">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Выручка и расходы</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-xs-7 content">
+                                <h1 class="no-margins text-navy">{{ money_amount }}</h1>
+                                <i class="fa fa-level-up font-bold text-navy"></i>
+                                <small>Выручка за месяц</small>
+                            </div>
+                            <div class="col-xs-3 content">
+                                <h1 class="no-margins text-warning">{{ expence_amount }}</h1>
+                                <i class="fa fa-level-up font-bold text-warning"></i>
+                                <small>Расходы за месяц</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+{% endblock %}

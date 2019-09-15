@@ -1,0 +1,78 @@
+{% load staticfiles %}
+<nav class="navbar-default navbar-static-side " role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu sticky-top" id="side-menu" style="">
+            <li class="nav-header">
+                <div class="dropdown profile-element"> <span>
+                    <img alt="image" class="img" src="{% static 'inetreco_logo.logo' %}">
+                        </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ user.username }}</strong>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    <img alt="image" class="img" src="{% static 'inetreco_logo.logo' %}">
+                </div>
+            </li>
+            <li>
+                <a href="{% url 'home' %}"><i class="fa fa-home"></i> <span class="nav-label">Ana səhifə</span></a>
+            </li>
+            <li>
+                <a href="{% url 'haystack_search' %}"><i class="fa fa-search"></i> <span class="nav-label">Axtarış</span></a>
+            </li>
+            
+            <li>
+                <a href="#"><i class="fa fa-laptop"></i> <span class="nav-label">Şəbəkə avadanlığı</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{% url 'network_hw_create' %}">Əlavə et</a></li>
+                    <li><a href="{% url 'network_hw_list' %}">Avadanlığın listi / Dəyiş</a></li>
+                    <li><a href="{% url 'network_hw_sold_list' %}">Satılmış avadanlığın listi / Dəyiş</a></li>
+                    </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-laptop"></i> <span class="nav-label">Server</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{% url 'network_hw_create' %}">Əlavə et</a></li>
+                    <li><a href="{% url 'network_hw_list' %}">Serverlərin listi / Dəyiş</a></li>
+                    <li><a href="{% url 'network_hw_sold_list' %}">Satılmış serverlərin listi / Dəyişmək</a></li>
+                    </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-laptop"></i> <span class="nav-label">Mədaxil</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{% url 'money_in_create' %}">Mədaxil əlavə et</a></li>
+                    <li><a href="{% url 'money_in_list' %}">Mədaxil listi / Dəyiş</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#"><i class="fa fa-laptop"></i> <span class="nav-label">Məxaric</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{% url 'money_out_create' %}">Məxaric əlavə et</a></li>
+                    <li><a href="{% url 'money_out_list' %}">Məxaric listi / Dəyiş</a></li>
+                </ul>
+            </li>
+
+
+
+
+            <li>
+                <a href="#"><i class="fa fa-laptop"></i> <span class="nav-label">Расход</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{% url 'expence_create' %}">Добавить расход</a></li>
+                    <li><a href="{% url 'expence_list' %}">Список расходов / Изменить</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-laptop"></i> <span class="nav-label">Клиент</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{% url 'client_create' %}">Добавить клиента</a></li>
+                    <li><a href="{% url 'client_list' %}">Список клиентов / Изменить</a></li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</nav>
