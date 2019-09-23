@@ -9,6 +9,7 @@ class Money(models.Model):
     # Timestamps
     date = models.DateTimeField("Tarix")
     amount = models.DecimalField("Məbləğ", decimal_places=2, max_digits=5)
+    incoming = models.BooleanField("Mədaxil", default=False)
     
     #This class should be done as abstract possibly?
     #Another option is to override amount in the derived class
@@ -50,11 +51,4 @@ class Money(models.Model):
 
     class Meta:
         verbose_name_plural = "Money"
-
-class MoneyIn(Money):
-    def newamount(self):
-        self.amount = models.DecimalField("Mədaxil", max_digits=5, decimal_places=2, default=0)
-
-class MoneyOut(Money):
-    def newamount(self):
-        self.amount = models.DecimalField("Məxaric", max_digits=5, decimal_places=2, default=0)
+    

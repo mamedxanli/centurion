@@ -34,7 +34,7 @@ class ServerHardwareUpdate(generic.UpdateView):
 
     model = ServerHardware
     form_class = ServerHardwareForm
-    template_name_suffix = '_update_form'
+    template_name = 'server/server_hw_update_form.html'
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()

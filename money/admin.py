@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from money.models import MoneyIn, MoneyOut
+from money.models import Money
 
-admin.site.register(MoneyIn)
-admin.site.register(MoneyOut)
+admin.site.register(Money)

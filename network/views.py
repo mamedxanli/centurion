@@ -34,7 +34,8 @@ class NetworkHardwareUpdate(generic.UpdateView):
 
     model = NetworkHardware
     form_class = NetworkHardwareForm
-    template_name_suffix = '_update_form'
+    #template_name_suffix = '_update_form'
+    template_name = 'network/network_hw_update_form.html'
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()

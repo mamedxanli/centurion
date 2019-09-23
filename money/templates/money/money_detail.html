@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block title %}
-    <title>Məxaric</title>
+    <title>Mədaxil</title>
 {% endblock %}
 
 {% block main %}
 <div class="col-lg-8 col-lg-offset-2">
     <div class="contact-box center-version">
         <a href="{{ object.get_absolute_url }}">
-            <h5 class="m-b-xs">Məxaric</h5>
+            <h5 class="m-b-xs">Mədaxil</h5>
             <h2 class="m-b-xs"><strong>{{ object.date }}</strong></h2>
             <p>Dəyiş</p>
         </a>
@@ -22,6 +22,8 @@
                                 <h1 class="m-b-xs"><i class="icon-custom fa fa-female"></i></h2>
                                 <h3 class="m-b-xs"><span>Tarix: </span><span class="text-navy">{{ object.date }}</span></h3>
                                 <h3 class="m-b-xs"><span>Cəmi: </span><span class="text-navy">{{ object.amount }}</span></h3>
+                                <h4 class="m-b-xs">Mədaxil</h4>
+                                <h2 class="m-b-xs"><strong>{{ object.incoming|yesno:"Hə,Yox" }}</strong></h2>
                                 </td>
                             <td>
                         </tr>

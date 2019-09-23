@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  <title>Изменить расход</title>
+  <title>Mədaxili əlavə et</title>
 {% endblock %}
 
 {% block main %}
@@ -10,26 +10,22 @@
     <div class="col-lg-8 col-lg-offset-2">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Изменить расход</h5>
-                <div class="ibox-tools">
-                    <small> Запись создана: </small><strong>{{ object.created_at }}</strong>
-                    <small> Запись изменена: </small><strong>{{ object.updated_at }}</strong>
-                    <small> Изменил: </small><strong>{{ object.created_by }}</strong>
-                </div>
+                <h4>Mədaxili əlavə et</h4>
             </div>
             <div class="ibox-content">
                 <form method="post" enctype='multipart/form-data' class="form-horizontal">
                     {% csrf_token %}
                     {% for item in form %}
+                                         
                         <div class="form-group"><label class="col-sm-5 control-label">{{ item.label }}</label>
-                            <div class="col-sm-5">{{ item }}</div>
+                            <div class="col-sm-4">{{ item }}</div>
                         </div>
                         <div class="hr-line-dashed"></div>
                     {% endfor %}
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-5">
-                            <input type=button value="Back" class="btn btn-white" onClick="javascript:history.go(-1);"></input>
-                            <button class="btn btn-primary" type="submit">Изменить</button>
+                            <input type=button value="Geriyə" class="btn btn-white" onClick="javascript:history.go(-1);"></input>
+                            <button class="btn btn-primary" type="submit">Təsdiqlə</button>
                         </div>
                     </div>
                 </form>
@@ -38,5 +34,3 @@
     </div>
 </div>
 {% endblock %}
-
-

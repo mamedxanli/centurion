@@ -8,7 +8,7 @@ from itertools import chain
 # Import from our apps
 from network.models import NetworkHardware
 from money.models import Money
-from expence.models import Expence
+from server.models import ServerHardware
 
 class HomePage(generic.TemplateView):
     template_name = "inetrecomgr/index.html"
@@ -24,7 +24,6 @@ class HomePage(generic.TemplateView):
         context['network_stock_amount'] = NetworkHardware.get_amount_in_stock(self)
         context['network_stock']  = NetworkHardware.get_number_of_items_in_stock(self)
         context['money_amount'] = Money.get_money_for_month(self)
-        context['expence_amount'] = Expence.get_expence_for_month(self)
         return context
 
 """

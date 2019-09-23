@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  <title>Məxarici əlavə et</title>
+  <title>Delete Network Device | Asset Manager</title>
 {% endblock %}
 
 {% block main %}
@@ -10,22 +10,19 @@
     <div class="col-lg-8 col-lg-offset-2">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h4>Məxarici əlavə et</h4>
+                <h4>Delete network device</h4>
             </div>
             <div class="ibox-content">
-                <form method="post" enctype='multipart/form-data' class="form-horizontal">
+                <form method="post" class="form-horizontal">
                     {% csrf_token %}
-                    {% for item in form %}
-                                         
-                        <div class="form-group"><label class="col-sm-5 control-label">{{ item.label }}</label>
-                            <div class="col-sm-4">{{ item }}</div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                    {% endfor %}
+                    <h3>Deleting cannot be undone, we recomend you to mark it as decomissioned <a href="{{ object.get_absolute_url }}">here</a> instead</h3>
+                    <div class="hr-line-dashed"></div>
+                    <p>Are you sure you want to delete <strong>Name: {{ object.hostname }} - SN: {{ object.serial_number }} - IP: {{ object.ip_v4_address }}</strong>.</p>
+                    <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-5">
                             <input type=button value="Back" class="btn btn-white" onClick="javascript:history.go(-1);"></input>
-                            <button class="btn btn-primary" type="submit">Təsdiqlə</button>
+                            <button class="btn btn-danger" type="submit">Delete</button>
                         </div>
                     </div>
                 </form>

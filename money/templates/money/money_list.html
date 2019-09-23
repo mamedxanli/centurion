@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  <title>Məxaric listi</title>
+  <title>Mədaxil listi</title>
 {% endblock %}
 
 {% block main %}
@@ -20,6 +20,7 @@
                                 <tr>
                                     <th>Tarix</th>
                                     <th>Məbləğ</th>
+                                    <th>Mədaxil</th>
                                     </tr>
                             </thead>
                             <tbody>
@@ -27,6 +28,7 @@
                                 <tr class="row-cursor" title="Əlavə məlumat üçün tıklayın">
                                     <td><a href="{{ object.get_detail }}">{{ object.date }}</a></td>
                                     <td>{{ object.amount }}</td>
+                                    <td>{{ object.incoming|yesno:"Hə,Yox"  }}</td>
                                     <td class="text-center"><a class="btn btn-primary btn-sm"href="{{ object.get_absolute_url }}">Dəyiş</a><a class="btn btn-danger btn-sm" href="{{ object.get_delete }}">Sil</a></td>
                                 </tr>
                                 {% endfor %}
