@@ -13,10 +13,10 @@ class Client(models.Model):
     created_by = models.CharField(max_length=100, default=None)
     
     #Models
-    name = models.CharField(_("Имя клиента"), max_length=30)
-    phone = models.CharField(_("Телефон"), max_length=30, default=None)
-    email = models.EmailField(_("Электронный адрес"), max_length=254, default=None)
-    debt = models.DecimalField(_("Долг"), max_digits=5, decimal_places=2)
+    name = models.CharField(_("Müştərinin adı"), max_length=30)
+    phone = models.CharField(_("Telefon"), max_length=30, default=None)
+    email = models.EmailField(_("E-mail"), max_length=254, default=None)
+    debt = models.DecimalField(_("Borc"), max_digits=5, decimal_places=2)
 
 
     def __str__(self):

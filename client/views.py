@@ -21,7 +21,7 @@ class ClientCreate(generic.CreateView):
         obj = form.save(commit=False)
         obj.created_by = self.request.user.username
         obj.save()
-        messages.success(self.request, _('Item successfully created'))
+        messages.success(self.request, _('Müvəffəqiyyətlə yaradıldı'))
         return HttpResponseRedirect('list')
 
 
@@ -49,7 +49,7 @@ class ClientUpdate(generic.UpdateView):
         obj = form.save(commit=False)
         obj.created_by = self.request.user.username
         obj.save()
-        messages.success(self.request, _('Item successfully updated'))
+        messages.success(self.request, _('Müvəffəqiyyətlə yaradıldı'))
         return render(self.request, 'network/network_hw_update_form.html', {'form': form})
 
 
