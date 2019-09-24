@@ -13,6 +13,7 @@ class MoneyForm(ModelForm):
         model = Money
         fields = ['date',
                   'amount',
+                  'description',
                   'incoming',
                  ]
         widgets = {'date': forms.TextInput(attrs={'placeholder': 'Misal: 2018-12-31'})}

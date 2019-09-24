@@ -9,6 +9,7 @@ class Money(models.Model):
     # Timestamps
     date = models.DateTimeField("Tarix")
     amount = models.DecimalField("Məbləğ", decimal_places=2, max_digits=5)
+    description = models.TextField("Təsvir", max_length=500, default=None)
     incoming = models.BooleanField("Mədaxil", default=False)
     
     #This class should be done as abstract possibly?

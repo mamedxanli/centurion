@@ -24,7 +24,7 @@ class ServerHardware(models.Model):
     memory = models.CharField("RAM", max_length=50)
     cpu = models.CharField("CPU", max_length=50)
     storage = models.CharField("HDD", max_length=50)
-    description = models.CharField("Təsviri", max_length=100, default=None)
+    description = models.TextField("Təsvir", max_length=500, default=None)
     purchase_price = models.DecimalField("Alış qiməti", decimal_places=2, max_digits=5)
     selling_price = models.DecimalField("Satış qiyməti", decimal_places=2, max_digits=5)
     quantity = models.IntegerField("Ədəd", default=1)

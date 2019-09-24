@@ -15,6 +15,7 @@ class ClientForm(ModelForm):
                    'phone',
                    'email',
                    'debt',
+                   'description',
                   ]
 
     def __init__(self, *args, **kwargs):
