@@ -20,9 +20,10 @@
                                 <tr>
                                     <th>Kod</th>
                                     <th>Brend</th>
+                                    <th>Kateqoriya</th>
+                                    <th>Model</th>
                                     <th>Təsviri</th>
                                     <th>Satılıb</th>
-                                    <th>Alış qiyməti</th>
                                     <th>Satış qiyməti</th>
                                     <th>Ədəd</th>
                                     <th>Şəkil</th>
@@ -34,9 +35,10 @@
                                 <tr class="row-cursor" title="Click to view this item">
                                     <td><a href="{{ network_hw.get_detail }}">{{ network_hw.code }}</a></td>
                                     <td>{{ network_hw.brand }}</td>
+                                    <td>{{ network_hw.category }}</td>
+                                    <td>{{ network_hw.model }}</td>
                                     <td>{{ network_hw.description }}</td>
                                     <td>{{ network_hw.sold|yesno:"Да,Нет" }}</td>
-                                    <td>{{ network_hw.purchase_price }}</td>
                                     <td>{{ network_hw.selling_price }}</td>
                                     <td>{{ network_hw.quantity }}</td>
                                     {% if network_hw.image %}

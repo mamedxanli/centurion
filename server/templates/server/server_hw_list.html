@@ -20,9 +20,10 @@
                                 <tr>
                                     <th>Kod</th>
                                     <th>Brend</th>
+                                    <th>Kateqoriya</th>
+                                    <th>Model</th>
                                     <th>Təsviri</th>
                                     <th>Satılıb</th>
-                                    <th>Alış qiyməti</th>
                                     <th>Satış qiyməti</th>
                                     <th>Ədəd</th>
                                     <th>Şəkil</th>
@@ -34,9 +35,10 @@
                                 <tr class="row-cursor" title="Click to view this item">
                                     <td><a href="{{ object.get_detail }}">{{ object.code }}</a></td>
                                     <td>{{ object.brand }}</td>
+                                    <td>{{ object.category }}</td>
+                                    <td>{{ object.model }}</td>
                                     <td>{{ object.description }}</td>
                                     <td>{{ object.sold|yesno:"Hə,Yox" }}</td>
-                                    <td>{{ object.purchase_price }}</td>
                                     <td>{{ object.selling_price }}</td>
                                     <td>{{ object.quantity }}</td>
                                     {% if object.image %}
