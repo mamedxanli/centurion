@@ -63,8 +63,8 @@ class NetworkHardwareList(generic.ListView):
     paginate_by = 50
     
     def get_queryset(self):
-        qs = NetworkHardware.objects.all()
-        return qs.order_by('-code')
+        qs = NetworkHardware.objects.filter(sold=False,inventory=False)
+        return qs.order_by('code')
     
 class NetworkHardwareSoldList(generic.ListView):
     model = NetworkHardware
@@ -73,6 +73,16 @@ class NetworkHardwareSoldList(generic.ListView):
 
     def get_queryset(self):
         qs = NetworkHardware.objects.filter(sold=True)
+        return qs.order_by('code')
+
+
+class NetworkHardwareInventoryList(generic.ListView):
+    model = NetworkHardware
+    template_name = 'network/network_hw_inventory_list.html'
+    paginate_by = 50
+
+    def get_queryset(self):
+        qs = NetworkHardware.objects.filter(inventory=True)
         return qs.order_by('code')
 
 class NetworkHardwareDetail(generic.DetailView):

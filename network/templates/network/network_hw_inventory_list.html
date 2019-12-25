@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  <title>Avadanlığın listi</title>
+  <title>Inventarın listi</title>
 {% endblock %}
 
 {% block main %}
@@ -11,7 +11,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Avadanlığın təsviri</h5>
+                    <h5>İnventarın təsviri</h5>
                 </div>
                 <div class="ibox-content">
                     <div class="table-responsive">
@@ -34,10 +34,10 @@
                                 <tr class="row-cursor" title="Click to view this item">
                                     <td><a href="{{ object.get_detail }}">{{ object.code }}</a></td>
                                     <td>{{ object.brand }}</td>
-                                    <td>{{ object.category }}</td>
+                                    <td>{{ object.categpry }}</td>
                                     <td>{{ object.model }}</td>
                                     <td>{{ object.description }}</td>
-                                    <td>{{ object.sold|yesno:"Да,Нет" }}</td>
+                                    <td>{{ object.inventory|yesno:"Hə,Yox" }}</td>
                                     <td>{{ object.selling_price }}</td>
                                     {% if object.image %}
                                         <td>

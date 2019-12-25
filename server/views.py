@@ -62,8 +62,8 @@ class ServerHardwareList(generic.ListView):
     paginate_by = 50
     
     def get_queryset(self):
-        qs = ServerHardware.objects.all()
-        return qs.order_by('-code')
+        qs = ServerHardware.objects.filter(sold=False)
+        return qs.order_by('code')
     
 class ServerHardwareSoldList(generic.ListView):
     model = ServerHardware
