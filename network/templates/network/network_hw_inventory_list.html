@@ -23,8 +23,6 @@
                                     <th>Kateqoriya</th>
                                     <th>Model</th>
                                     <th>Təsvir</th>
-                                    <th>Satılıb</th>
-                                    <th>Satış qiyməti</th>
                                     <th>Şəkil</th>
                                     
                                 </tr>
@@ -37,8 +35,6 @@
                                     <td>{{ object.categpry }}</td>
                                     <td>{{ object.model }}</td>
                                     <td>{{ object.description }}</td>
-                                    <td>{{ object.inventory|yesno:"Hə,Yox" }}</td>
-                                    <td>{{ object.selling_price }}</td>
                                     {% if object.image %}
                                         <td>
                                         <a href="{{ object.image.url }}" download><img src='{{ object.image.url}}' height='75' width='75' border='1'/></a>
