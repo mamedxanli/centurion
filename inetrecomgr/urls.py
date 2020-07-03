@@ -22,14 +22,17 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.views.static import serve
+from django.contrib.auth.views import LoginView, LogoutView
 
 # Import from our apps
 from . import views
 
 urlpatterns = [
     url(r'^$', login_required(views.HomePage.as_view()), name='home'),
-    url(r'^login/$', auth_views.login, name='login'),
-    url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
+    url(r'^login/$', LoginView.as_view(template_name="login.html"), name='login'),
+    #url(r'^login/$', auth_views.login, name='login'),
+    url(r'^accounts/logout/$', LogoutView.as_view(template_name="registration/login.html"), name='logout'),
+    #url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     #IP Reports views
     #url(r'^ip_used_list/$', login_required(views.IPlist_Used.as_view()), name='ip_used_list'),
     #url(r'^ip_decomissioned_list/$', login_required(views.IPlist_Decomissioned.as_view()), name='ip_decomissioned_list'),
