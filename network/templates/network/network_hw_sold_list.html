@@ -22,6 +22,7 @@
                                     <th>Brend</th>
                                     <th>Kateqoriya</th>
                                     <th>Model</th>
+                                    <th>Serial Nömrə</th>
                                     <th>Təsvir</th>
                                     <th>Satılıb</th>
                                     <th>Satış qiyməti</th>
@@ -36,8 +37,9 @@
                                     <td>{{ object.brand }}</td>
                                     <td>{{ object.category }}</td>
                                     <td>{{ object.model }}</td>
+                                    <td>{{ object.serial_number }}</td>
                                     <td>{{ object.description }}</td>
-                                    <td>{{ object.sold|yesno:"Да,Нет" }}</td>
+                                    <td>{{ object.sold|yesno:"Hə,Yox" }}</td>
                                     <td>{{ object.selling_price }}</td>
                                     {% if object.image %}
                                         <td>
