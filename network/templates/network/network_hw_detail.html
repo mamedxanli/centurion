@@ -22,14 +22,16 @@
                                 <h1 class="m-b-xs"><i class="icon-custom fa fa-server"></i></h2>
                                 <h3 class="m-b-xs"><span>Kod: </span><span class="text-navy">{{ object.code }}</span></h3>
                                 <h3 class="m-b-xs"><span>Brend: </span><span class="text-navy">{{ object.brand }}</span></h3>
-                                <h3 class="m-b-xs"><span>kateqoriya: </span><span class="text-navy">{{ object.category }}</span></h3>
+                                <h3 class="m-b-xs"><span>Kateqoriya: </span><span class="text-navy">{{ object.category }}</span></h3>
+                                <h3 class="m-b-xs"><span>Model: </span><span class="text-navy">{{ object.model }}</span></h3>
+                                <h3 class="m-b-xs"><span>Seriya Nömrəsi: </span><span class="text-navy">{{ object.serial_number }}</span></h3>
                                 <h3 class="m-b-xs"><span>Təsviri: </span><span class="text-navy">{{ object.description }}</span></h3>
                                 <h3 class="m-b-xs"><span>Alış qiyməti: </span><span class="text-navy">{{ object.purchase_price }}</span></h3>
                                 <h3 class="m-b-xs"><span>Satış qiyməti: </span><span class="text-navy">{{ object.selling_price }}</span></h3>
                                 <div class="hr-line-dashed"></div>
                                 <h1 class="m-b-xs"><i class="icon-custom fa fa-cogs"></i></h1>
-                                <h3 class="m-b-xs"><span>Количество: </span><span class="text-navy">{{ object.quantity }}</span></h3>
-                                <h3 class="m-b-xs">Продано: </span><span class="text-navy">{{ object.sold|yesno:"Да,Нет" }}</span></h3>
+                                <h3 class="m-b-xs"><span>Sayı: </span><span class="text-navy">{{ object.quantity }}</span></h3>
+                                <h3 class="m-b-xs">Satılıb: </span><span class="text-navy">{{ object.sold|yesno:"Hə,Yox" }}</span></h3>
                             </td>
                             {% if object.image %}
                                 <td>

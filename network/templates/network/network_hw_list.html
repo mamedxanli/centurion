@@ -22,6 +22,7 @@
                                     <th>Brend</th>
                                     <th>Kateqoriya</th>
                                     <th>Model</th>
+                                    <th>Seriya Nömrəsi</th>
                                     <th>Təsviri</th>
                                     <th>Satılıb</th>
                                     <th>Satış qiyməti</th>
@@ -37,8 +38,9 @@
                                     <td>{{ network_hw.brand }}</td>
                                     <td>{{ network_hw.category }}</td>
                                     <td>{{ network_hw.model }}</td>
+                                    <td>{{ network_hw.serial_number }}</td>
                                     <td>{{ network_hw.description }}</td>
-                                    <td>{{ network_hw.sold|yesno:"Да,Нет" }}</td>
+                                    <td>{{ network_hw.sold|yesno:"Hə,Yox" }}</td>
                                     <td>{{ network_hw.selling_price }}</td>
                                     <td>{{ network_hw.quantity }}</td>
                                     {% if network_hw.image %}
