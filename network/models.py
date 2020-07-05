@@ -19,7 +19,7 @@ class NetworkHardware(models.Model):
     code = models.IntegerField("Kod", primary_key=True)
     brand = models.CharField("Brend", max_length=20, default=None)
     model = models.CharField("Model", max_length=50)
-    serial_number = models.CharField("Seriya Nömrəsi", max_length=50, default=None)
+    serial_number = models.CharField("Seriya Nömrəsi", max_length=50, default=0)
     category = models.CharField("Kateqoriya", max_length=30, default=None)
     description = models.TextField("Təsvir", max_length=500, default=None)
     purchase_price = models.DecimalField("Alış qiməti", decimal_places=2, max_digits=10)
