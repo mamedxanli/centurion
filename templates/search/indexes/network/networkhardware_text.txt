@@ -1,2 +1,6 @@
 {{ object.code }}
 {{ object.brand }}
+{{ object.category }}
+{{ object.serial_number }}
+{{ object.model }}
+{{ object.text }}
