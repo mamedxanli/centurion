@@ -57,6 +57,13 @@ class Money(models.Model):
         for item in qs:
             total_stock_value = total_stock_value + item.selling_price*item.quantity
         return total_stock_value
+    
+    def get_purchase_price_stock(self):
+        qs = NetworkHardware.objects.filter(sold=False, inventory=False)
+        total_purchase_price_value = 0
+        for item in qs:
+            total_purchase_price_value = total_purchase_price_value + item.purchase_price*item.quantity
+        return total_purchase_price_value
 
     class Meta:
         verbose_name_plural = "Money"

@@ -25,6 +25,7 @@
                                     <th>Seriya Nömrəsi</th>
                                     <th>Təsviri</th>
                                     <th>Satılıb</th>
+                                    <th>Alış qiyməti</th>
                                     <th>Satış qiyməti</th>
                                     <th>Ədəd</th>
                                     <th>Şəkil</th>
@@ -41,6 +42,7 @@
                                     <td>{{ network_hw.serial_number }}</td>
                                     <td>{{ network_hw.description }}</td>
                                     <td>{{ network_hw.sold|yesno:"Hə,Yox" }}</td>
+                                    <td>{{ network_hw.purchase_price }}</td>
                                     <td>{{ network_hw.selling_price }}</td>
                                     <td>{{ network_hw.quantity }}</td>
                                     {% if network_hw.image %}
