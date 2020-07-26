@@ -24,6 +24,7 @@ class HomePage(generic.TemplateView):
         context['network_stock_amount'] = NetworkHardware.get_amount_in_stock(self)
         context['network_stock']  = NetworkHardware.get_number_of_items_in_stock(self)
         context['money_amount'] = Money.get_money_for_month(self)
+        context['get_total_stock'] = Money.get_total_stock(self)
         return context
 
 """
