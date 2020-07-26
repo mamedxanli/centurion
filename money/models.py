@@ -4,6 +4,7 @@ from django.urls import reverse, reverse_lazy
 from datetime import datetime
 
 # Import from our apps
+from network.models import NetworkHardware
 
 class Money(models.Model):
     # Timestamps
@@ -49,6 +50,13 @@ class Money(models.Model):
         for item in qs:
             money_amount = money_amount + item.amount
         return money_amount
+
+    def get_total_stock(self):
+        qs = NetworkHardware.objects.filter(sold=False, inventory=False)
+        total_stock_value = 0
+        for item in qs:
+            total_stock_value = total_stock_value + item.selling_price*item.quantity
+        return total_stock_value
 
     class Meta:
         verbose_name_plural = "Money"
