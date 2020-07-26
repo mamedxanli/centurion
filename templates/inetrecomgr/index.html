@@ -17,14 +17,9 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-xs-7 content">
-                                <h1 class="no-margins text-navy">{{ clothes_stock }}</h1>
+                                <h1 class="no-margins text-navy">{{ get_total_stock }}</h1>
                                 <i class="fa fa-level-up font-bold text-navy"></i>
                                 <small>Ambar</small>
-                            </div>
-                            <div class="col-xs-7 content">
-                                <h1 class="no-margins text-navy">{{ clothes_stock_amount }}</h1>
-                                <i class="fa fa-level-up font-bold text-navy"></i>
-                                <small>Məbləğ</small>
                             </div>
                             <div class="col-xs-3 content">
                                 <h1 class="no-margins text-warning">{{ clothes_sold.count }}</h1>
@@ -54,11 +49,6 @@
                                 <h1 class="no-margins text-warning">{{ expence_amount }}</h1>
                                 <i class="fa fa-level-up font-bold text-warning"></i>
                                 <small>Aylıq məxaric</small>
-                            </div>
-                            <div class="col-xs-3 content">
-                                <h1 class="no-margins text-warning">{{ get_total_stock }}</h1>
-                                <i class="fa fa-level-up font-bold text-warning"></i>
-                                <small>Cəmi stokda</small>
                             </div>
                         </div>
                     </div>
