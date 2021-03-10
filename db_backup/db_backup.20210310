@@ -672,7 +672,7 @@ SELECT pg_catalog.setval('public.auth_permission_id_seq', 66, true);
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
 9	pbkdf2_sha256$150000$6n5lTw6pM2NA$DjEDwzCnQMoySjJfoEGxu+W0zO+4dW858554I3GOhME=	\N	f	marina	Marina	Mammadova	mammadova.marina@centurion.az	f	t	2021-02-21 20:39:51+00
 8	pbkdf2_sha256$150000$P3VNEZ0e3R8U$Ay8M+6W5suxQBLWMXcSRQHoX8I58tOre6Z7hyi7Tc6k=	2021-03-09 09:36:28.216881+00	f	rafiq	Rafiq	Memmedli		f	t	2021-02-21 20:34:32+00
-1	pbkdf2_sha256$150000$j5i2eLgnj2fM$aBhzvxO7DIk3CzPhx0YE8/UcGY8A2BaD4q+TujDk7ck=	2021-03-10 21:11:27.796558+00	t	admin			mammadov.alek@linux.com	t	t	2021-02-21 20:16:16.257489+00
+1	pbkdf2_sha256$150000$j5i2eLgnj2fM$aBhzvxO7DIk3CzPhx0YE8/UcGY8A2BaD4q+TujDk7ck=	2021-03-10 22:24:53.640394+00	t	admin			mammadov.alek@linux.com	t	t	2021-02-21 20:16:16.257489+00
 \.
 
 
@@ -1007,6 +1007,7 @@ tacworxswsj912445kcg0xqrtch3va46	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWY
 ccn640kfnawjf0hkeuu4dyvlkhgfs90u	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWYxZDZjZDp7Il9hdXRoX3VzZXJfaWQiOiI4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MDQxNjVmMDliN2MwMzZkOWFiOWVhNzI5YzNmN2JlNzExYzRjNmRkIn0=	2021-03-09 07:58:19.042874+00
 b29wtwxub2yzi2mg9ysxfppb99k1gjud	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWYxZDZjZDp7Il9hdXRoX3VzZXJfaWQiOiI4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MDQxNjVmMDliN2MwMzZkOWFiOWVhNzI5YzNmN2JlNzExYzRjNmRkIn0=	2021-03-23 09:36:28.225969+00
 wiuxkbs8o4rppkyi8fq7ld8c484z1miv	MjAyNjQ5YmQyOWRhMDg1YTA3ZDU3MGQ3Y2FmN2E3MjkxYWVmM2M0NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmMzFkYmRmYTk0ZmZhOTY2N2IzZmU4OGQ0ZTIzNGI2MDBkMDVmODJlIn0=	2021-03-24 21:11:27.805166+00
+vrxky97h2t7ufluu08aybjyjmtcy986q	MjAyNjQ5YmQyOWRhMDg1YTA3ZDU3MGQ3Y2FmN2E3MjkxYWVmM2M0NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmMzFkYmRmYTk0ZmZhOTY2N2IzZmU4OGQ0ZTIzNGI2MDBkMDVmODJlIn0=	2021-03-24 22:24:53.64899+00
 \.
 
 
