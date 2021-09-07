@@ -1,5 +1,5 @@
 Django==2.2.13
-psycopg2-binary
+psycopg2-binary==2.8.6
 #For search functionality
 django-haystack
 elasticsearch==2.4.1

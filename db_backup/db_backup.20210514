@@ -1,0 +1,1911 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.21
+-- Dumped by pg_dump version 9.6.21
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: DATABASE postgres; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO postgres;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO postgres;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO postgres;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(150) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.auth_user OWNER TO postgres;
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_groups OWNER TO postgres;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_groups_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_user_permissions OWNER TO postgres;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
+
+
+--
+-- Name: client_client; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.client_client (
+    id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    created_by character varying(100) NOT NULL,
+    name character varying(30) NOT NULL,
+    phone character varying(30) NOT NULL,
+    email character varying(254) NOT NULL,
+    debt numeric(5,2) NOT NULL,
+    description text NOT NULL
+);
+
+
+ALTER TABLE public.client_client OWNER TO postgres;
+
+--
+-- Name: client_client_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.client_client_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.client_client_id_seq OWNER TO postgres;
+
+--
+-- Name: client_client_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.client_client_id_seq OWNED BY public.client_client.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO postgres;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO postgres;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO postgres;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO postgres;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO postgres;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO postgres;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO postgres;
+
+--
+-- Name: money_money; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.money_money (
+    id integer NOT NULL,
+    date timestamp with time zone NOT NULL,
+    amount numeric(10,2) NOT NULL,
+    incoming boolean NOT NULL,
+    description text NOT NULL
+);
+
+
+ALTER TABLE public.money_money OWNER TO postgres;
+
+--
+-- Name: money_money_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.money_money_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.money_money_id_seq OWNER TO postgres;
+
+--
+-- Name: money_money_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.money_money_id_seq OWNED BY public.money_money.id;
+
+
+--
+-- Name: network_networkhardware; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.network_networkhardware (
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    created_by character varying(100) NOT NULL,
+    code integer NOT NULL,
+    brand character varying(20) NOT NULL,
+    model character varying(50) NOT NULL,
+    serial_number character varying(50) NOT NULL,
+    category character varying(30) NOT NULL,
+    description text NOT NULL,
+    purchase_price numeric(10,2) NOT NULL,
+    selling_price numeric(10,2) NOT NULL,
+    quantity integer NOT NULL,
+    image character varying(100) NOT NULL,
+    sold boolean NOT NULL,
+    inventory boolean NOT NULL
+);
+
+
+ALTER TABLE public.network_networkhardware OWNER TO postgres;
+
+--
+-- Name: server_serverhardware; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.server_serverhardware (
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    created_by character varying(100) NOT NULL,
+    code integer NOT NULL,
+    brand character varying(20) NOT NULL,
+    model character varying(50) NOT NULL,
+    category character varying(30) NOT NULL,
+    memory character varying(50) NOT NULL,
+    cpu character varying(50) NOT NULL,
+    storage character varying(50) NOT NULL,
+    description text NOT NULL,
+    purchase_price numeric(10,2) NOT NULL,
+    selling_price numeric(10,2) NOT NULL,
+    quantity integer NOT NULL,
+    image character varying(100) NOT NULL,
+    sold boolean NOT NULL,
+    inventory boolean NOT NULL
+);
+
+
+ALTER TABLE public.server_serverhardware OWNER TO postgres;
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: client_client id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.client_client ALTER COLUMN id SET DEFAULT nextval('public.client_client_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: money_money id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.money_money ALTER COLUMN id SET DEFAULT nextval('public.money_money_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add user	4	add_user
+14	Can change user	4	change_user
+15	Can delete user	4	delete_user
+16	Can view user	4	view_user
+17	Can add content type	5	add_contenttype
+18	Can change content type	5	change_contenttype
+19	Can delete content type	5	delete_contenttype
+20	Can view content type	5	view_contenttype
+21	Can add session	6	add_session
+22	Can change session	6	change_session
+23	Can delete session	6	delete_session
+24	Can view session	6	view_session
+25	Can add network hardware	7	add_networkhardware
+26	Can change network hardware	7	change_networkhardware
+27	Can delete network hardware	7	delete_networkhardware
+28	Can view network hardware	7	view_networkhardware
+29	Can add server hardware	8	add_serverhardware
+30	Can change server hardware	8	change_serverhardware
+31	Can delete server hardware	8	delete_serverhardware
+32	Can view server hardware	8	view_serverhardware
+33	Can add money	9	add_money
+34	Can change money	9	change_money
+35	Can delete money	9	delete_money
+36	Can view money	9	view_money
+37	Can add client	10	add_client
+38	Can change client	10	change_client
+39	Can delete client	10	delete_client
+40	Can view client	10	view_client
+\.
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 66, true);
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+9	pbkdf2_sha256$150000$6n5lTw6pM2NA$DjEDwzCnQMoySjJfoEGxu+W0zO+4dW858554I3GOhME=	2021-04-06 09:57:06.991505+00	f	marina	Marina	Mammadova	mammadova.marina@centurion.az	f	t	2021-02-21 20:39:51+00
+8	pbkdf2_sha256$150000$P3VNEZ0e3R8U$Ay8M+6W5suxQBLWMXcSRQHoX8I58tOre6Z7hyi7Tc6k=	2021-05-01 11:33:23.517151+00	f	rafiq	Rafiq	Memmedli		f	t	2021-02-21 20:34:32+00
+1	pbkdf2_sha256$150000$j5i2eLgnj2fM$aBhzvxO7DIk3CzPhx0YE8/UcGY8A2BaD4q+TujDk7ck=	2021-05-10 12:01:33.539863+00	t	admin			mammadov.alek@linux.com	t	t	2021-02-21 20:16:16.257489+00
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 9, true);
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: client_client; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.client_client (id, created_at, updated_at, created_by, name, phone, email, debt, description) FROM stdin;
+8	2019-11-27 10:53:38.419029+00	2020-03-28 19:53:25.227748+00	rafiq	Müştəri: Elçin Kərimov	+994559880022	elchin_baku@list.ru	0.00	1921 ruterlər alan alıcı. "Matrix Logistics"
+30	2020-01-13 11:28:04.643384+00	2020-03-28 19:56:41.11706+00	rafiq	Abunəçi: Emil Niftəliyev	+994 55 207 35 91	yoxdur@mail.az	0.00	LAN\r\nPaket: 60 AZN\r\nAbunə günü: 1\r\nDükanın adı: MEMİ-2\r\nDükanın nömrəsi: \r\n1-ci mərtəbə, 1-ci rek, 2-ci port
+10	2019-11-27 11:00:47.570617+00	2020-03-28 20:31:35.510446+00	rafiq	Müştəri: Elnur Namazov	+994553862641	yoxdur@mail.az	0.00	300 manata 24 PoE sviç+AP+wi-fi kontroller satıb.\r\nQEYD: E-mail-ini verməkdən imtina edib.
+35	2020-03-29 15:19:20.296404+00	2020-03-29 15:19:20.296517+00	rafiq	Müştəri: Fariz Abdullayev	+994 55 909 09 99	info@mobicom.az	0.00	2-ci e-mail: info@it-market.org\r\n"It Market" LTD - https://mobicom.az, "Mobicom" LTD - https://mobicom.az,
+14	2019-11-27 11:36:34.160699+00	2019-11-27 11:36:34.160744+00	rafiq	Abunəçi Market Telman	+994703019181 \\ +994707338006	yoxdur@mail.az	0.00	3409, qonşu market. 20 manatlıq paket. 20 metr LAN kabel çəkilib.
+28	2020-01-13 11:06:30.780836+00	2020-01-13 11:16:26.703845+00	rafiq	Abunəçi: Ağakişiyev İlham, Abu	+994 55 644 74 84	yoxdur@mail.az	0.00	SSİD: 1net55 \r\nPaket: 20 AZN\r\nAP No85, 3-cü rek, 2-ci port \r\nAbunə günü: 10\r\nDükanın adı: ABU\r\nDükanın nömrəsi: 1513
+13	2019-11-27 11:30:22.561903+00	2019-11-27 11:39:06.143205+00	rafiq	Abunəçi MEMİ Ayaz Ələkbərov	+994552433033	yoxdur@mail.az	0.00	2642, 60 manatlıq paket. Pulsuz LAN kabel çəkilib və pulsuz bir AP verilib.
+16	2019-11-27 12:20:00.715576+00	2019-11-27 12:20:00.715639+00	rafiq	Abunəçi Dəftərxana Rail	+994702404212 \\ +994559268765	yoxdur@mail.az	0.00	2306+2626, ssid: defterxana. Rail Şeydabəyov+Daşqın - 2 mağaza birləşib. 20 manatlıq paket.
+15	2019-11-27 12:13:41.540981+00	2019-11-27 12:20:39.410471+00	rafiq	Abunəçi Azeriimport Qoşqar	+994557487999	yoxdur@mail.az	0.00	2207, ssid: 2net1, 60 manatlıq paket. LAN kabel çəkilib, ayrıca wi-fi verilib.
+17	2019-11-27 12:23:26.643944+00	2019-11-27 12:23:26.644007+00	rafiq	Abunəçi Musiqi alətləri Abdul	+994505634616	yoxdur@mail.az	0.00	1303, ssid: 1net1, Hacıyev Abdul, 20 manatlıq paket
+18	2019-11-27 12:28:36.231696+00	2019-11-27 12:28:36.231739+00	rafiq	Abunəçi Dədə oyuncaq Mahnur	+994702496813	yoxdur@mail.az	0.00	1666, ssid: 1net10 Əfəndiyeva Mahnur, 20 manatlıq paket
+19	2019-11-27 12:32:37.65077+00	2019-11-27 12:32:37.650816+00	rafiq	Abunəçi World Parfum Samir	+994553470786	yoxdur@mail.az	0.00	1636, ssid: 1net11, Ələkbərov Samir, 20 manatlıq paket.
+20	2019-11-27 12:36:17.042096+00	2019-11-27 12:36:17.042141+00	rafiq	Abunəçi World Style Fərhad	+994554613279	yoxdur@mail.az	0.00	2541, ssid: world_style, Qayıbov Fərhad, 20 manatlıq paket
+21	2019-11-27 12:46:58.459147+00	2019-11-27 12:46:58.459184+00	rafiq	Abunəçi İran kassaları Əli	+994514502121	yoxdur@mail.az	0.00	1309a, ssid: 1net35, Əli Səbuhi, 40 manatlıq paket
+24	2019-11-27 12:58:50.514109+00	2019-11-27 12:58:50.514162+00	rafiq	Abunəçi Rəvan Ekspres Emil	+994552007964	khalilov.e@ravan.company	0.00	3308, ssid: reg (qonşu) Xəlilov Emil, 40 manatlıq paket
+25	2019-11-27 13:05:06.730513+00	2019-11-27 13:05:06.730575+00	rafiq	Abunəçi N Telekom Ramil	+994505333313	yoxdur@mail.az	0.00	1402a, ssid: 1net33, Əsgərov Ramil, 20 manatlıq paket
+22	2019-11-27 12:51:39.99785+00	2019-12-16 08:57:04.030923+00	rafiq	Abunəçi Aysel Parfum Kənan	+994503049416	yoxdur@mail.az	0.00	1304, ssid: 1net2, Rzayev Kənan, 20 manatlıq paket
+11	2019-11-27 11:13:46.727199+00	2020-03-28 20:36:41.776971+00	rafiq	Müştəri: Fəxri Ələkbərov	+994504336528	fexri5240@mail.ru	0.00	"Dives Group" MMC, http://divesgroup.co/, SFP satıcısı.\r\nQEYD: 60 manata SFP almışıq.\r\n2-ci e-mail: info@divesgroup.co
+23	2019-11-27 12:54:34.843213+00	2020-01-13 10:50:53.975758+00	rafiq	Abunəçi Sevva butik Rəşad	+994776178898 \\ +994552712124	yoxdur@mail.az	0.00	2411, ssid: 2net19, Xuraman İsmayılova, Rəşad, 20 manatlıq paket
+26	2019-12-08 08:37:19.396608+00	2020-01-13 10:57:08.451939+00	rafiq	Abunəçi: Əliyev Ruslan	+994 51 433 01 33	yoxdur@mail.az	0.00	Ayaqqabı dükanı (2617). \r\nAP No81, 2fl, 2-ci sviç, 5-ci port, bku-2fl-ap008\r\nssid: 2net30\r\nPaket: 20 manatlıq\r\nÖdəmə günü: 10
+9	2019-11-27 10:56:45.48992+00	2020-03-29 15:02:38.763205+00	rafiq	Müştəri: Fərhad Kərimov	+994502776775	farhad.karimov@educators.pro	0.00	"Educators", http://educators.pro/, Şəbəkə avadanlığı ilə maraqlanıb.
+29	2020-01-13 11:15:28.093296+00	2020-01-13 11:15:28.09336+00	rafiq	Abunəçi: Əliyev Cəlal	+994 55 650 22 67	yoxdur@mail.az	0.00	SSİD: 2net4\r\nPaket: 20 AZN\r\nAbunə günü: 10\r\nDükanın adı: Aksessuar\r\nDükanın nömrəsi: 2306\r\nAP No 20, 2-ci mərtəbə, 2-ci rek, 2-ci port (Qoşqargil)
+27	2019-12-16 08:54:56.115024+00	2020-01-13 12:14:17.612962+00	rafiq	Abunəçi: Yunis Hüseynov	+994 55 331 13 12	yoxdur@mail.az	0.00	1642, Sabina mağazası, ssid: 1net50, Hüseynov Yunis, 20 manatlıq paket\r\nAP 87 1-ci mərtəbə, 1-ci rek, 1-ci port
+5	2019-11-27 10:41:36.077982+00	2020-03-27 19:16:10.811021+00	rafiq	Müştəri: Namiq Ağasıyev	+994515890884 \\ +994705289909	namik.agasiyev@mail.ru	0.00	Fiziki şəxs. Əsasən, 1921 ruterlər alır.
+12	2019-11-27 11:20:58.981365+00	2020-03-29 15:05:13.317806+00	rafiq	Müştəri: Ramin	+994503163338	yoxdur@mail.az	0.00	90 manata 2 AP satıb.\r\nE-mail-ini verməkdən imtina edib.
+31	2020-03-29 15:10:25.73027+00	2020-03-29 15:10:25.730328+00	rafiq	Müştəri: Asəf Məmmədyarov	+994 55 951 09 08	pb.asef@gmail.com	0.00	"Uniser Group", ASA 5520 alıb\r\nTarix: 14.03.2020\r\nQiyməti: 486 azn
+32	2020-03-29 15:12:58.198229+00	2020-03-29 15:12:58.198286+00	rafiq	Müştəri: Azər Məmmədov	+994515723882/+994502659476	amemmedov@palitro.az	0.00	"Evro Inshaat",\r\nweb: http://palitro.az/en/esas2-2/\r\nsviçlə maraqlanıb
+33	2020-03-29 15:15:25.026336+00	2020-03-29 15:15:25.026393+00	rafiq	Müştəri: Elçin Qasımlı	+994 50 253 65 96	e.qasimli91@gmail.com	0.00	2-ci e-mail: elchin.qasimov@azfiber.net \r\n"AzFibernet" MMC və "Noor Trading" MMC, 2 SFP-10G-LR alıb.
+34	2020-03-29 15:17:25.318236+00	2020-03-29 15:17:25.318288+00	rafiq	Müştəri: Əfsər Qurbanov	+994 55 663 72 52‬	q.efser@ultra.az	0.00	"Ultra", Satış departamenti, 2 PoE sviç alıb
+6	2019-11-27 10:46:06.479647+00	2020-03-27 19:22:31.570384+00	rafiq	Müştəri: Coşqun Ünal	+994554887949	coskun.unal@akinsoft.az	0.00	"Rec Elektironik", http://rec.com.az/\r\nTürk sahibkar. 1 dəfə 600 manata 1921 ruter alıb..\r\nQEYD: 2-ci email: info@rec.com.az
+36	2020-03-29 15:50:21.278968+00	2020-03-29 15:50:21.27903+00	rafiq	Müştəri: Fərid Məmmədzadə	+994 55 212 21 29	fm@unibank.az	0.00	"Unibank",  Şahin Mirabutalıbovun əməkdaşı
+37	2020-03-29 15:53:41.78629+00	2020-03-29 15:53:41.786348+00	rafiq	Müştəri: Firəddin Bağırov	+994506608848 / +994552137811	fedya81@mail.ru	0.00	"Halal P" MMC, "B2B Group", HP Server alıcısı
+38	2020-03-29 15:55:09.147832+00	2020-03-29 15:55:09.147893+00	rafiq	Müştəri: Kamal Novruzov	+994 70 909 62 00	kamal.novruzov@altair.az	0.00	Cisco Phone sifariş verib.
+39	2020-03-29 15:56:43.173766+00	2020-03-29 15:56:43.173827+00	rafiq	Müştəri: Kamran Qasımzadə	+994 55 234 44 44	Sales@itservices.az	0.00	"Azitservices" MMC, Sviçlə maraqlanıb.
+40	2020-03-29 15:58:31.937744+00	2020-03-29 15:58:31.9378+00	rafiq	Müştəri: Orxan Ağayev	+994 55 700 55 61	Orik211@mail.ru	0.00	Fiziki şəxs, SFP ilə maraqlanıb.
+41	2020-03-29 15:59:53.442258+00	2020-03-29 15:59:53.442318+00	rafiq	Müştəri: Qamət Cahangirli	+994 50 274 82 78	gamet.jahangirli@gmail.com	0.00	Şəbəkə mühəndisi (işsiz), ASA 5520 (No40) alıb.
+42	2020-03-29 16:00:59.311199+00	2020-03-29 16:00:59.311264+00	rafiq	Müştəri: Rəhim Qədirov	+994 55 300 97 31	rehim1988@gmail.com	0.00	Fiziki şəxs
+43	2020-03-29 16:02:58.129749+00	2020-03-29 16:02:58.12981+00	rafiq	Müştəri: Sahin Mirabutalıbov	+994 55 660 04 10	mirabutalibov.shahin@gmail.com	0.00	"Unibank", AP, ASA\r\nQEYD: CCIE Cisco dərəcəsi var.
+44	2020-03-29 16:39:27.76179+00	2020-03-29 16:39:27.761843+00	rafiq	Müştəri: Samir Poladov	+994552137810 / +994555990800	samir.poladov@b2bgroup.az	0.00	"B2B Group" LLC, HP Server, Vüsalın işçisi
+45	2020-03-29 16:40:41.386409+00	2020-03-29 16:40:41.386469+00	rafiq	Müştəri: Sevinc Əlizadə	+994 50 210 80 79	sevadd848@gmail.com	0.00	Sanitariya idarəsi, Router 892 alıb
+46	2020-03-29 16:41:53.521389+00	2020-03-29 16:41:53.521446+00	rafiq	Müştəri: Surxay Ələkbərov	+994 55 330 10 15	surxay@abv.az	0.00	ABV
+47	2020-03-29 16:43:04.848677+00	2020-03-29 16:43:04.84873+00	rafiq	Müştəri: Teymur Əzimov	+994 55 239 79 51	teymura@ntcenter.az	0.00	"Nerwork Technology Center"
+48	2020-03-29 16:44:11.728628+00	2020-03-29 16:44:11.728681+00	rafiq	Müştəri: Vaqif Sadiqov	+994 55 251 78 80	vagif@otech.az	0.00	"Integrated Services" MMC
+49	2020-03-31 11:59:15.597243+00	2020-03-31 11:59:15.597303+00	rafiq	Müştəri: Anar Ağayev	+994 50 382 68 90	anar.aghayev@aeunion.az	0.00	Şirkət: "AEUNION" MMC\r\nTarix: 29.03.2020 \r\nQiymət: 210 AZN\r\nAvadanlıq: ASA 5505 firewall
+7	2019-11-27 10:49:38.487182+00	2020-04-27 08:24:45.215189+00	rafiq	Müştəri: Ehtiram	+994552209107	yoxdur@mail.az	0.00	2 dəfə 48 portluq sviç alıb.\r\nTelefonuna zəng çatmır.
+50	2020-04-27 08:30:57.283434+00	2020-04-27 08:30:57.283494+00	rafiq	Müştəri: Emil Səfərov	+994 55 763 00 33	emil.seferov@gmail.com	0.00	"A2Z Techologies", Rüstəm İsmayılov (işçi) (+994 50 207 66 82), No66 sviç götürüblər.
+51	2020-04-27 08:32:33.504468+00	2020-04-27 08:32:33.504518+00	rafiq	Müştəri: Emin Məhərrəmi	+994 50 251 59 78	emaharrami@azerbaijansupermarket.com	0.00	"Azerbaijan Supermarket" LLC (Bravo), Procurement and Project Cost Control
+53	2020-04-27 08:40:32.918247+00	2020-04-27 08:40:32.91831+00	rafiq	Müştəri: Andrey Sinatulov	+994702708886 / +994552503386	Andrey.sinatulov@transeurocom.az	0.00	"Transeurocom"un texniki işçisi.
+54	2020-04-27 08:41:49.681206+00	2020-04-27 08:41:49.681265+00	rafiq	Müştəri: Fərid Piriyev	+994 51 456 06 13	farid86piri@mail.ru	0.00	“Innovativ Layihələr Mərkəzi” MMC, 1 3750x PoE sviç
+55	2020-04-27 08:42:59.080841+00	2020-04-27 08:42:59.080904+00	rafiq	Müştəri: Camal Əsgərov	+994 77 395 00 00	sales@epro.az	0.00	"E-pro", tap-az-da Cisco satan təşkilat. http://epro.az/
+52	2020-04-27 08:37:19.737623+00	2020-04-27 08:51:44.150849+00	rafiq	Müştəri: Tariyel Quliyev	+994552662222 / +994502892227	Tariyel.guliyev@pashaconstruction.com	0.00	"Paşa İnşaat", 2 PoE Sviç, No 142, 143 (1425 azn)\r\nişçi: Teymur Qasımov\r\nTariyel Quliyev: +994 50 251 07 74
+57	2020-04-27 17:57:53.345545+00	2020-04-27 17:59:34.336299+00	rafiq	Müştəri: Fərrux Rəcəbli	+994 55 598 97 28	farrukhrajabli@technogen.az	0.00	Müştəri: Fərrux Rəcəbli\r\nMobil: +994 55 598 97 28\r\ne-mail-2: info@technogen.az\r\n27.04.2020-də 2960 sviç alıb.
+58	2020-04-30 12:51:07.606973+00	2020-04-30 12:51:07.607027+00	rafiq	Müştəri: Eyyub Sadıxlı	+994 55 847 27 10	Sadigov.eyyub@gmail.com	0.00	F/ş. WS-C3560CG 8PC PoE, 685 azn, No120
+59	2020-04-30 12:52:45.143295+00	2020-04-30 13:46:28.409361+00	rafiq	Müştəri: Məhəmməd Əlizadə	+994 55 580 02 32	xezer.m.aliyev@gmail.com	0.00	f/ş Cisco router ISR 1921, 427 azn, No140, Şüvəlanlıdır. "Araz" supermarketi üçün işləyir.
+60	2020-05-20 19:21:19.059173+00	2020-05-20 19:21:19.059253+00	rafiq	Müştəri: Fərid Ağakişiyev	+994 50 225 25 30	farid.agakishiyev@gmail.com	0.00	20.05.2020 tarixində 106 saylı 24 portlu PoE sviç alıb.\r\nŞirkət: İT MCCI
+61	2020-05-20 19:31:42.09388+00	2020-05-20 19:31:42.093911+00	rafiq	Müştəri: Polad Qulamov	+994519771000/ +994502351909	Pg@itf.az	0.00	24.04.2020 tarixdə "Muğanbank"a 117 saylı 24 portlu PoE sviç alıb.
+62	2020-05-20 19:38:13.078859+00	2020-05-20 19:38:13.078908+00	rafiq	Müştəri: İmaməddin Firuddinli	+994552244871/ +994505815758	imameddin@strix.az	0.00	"Strix" MMC. May, 2020-ci ildə, 10-port switch alıb.
+63	2020-05-22 06:06:25.264072+00	2020-05-22 06:06:25.264114+00	rafiq	Müştəri: Təlatum Zahidov	+994 50 285 55 80	talatumz@gmail.com	0.00	21.05.2020-də WS-C3560G-48PS-S PoE No154 alıb.\r\nQEYD: email-2: tt@pcs.az
+64	2020-06-03 13:56:17.149369+00	2020-06-03 13:56:17.149431+00	rafiq	Müştəri: Aqşin Rəsulov	+994 50 220 52 93	r.agshin@ultra.az	0.00	"Ultra", ("Az Services"), Deputy Chief for Corporate Solution, Fərid Piriyev (vasitəçi)
+65	2020-06-03 13:57:37.479602+00	2020-06-03 13:57:37.479673+00	rafiq	Müştəri: Mais Rəsulov	+994 55 861 67 25	mais.rasulov@adsgarden.com	0.00	"O.M.M." MMC, 2 ədəd 2960 sadə sviç
+66	2020-06-28 20:19:52.148435+00	2020-06-28 20:19:52.148481+00	rafiq	Müştəri: Elvin Huseynli	+994 70 811 10 81	8111081@gmail.com	0.00	Şirkət: AGT\r\nTarix: 26.06.2020\r\nAlıblar: 1 ədəd Cisco Switch WS-C3750X-48P-S və 1 ədəd Router 2921 müvəqqəti işlətməyə..
+67	2020-06-28 20:22:08.159104+00	2020-06-28 20:22:08.159165+00	rafiq	Müştəri: Hüseyn Çərkəzli	+994 55 227 09 32	hcherkezly@netgroup.az	0.00	Şirkət: AGT və NetGroup Azərbaycan\r\nAlış: 1 ədəd WS-C3750X-48P-S və 1 ədəd Router 2921 müvəqqəti işlətmə
+69	2020-07-28 07:05:32.200038+00	2020-07-28 07:05:32.200097+00	rafiq	Müştəri: Mail Məmmədov	+994 51 585 85 15	mail@qocet.az	0.00	Müəssisə: "Qoç Ət"\r\nQeyd: ASA 5540 sifariş veriblər, əvəzində müvəqqəti olaraq ASA 5505 verilib.
+70	2020-08-22 07:43:57.960098+00	2020-08-22 07:43:57.960158+00	rafiq	Müştəri: Nihat Cəfərli	+994 50 400 85 86	Nihad.jafarli@matrixgroup.az	0.00	Matrix Group-da təchizat rəhbəri.\r\nNo38 1841 Router alıb.
+71	2020-09-06 12:23:08.891806+00	2020-09-06 12:23:08.891854+00	rafiq	Müştəri: Abdul Abbasov	+994 51 206 35 60	Abdul_abbasov@hotmail.com	0.00	Fiziki şəxs. 04.09.2020 tarixdə 800 manata Router 2921 (No104) alıb. Əvvəllər Aztelekom-da işləyib.
+72	2020-09-09 07:05:52.178444+00	2020-09-09 07:05:52.178478+00	rafiq	Müştəri: Məhəmməd İsmailzadə	+994 51 406 12 44	mehismailzade@gmail.com	0.00	Landau school-da işləyir, Əvvəl Bravoda işləyib. Cisco avadablıqla maraqlanır.
+73	2020-09-16 21:23:55.012175+00	2020-09-16 21:23:55.012234+00	rafiq	Müştəri: David Xripunov	+994 50 200 13 34	david@digitalks.az	0.00	Müəssisə: Digitalks\r\n16.09.2020 tarixində no 275 ASA 5515x alıb.
+74	2020-09-17 11:42:36.579292+00	2020-09-17 11:42:36.579351+00	rafiq	Müştəri: Qosqar Sadayzadə	+994 50 282 75 45	qoshqar.s@onyx.az	0.00	Müştəri: Onyx şirkəti\r\nTarix: 17.09.2020\r\nQeyd: 12 nömrəli 1841 Router satılıb
+75	2020-09-18 12:38:31.553604+00	2020-09-18 12:38:31.553662+00	rafiq	Müştəri: Elvin Həbibov	+994 50 250 00 53	elvin.habibov@rahattelecom.az	0.00	QEYD: Rahat Telekom\r\n18.09.2020 tarixində No227 ASA 5505 alıblar.
+76	2020-09-28 10:45:41.988556+00	2020-09-28 10:45:41.988623+00	rafiq	Müştəri: Mahir Ağayev	+994 55 202 50 15	mahir.aghayev@bakuelectronics.az	0.00	Şirkət: Baku Electronics\r\nMobil-2: +994 51 843 11 11 \r\n28.09.2020-də iki ədəd 1941 satılıb. (No277-278)
+77	2020-09-28 10:51:20.338172+00	2020-09-28 10:51:20.338234+00	rafiq	Müştəri: Sadiq Həbubullayev	+994 50 240 50 25	sadig@prosys.az	0.00	Şirkət: Prosys\r\n28.09.2020-də ASA 5505 (No226) satılıb
+68	2020-07-16 11:31:50.980783+00	2020-10-07 12:08:44.55661+00	rafiq	Müştəri: Mirzə İsgəndərov	+994 70 202 42 82	mirza.iskandarov@gmail.com	0.00	TaxiMax şirkəti
+78	2020-11-06 17:04:59.402898+00	2020-11-06 17:04:59.402959+00	rafiq	Müştəri: Seyfi Bal	+994 55 409 35 38	s.bal@akinsoft.az	0.00	28.10.2020-də 1 ədəd Router 1921 alıb.
+79	2021-01-29 19:35:27.669805+00	2021-01-29 19:35:27.669907+00	rafiq	Müştəri: Elmaq Xasməmmədov	+994 50 877 66 56	Khasmammadov.e@gmail.com	0.00	Müəssisə: Cinema Plaza Hotel\r\nTarix: 29.01.2021\r\n1 ədəd 1841 (No4) alıb.
+80	2021-03-10 06:32:04.398467+00	2021-03-10 06:32:04.398502+00	rafiq	Müştəri: Elçin Həsənov	+994 50 385 07 72	hasanovelchin@l-e.az	0.00	“Life Elektroniks” MMC\r\nTarix: 09,03,2021\r\n2 ədəd WS-C2960S-48TS-L + 2 ədəd 2921
+81	2021-03-20 13:03:26.187461+00	2021-03-20 13:03:26.187493+00	rafiq	Müştəri: İsa İsrafilov	+994 50 555 25 00	it.services@bakertilly.az	0.00	Müştəri: “Baker Tilly Audit Azərbaycan” Qapalı Səhmdar Cəmiyyəti\r\nQeyd: 164 saylı sviç alıblar
+82	2021-03-23 15:17:57.713007+00	2021-03-23 15:17:57.713044+00	rafiq	Müştəri: Kamran Şeyxov	+994 50 218 88 97	Sheykhov@gmail.com	0.00	Müştəri: Fiziki şəxs\r\n22.03.2021 tarixdə ASA 5505 alıb.
+83	2021-04-27 18:29:20.386527+00	2021-04-27 18:33:58.318544+00	rafiq	Müştəri: Ehtiram Eyvazov	+994 50 254 06 94	ehtiram.eyvazov@azertexnolayn.com	0.00	Azertexnolayn, 27,04,2021-də 1 ədəd Kod 225 - WS-C2960G-24TC-L - 370 man.
+84	2021-05-06 13:37:33.881442+00	2021-05-06 13:37:33.881474+00	rafiq	Müştəri: Daşqın Lazımov	+994 55 201 47 70	dlazimov@portofbaku.com	0.00	Müəssisə: Trans Caspian HIt MMC\r\nRouter 2921 alıblar.
+85	2021-05-06 13:41:43.073268+00	2021-05-06 13:41:43.0733+00	rafiq	Müştəri: Səməndər İsgəndərov	+994 51 225 00 74	semender.iskenderov@azertexnolayn.com	0.00	Müəssisə: Azertexnolayn\r\nQeyd: 1 ədəd Kod 222 - WS-C2960G-24TC-L - 370 man.
+86	2021-05-09 19:43:18.714211+00	2021-05-09 19:43:18.714244+00	rafiq	Müştəri: Kənan Məmmədov	+994 55 206 63 01	kenan.mammadov@retail.az	0.00	Veysəloğlu şirkətindən, 1 ədəd 1921
+\.
+
+
+--
+-- Name: client_client_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.client_client_id_seq', 86, true);
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2019-10-21 00:05:25.622927+00	2	rafiq	1	[{"added": {}}]	4	1
+2	2019-10-21 00:05:48.628672+00	2	rafiq	2	[{"changed": {"fields": ["first_name", "last_name"]}}]	4	1
+3	2019-10-22 09:09:19.976787+00	2	rafiq	2	[{"changed": {"fields": ["is_staff"]}}]	4	1
+4	2019-11-28 12:21:28.313199+00	1	 2019-11-27 00:00:00+00:00 	2	[{"changed": {"fields": ["date", "description"]}}]	9	1
+5	2019-11-28 12:24:20.081038+00	1	 2019-11-27 00:00:00+00:00 	3		9	1
+6	2019-12-05 16:41:54.602025+00	105	 105 	2	[]	8	1
+7	2019-12-26 13:40:17.26637+00	3	asim	1	[{"added": {}}]	4	1
+8	2019-12-26 13:40:44.77205+00	3	asim	2	[]	4	1
+9	2019-12-26 13:41:31.096288+00	2	rafiq	2	[{"changed": {"fields": ["is_staff"]}}]	4	1
+10	2020-06-25 19:04:18.052404+00	4	rafiq	1	[{"added": {}}]	4	1
+11	2020-06-25 19:04:28.518564+00	4	rafiq	2	[]	4	1
+12	2020-07-01 20:03:49.544007+00	5	fariz	1	[{"added": {}}]	4	1
+13	2020-07-01 20:04:19.075521+00	5	fariz	2	[{"changed": {"fields": ["first_name", "last_name", "email"]}}]	4	1
+14	2020-07-01 20:28:04.88452+00	6	ali	1	[{"added": {}}]	4	1
+15	2020-07-01 20:28:30.38617+00	6	ali	2	[{"changed": {"fields": ["first_name", "last_name", "email"]}}]	4	1
+16	2020-08-12 10:46:49.76189+00	7	marina	1	[{"added": {}}]	4	1
+17	2020-08-12 10:47:25.313025+00	7	marina	2	[{"changed": {"fields": ["first_name", "last_name", "email"]}}]	4	1
+18	2020-09-06 15:26:27.967476+00	7	marina	2	[{"changed": {"fields": ["is_superuser"]}}]	4	1
+19	2021-02-21 20:34:33.0404+00	8	rafiq	1	[{"added": {}}]	4	1
+20	2021-02-21 20:34:48.661163+00	8	rafiq	2	[{"changed": {"fields": ["first_name", "last_name"]}}]	4	1
+21	2021-02-21 20:39:51.580589+00	9	marina	1	[{"added": {}}]	4	1
+22	2021-02-21 20:40:13.97152+00	9	marina	2	[{"changed": {"fields": ["first_name", "last_name", "email"]}}]	4	1
+\.
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 22, true);
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	network	networkhardware
+8	server	serverhardware
+9	money	money
+10	client	client
+\.
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 33, true);
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2021-02-21 20:13:16.724179+00
+2	auth	0001_initial	2021-02-21 20:13:16.863704+00
+3	admin	0001_initial	2021-02-21 20:13:17.073396+00
+4	admin	0002_logentry_remove_auto_add	2021-02-21 20:13:17.119303+00
+5	admin	0003_logentry_add_action_flag_choices	2021-02-21 20:13:17.135971+00
+6	contenttypes	0002_remove_content_type_name	2021-02-21 20:13:17.166864+00
+7	auth	0002_alter_permission_name_max_length	2021-02-21 20:13:17.18105+00
+8	auth	0003_alter_user_email_max_length	2021-02-21 20:13:17.201976+00
+9	auth	0004_alter_user_username_opts	2021-02-21 20:13:17.218114+00
+10	auth	0005_alter_user_last_login_null	2021-02-21 20:13:17.23448+00
+11	auth	0006_require_contenttypes_0002	2021-02-21 20:13:17.242951+00
+12	auth	0007_alter_validators_add_error_messages	2021-02-21 20:13:17.261105+00
+13	auth	0008_alter_user_username_max_length	2021-02-21 20:13:17.290696+00
+14	auth	0009_alter_user_last_name_max_length	2021-02-21 20:13:17.310074+00
+15	auth	0010_alter_group_name_max_length	2021-02-21 20:13:17.328933+00
+16	auth	0011_update_proxy_permissions	2021-02-21 20:13:17.345578+00
+17	client	0001_initial	2021-02-21 20:13:17.36761+00
+18	client	0002_auto_20210221_2013	2021-02-21 20:13:17.403358+00
+19	money	0001_initial	2021-02-21 20:13:17.426886+00
+20	money	0002_auto_20210221_2013	2021-02-21 20:13:17.450602+00
+21	network	0001_initial	2021-02-21 20:13:17.484245+00
+22	server	0001_initial	2021-02-21 20:13:17.52257+00
+23	server	0002_auto_20210221_2013	2021-02-21 20:13:17.54181+00
+24	sessions	0001_initial	2021-02-21 20:13:17.574623+00
+\.
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 69, true);
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+6z6ry1kj85pdsi6l2djkrol997rtzif9	MjAyNjQ5YmQyOWRhMDg1YTA3ZDU3MGQ3Y2FmN2E3MjkxYWVmM2M0NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmMzFkYmRmYTk0ZmZhOTY2N2IzZmU4OGQ0ZTIzNGI2MDBkMDVmODJlIn0=	2021-03-07 20:16:29.319396+00
+h6wx0tvzebka25gaxef47667woepcfs7	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2019-11-05 09:07:45.758355+00
+dw0fpmhby7se29933dy6fgraiushno6q	N2RlMGY2NTUwZGQ1ODNjYWMyYzIzNWI5MjcwNzIxMjg0YTQ5YTNjZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmNTg3ZjgzMDBlOTExZDcwMzJhZDBmYjFkZDcwMzQ3MjExZmM4ODI0In0=	2019-11-05 09:11:46.495399+00
+6j4sl0jn2ro0xtm8434c09k5z58tpiw8	N2RlMGY2NTUwZGQ1ODNjYWMyYzIzNWI5MjcwNzIxMjg0YTQ5YTNjZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmNTg3ZjgzMDBlOTExZDcwMzJhZDBmYjFkZDcwMzQ3MjExZmM4ODI0In0=	2019-11-05 09:12:11.507966+00
+9g5ku13gbsldwo3xdjjr9w0v7wlh86q1	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2019-11-06 14:18:06.036297+00
+hnkc0mt11uu7e2rui6qg39sih97sykpt	N2RlMGY2NTUwZGQ1ODNjYWMyYzIzNWI5MjcwNzIxMjg0YTQ5YTNjZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmNTg3ZjgzMDBlOTExZDcwMzJhZDBmYjFkZDcwMzQ3MjExZmM4ODI0In0=	2019-11-06 14:18:22.455226+00
+58qmjuvm6ufo2qsxyc84cai5v4kuiky1	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2019-11-11 14:57:30.765895+00
+sp6r1tjzmjhg1pd3s299ulia3pd96ecp	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2019-11-28 16:20:08.85649+00
+w3o63uqou4wy5eef78v72rj1994yna7z	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2019-11-28 22:52:45.288808+00
+zvj7ejisia8ql4lvc3xgttxo3t6w5wbw	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2019-12-11 09:47:52.092827+00
+qlyyzlu75r9hzt1scd0igac4dq2clkny	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2019-12-12 19:49:20.978519+00
+hvn5dhualfan77wu368qtc3dspkqybye	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2019-12-14 12:53:43.423845+00
+3rdsq8p07id20icqxvtdagq663g8v431	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2019-12-19 16:19:47.571798+00
+5qv8gq400lwh8fmg6b25rspj0cavgf7n	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2019-12-25 16:59:03.490624+00
+jhybeq69p1ykl32300rnnlds2mp0bbmk	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2019-12-25 18:03:44.565918+00
+cern4ya1arbomnitcn7qcg251l1930rx	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2019-12-26 09:48:30.726436+00
+m81i4imuqi0vlep5aqwnyv01fzi5zycl	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2019-12-26 10:02:41.179375+00
+z46ke7nlp3u1mc4kb1jgpfdhnyvuq50y	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2019-12-28 18:40:25.785198+00
+bigipstye3vlldewbgbaynnzvt60aine	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2019-12-29 15:32:54.515706+00
+x696ao06elfgw0dritdbtyeedavvcxzz	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-01-09 12:25:10.479791+00
+4ce0k6br4annskmldlab95b51o3dn9gb	OTAyMjRiYzVhZDNmMDUzODZjYTRiM2JiNjgyYWFjNWYyNTYxMWNkOTp7Il9hdXRoX3VzZXJfaWQiOiIzIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2MDJlNWZlNmZhMDZmNTI1MmRmOWQ5NjgzMjI5YTI0ZTYyNWU2NTkwIn0=	2020-01-09 13:42:59.965324+00
+p7g4o6ehq5e1bxgdt33q27sz480xrzk7	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-01-11 18:56:38.528776+00
+c9ecut5ua4dkjev2gk9owa3bbha2lhp1	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2020-01-12 16:02:39.824419+00
+ng5mwf0cbuot11wdeu0c1vf4ny3um8a2	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-01-23 12:40:20.969826+00
+ijg176bzhd90q2qkkb5b73gihhuxj3zh	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-01-25 20:04:44.313228+00
+6a30tgnaohbo080k0izdvl0xfq3t01mc	OTAyMjRiYzVhZDNmMDUzODZjYTRiM2JiNjgyYWFjNWYyNTYxMWNkOTp7Il9hdXRoX3VzZXJfaWQiOiIzIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2MDJlNWZlNmZhMDZmNTI1MmRmOWQ5NjgzMjI5YTI0ZTYyNWU2NTkwIn0=	2020-01-30 09:16:46.758948+00
+y71smhm1pf1hybeeava5jizpo5obz37s	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2020-01-31 15:43:57.250245+00
+sby54fbli1916ca1ahfq1zndog5bbq2q	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-02-07 07:42:43.828819+00
+w7l2lai1dgbgq3rnrltqq0rwcelgiged	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-02-09 07:12:47.235819+00
+dihurpgy3hfx8hdkrc463ermlvtzdsl4	OTAyMjRiYzVhZDNmMDUzODZjYTRiM2JiNjgyYWFjNWYyNTYxMWNkOTp7Il9hdXRoX3VzZXJfaWQiOiIzIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2MDJlNWZlNmZhMDZmNTI1MmRmOWQ5NjgzMjI5YTI0ZTYyNWU2NTkwIn0=	2020-02-14 12:10:38.329307+00
+qj99os9uaz8o7pwrhmvt6ycif8t4fif6	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2020-02-18 16:29:51.964597+00
+0xwixm1tn8ignjvsf83rnvw7o9no15tt	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-02-21 07:35:01.805141+00
+b5ftru5ohdb989obn461gqypi6drftzh	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-02-23 16:08:04.105406+00
+go9cflvgar8uvjtlnvh98pi4wpngjvu7	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-03-07 07:40:57.621325+00
+g7ticd7z8k346o663pe9e4o2hh5v7y1e	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-03-09 17:13:49.500128+00
+u092eoe42gxaurepc95b0kt31yl9sjge	OTAyMjRiYzVhZDNmMDUzODZjYTRiM2JiNjgyYWFjNWYyNTYxMWNkOTp7Il9hdXRoX3VzZXJfaWQiOiIzIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2MDJlNWZlNmZhMDZmNTI1MmRmOWQ5NjgzMjI5YTI0ZTYyNWU2NTkwIn0=	2020-03-20 11:33:58.776233+00
+fnoii6rxde2bk9n9g8dwu90n2h64nnsj	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-03-24 07:46:09.161725+00
+3gzi81kux13tqyt2j7t2zg6aol7ljbcv	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2020-03-26 13:42:29.74425+00
+65np1ufmpqfw5l4nb60yteazwkr5htcf	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2020-04-01 18:20:55.033478+00
+mw5chqlz7yq573tjw4m8w8ofchm2ckyl	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-04-01 19:10:07.525197+00
+1dsd8bq8kwzpgy5o4sbzx8bmfy2jr3ts	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-04-09 21:13:54.746436+00
+i3rgjvg1bwrkpxwa0p9h16p699b28t78	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-04-16 06:39:11.494881+00
+t67205787mvwozpwwzonua0nq95oestv	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-04-16 08:21:31.061228+00
+rk6hdkqj44azor4p60xg5qq09f6f8g3d	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2020-04-17 12:44:11.073306+00
+299xlyncqmrknwnzgqelzr277we7ace0	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-04-26 00:49:08.659978+00
+75bgskugovlqegfr56fnrp9cbkqcxpif	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-04-30 09:23:57.590483+00
+dvy40aw0r4ivyoph56wp90yec59hca4d	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-05-02 07:35:33.406503+00
+98h248ukwuhgglyun4ipcjd0rcxrsz5x	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-05-04 18:56:06.544827+00
+8c1by0coiojxh4jj32w8qh61nrf3dacz	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-05-08 10:38:58.320735+00
+4uc3gjp790cqisykvzkcqkfuybyxiznd	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-05-16 17:29:53.05082+00
+09xhh56g3am7i9lw8sheq7vqi309qljs	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-05-19 09:01:01.714864+00
+hnw6nclplfj319im6lyej3oooxnq8k5x	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-05-30 17:48:19.505195+00
+m8vhorf772bypy7kkmrj910hkjskd88p	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-06-02 13:20:41.745735+00
+fn19i421l6vpvqm6y3ej4t8z682hynae	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-06-02 14:24:08.102911+00
+1xslfuwt2dv63ihcgcy2jvh7t4r23u8l	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-06-13 18:19:37.906897+00
+ndra6v49aw5wb3smlijo8118i0djo7vo	ZTg4MWMwMWQ0NjhlNjBmZDYwZTg0ZWQ4MzQ1ZjI1MWExMzkyYjlhOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMjJlYTdmNTI3NWE5ZDAwNGQ2NWVhNGYxMzAwNjU1ZWQ2NmRjOGU0In0=	2020-06-16 11:36:38.194424+00
+kh4o576fiejtq8o2incgvb3q39a90r5w	Mzc5MDQxZjNhNjZlMjU3Y2IyZDgyODNmYjk2MGUzZjIxNzVhNGU2NTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YTgxODA4MjQzODdmZjk4ODA0MTY4ZTdhNzdjNDIxODkzZWRhNjVjIn0=	2020-06-22 12:45:02.091456+00
+3kr60rpmp2vu0zumal3ko5i0u6un7m9q	MDJhZGIzMzc3NGE4ZTEyMGE4ZTAyMThjYjIzNDExOWIxYzllZmVkYzp7Il9hdXRoX3VzZXJfaWQiOiI2IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIyNjYzNjU5ZWY1OWU3MzM4MjRkNzRiNmEwY2E5YTMxOTA5NTkwY2EzIn0=	2020-07-16 17:06:19.134914+00
+g3amwlqis4n4lnasy6w7hm2gfb1uudbw	YTE0OTkxYTlkYWFiOTQ0OGM5Y2U0M2RkZWM3MTI0YjA3NzU2OGQ2ZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxZWNjOTg2M2NjM2QyNWQwMDE4MjgyMGUyMTVhMzY0NjlkMjg5NzhiIn0=	2020-07-17 23:53:45.91187+00
+gi82d1pum8hs0trln6i51qoqvh6zvih9	YTE0OTkxYTlkYWFiOTQ0OGM5Y2U0M2RkZWM3MTI0YjA3NzU2OGQ2ZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxZWNjOTg2M2NjM2QyNWQwMDE4MjgyMGUyMTVhMzY0NjlkMjg5NzhiIn0=	2020-07-19 15:45:01.23216+00
+frc3em6ma5jv42fq8d3qn3afxoh9gdeg	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-07-20 15:49:27.122897+00
+drh4flxa26ozl6kaii5jcbbc4kyhof66	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-07-21 05:34:34.301843+00
+yxllr2qtw5vcp2cd0xlqf0homulk5z4p	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-08-04 08:28:07.702823+00
+ut99a5o0gdao15glwg1hqqd95oqrhm14	YTE0OTkxYTlkYWFiOTQ0OGM5Y2U0M2RkZWM3MTI0YjA3NzU2OGQ2ZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxZWNjOTg2M2NjM2QyNWQwMDE4MjgyMGUyMTVhMzY0NjlkMjg5NzhiIn0=	2020-08-04 20:45:33.380358+00
+qxvffaitq9uxyxmgbkjyn41rd1xeqr79	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-08-18 20:47:16.945739+00
+qx87ra3r80lz646a3dne84v6ohnb8wg8	YTE0OTkxYTlkYWFiOTQ0OGM5Y2U0M2RkZWM3MTI0YjA3NzU2OGQ2ZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxZWNjOTg2M2NjM2QyNWQwMDE4MjgyMGUyMTVhMzY0NjlkMjg5NzhiIn0=	2020-08-26 10:45:44.6883+00
+o4n2vtwcd0gnhr5evg6z97t8f5uwrl56	NjFlY2QwYmMxODA5OTFjOWM5MTQyOGM2MDY4ZTkyOTc0ZDQ3YTFjNjp7Il9hdXRoX3VzZXJfaWQiOiI3IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzFlMDY0NzY1OTVlM2M3ZDNhM2FlNGY3MmExMjA2ZDQ4NzFjNDdjIn0=	2020-08-26 13:34:28.669864+00
+h9n2jis11dsh0hrgi5vprgr8mttp5w8b	NjFlY2QwYmMxODA5OTFjOWM5MTQyOGM2MDY4ZTkyOTc0ZDQ3YTFjNjp7Il9hdXRoX3VzZXJfaWQiOiI3IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzFlMDY0NzY1OTVlM2M3ZDNhM2FlNGY3MmExMjA2ZDQ4NzFjNDdjIn0=	2020-08-29 20:43:24.610291+00
+dpxaws0c59npeuigknllxbmf9ma7tpd6	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-09-02 11:08:13.314467+00
+9eeey7zdmqqrpiqu6s95p679ta8lx2ef	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-09-04 11:16:07.062174+00
+fch9kb9uw20z1ntm6eyfxb0vx731sog2	NjFlY2QwYmMxODA5OTFjOWM5MTQyOGM2MDY4ZTkyOTc0ZDQ3YTFjNjp7Il9hdXRoX3VzZXJfaWQiOiI3IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzFlMDY0NzY1OTVlM2M3ZDNhM2FlNGY3MmExMjA2ZDQ4NzFjNDdjIn0=	2020-09-09 19:02:13.396875+00
+bob2oyurlykbias6nps6desaupj78m1r	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-09-17 06:27:31.775782+00
+e17d1s9m22yekevhyza0gxyvupa3cos8	MWRiMjMxNjM1MGJjMjU3NGU2MmYxNGU2ODkwMTUxMzdiZjVkZDU1Yjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI3ZTc4YTJlYzllMmE1MjY4OGM0NTk0Yzk4MDg1MjI3M2I5NjQ1ZTc1In0=	2020-09-20 15:39:47.857715+00
+mdf8cla050lktb2tf8wvi0ihg50p7abp	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-10-01 08:19:00.744046+00
+f6fec9uxs59qco5a7sum5was28750k85	NjFlY2QwYmMxODA5OTFjOWM5MTQyOGM2MDY4ZTkyOTc0ZDQ3YTFjNjp7Il9hdXRoX3VzZXJfaWQiOiI3IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzFlMDY0NzY1OTVlM2M3ZDNhM2FlNGY3MmExMjA2ZDQ4NzFjNDdjIn0=	2020-10-02 15:08:24.514247+00
+pua2nkad9anesndjv0a67zxomydjr992	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-10-16 10:10:44.457497+00
+kh2qhxhbpunvh9oi4ar2elqu3zz0o2lm	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-10-16 17:04:55.983603+00
+6qdswjgyizu1x4oijabtsgk4nrecxg2j	MWRiMjMxNjM1MGJjMjU3NGU2MmYxNGU2ODkwMTUxMzdiZjVkZDU1Yjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI3ZTc4YTJlYzllMmE1MjY4OGM0NTk0Yzk4MDg1MjI3M2I5NjQ1ZTc1In0=	2020-10-19 16:01:28.308807+00
+o9bnk1by4vjs4ahmlhcjbipqaw3hetdt	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-10-31 07:39:28.64361+00
+ew3ccu3p9j2er3ml7ae7upddivnovo8c	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-11-14 17:17:30.008979+00
+mvkfd3iimgoj4jca6zr1ad6dtif2mnwb	MWRiMjMxNjM1MGJjMjU3NGU2MmYxNGU2ODkwMTUxMzdiZjVkZDU1Yjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI3ZTc4YTJlYzllMmE1MjY4OGM0NTk0Yzk4MDg1MjI3M2I5NjQ1ZTc1In0=	2020-11-20 10:59:34.769332+00
+id0xo6klyifhwoleeqfi5nkud53jakoh	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-11-30 08:26:31.606724+00
+zy4rszx806qqx1h5lda7oqo56qwudjaq	MWRiMjMxNjM1MGJjMjU3NGU2MmYxNGU2ODkwMTUxMzdiZjVkZDU1Yjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI3ZTc4YTJlYzllMmE1MjY4OGM0NTk0Yzk4MDg1MjI3M2I5NjQ1ZTc1In0=	2020-12-05 09:13:10.962708+00
+tqy04c4tbyrpvxmj6npwxrqfiufkbt99	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2020-12-22 09:54:17.621932+00
+g8flh8llmpfn98ri6jm19hbpi43ksiae	MWRiMjMxNjM1MGJjMjU3NGU2MmYxNGU2ODkwMTUxMzdiZjVkZDU1Yjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI3ZTc4YTJlYzllMmE1MjY4OGM0NTk0Yzk4MDg1MjI3M2I5NjQ1ZTc1In0=	2021-01-05 15:10:09.273065+00
+lpcf0vb1ujlwxiiq8ojyyf1ngh7zqp2u	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2021-01-05 15:12:25.249414+00
+9hj118hspaqve1oysxza39s75wzz527c	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2021-01-14 11:25:24.668631+00
+j52h53uukzwsylqu0u0359n418jqcot4	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2021-01-21 13:31:13.485652+00
+niprj9ru1izv0y7roy047sqel9fk3bo7	MWRiMjMxNjM1MGJjMjU3NGU2MmYxNGU2ODkwMTUxMzdiZjVkZDU1Yjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI3ZTc4YTJlYzllMmE1MjY4OGM0NTk0Yzk4MDg1MjI3M2I5NjQ1ZTc1In0=	2021-01-27 20:30:56.48919+00
+md6k5gk0nv8ax8lga7gchnnroek9riii	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2021-01-29 07:35:22.592695+00
+43pglf787035rp0ek0myerg4jayzkf1l	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2021-02-08 13:56:34.103604+00
+6gntzhtrr420eb9dzbcro9alqrl4fkyl	MWRiMjMxNjM1MGJjMjU3NGU2MmYxNGU2ODkwMTUxMzdiZjVkZDU1Yjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI3ZTc4YTJlYzllMmE1MjY4OGM0NTk0Yzk4MDg1MjI3M2I5NjQ1ZTc1In0=	2021-02-11 11:14:52.99471+00
+2emn1ds0lwmy71etnwr2txr1jfk9q79r	MjBjMTc2NTQyYjkzZjU0ODgyYWNlMzM5MDNlZDQ0MzgxOTMxM2M0MDp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MmIyYjVhNDYwNTY1OWU3ZGFlYWE1OTJiNGMzMjY0ZTJjNjU4ZDM2In0=	2021-02-12 19:32:05.223213+00
+2esdun5j30b6s9hwxgxuelhinrhqmj87	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWYxZDZjZDp7Il9hdXRoX3VzZXJfaWQiOiI4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MDQxNjVmMDliN2MwMzZkOWFiOWVhNzI5YzNmN2JlNzExYzRjNmRkIn0=	2021-03-09 06:42:00.548442+00
+tacworxswsj912445kcg0xqrtch3va46	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWYxZDZjZDp7Il9hdXRoX3VzZXJfaWQiOiI4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MDQxNjVmMDliN2MwMzZkOWFiOWVhNzI5YzNmN2JlNzExYzRjNmRkIn0=	2021-03-09 06:55:41.2986+00
+ccn640kfnawjf0hkeuu4dyvlkhgfs90u	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWYxZDZjZDp7Il9hdXRoX3VzZXJfaWQiOiI4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MDQxNjVmMDliN2MwMzZkOWFiOWVhNzI5YzNmN2JlNzExYzRjNmRkIn0=	2021-03-09 07:58:19.042874+00
+b29wtwxub2yzi2mg9ysxfppb99k1gjud	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWYxZDZjZDp7Il9hdXRoX3VzZXJfaWQiOiI4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MDQxNjVmMDliN2MwMzZkOWFiOWVhNzI5YzNmN2JlNzExYzRjNmRkIn0=	2021-03-23 09:36:28.225969+00
+wiuxkbs8o4rppkyi8fq7ld8c484z1miv	MjAyNjQ5YmQyOWRhMDg1YTA3ZDU3MGQ3Y2FmN2E3MjkxYWVmM2M0NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmMzFkYmRmYTk0ZmZhOTY2N2IzZmU4OGQ0ZTIzNGI2MDBkMDVmODJlIn0=	2021-03-24 21:11:27.805166+00
+vrxky97h2t7ufluu08aybjyjmtcy986q	MjAyNjQ5YmQyOWRhMDg1YTA3ZDU3MGQ3Y2FmN2E3MjkxYWVmM2M0NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmMzFkYmRmYTk0ZmZhOTY2N2IzZmU4OGQ0ZTIzNGI2MDBkMDVmODJlIn0=	2021-03-24 22:24:53.64899+00
+v7pf3hrn4h1nb6bm77698iditu2jq2jf	MjAyNjQ5YmQyOWRhMDg1YTA3ZDU3MGQ3Y2FmN2E3MjkxYWVmM2M0NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmMzFkYmRmYTk0ZmZhOTY2N2IzZmU4OGQ0ZTIzNGI2MDBkMDVmODJlIn0=	2021-03-25 14:23:24.255612+00
+bj9p02khzulk6klvrlkmtyl7pex9zjbt	MjAyNjQ5YmQyOWRhMDg1YTA3ZDU3MGQ3Y2FmN2E3MjkxYWVmM2M0NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmMzFkYmRmYTk0ZmZhOTY2N2IzZmU4OGQ0ZTIzNGI2MDBkMDVmODJlIn0=	2021-04-06 09:59:12.583142+00
+pqondc392bl73d49mnv7wzbwvxkx1zn9	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWYxZDZjZDp7Il9hdXRoX3VzZXJfaWQiOiI4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MDQxNjVmMDliN2MwMzZkOWFiOWVhNzI5YzNmN2JlNzExYzRjNmRkIn0=	2021-04-06 10:41:01.538906+00
+lv342zibinam8n2tidtlnx4ejl4hviqg	NTQyYjFmZDg4MWE0YjBkZGI1MGUxMDI2NGI5YzhlNWZmNDM5YWMwYjp7Il9hdXRoX3VzZXJfaWQiOiI5IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0ODA3MjMxNTgyMTRmYzdiZTc3MzdmNTY0YTdlZWNhZDJhYzljNGU4In0=	2021-04-20 09:57:07.001318+00
+hg8y9zizbxwcosq1lbxkg5u58pzbjdqs	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWYxZDZjZDp7Il9hdXRoX3VzZXJfaWQiOiI4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MDQxNjVmMDliN2MwMzZkOWFiOWVhNzI5YzNmN2JlNzExYzRjNmRkIn0=	2021-04-20 13:20:46.353581+00
+oijhoslnfntnfgbgjfueqgjhu1yg0qyd	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWYxZDZjZDp7Il9hdXRoX3VzZXJfaWQiOiI4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MDQxNjVmMDliN2MwMzZkOWFiOWVhNzI5YzNmN2JlNzExYzRjNmRkIn0=	2021-04-22 12:15:54.408802+00
+wvk63cq0l7ec4zqoij8psa27f82kav29	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWYxZDZjZDp7Il9hdXRoX3VzZXJfaWQiOiI4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MDQxNjVmMDliN2MwMzZkOWFiOWVhNzI5YzNmN2JlNzExYzRjNmRkIn0=	2021-05-04 14:08:18.057162+00
+jlrzl455xom5cmh85ri0movjrttdyx5u	MjAyNjQ5YmQyOWRhMDg1YTA3ZDU3MGQ3Y2FmN2E3MjkxYWVmM2M0NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmMzFkYmRmYTk0ZmZhOTY2N2IzZmU4OGQ0ZTIzNGI2MDBkMDVmODJlIn0=	2021-05-06 18:55:40.694637+00
+9zf064ynnj10i3g30185zs48s9e38vkc	YWIyZTY1NjM2NDI4NjQyNjhhZmFiZWI3NTEwMDE5M2RjMWYxZDZjZDp7Il9hdXRoX3VzZXJfaWQiOiI4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MDQxNjVmMDliN2MwMzZkOWFiOWVhNzI5YzNmN2JlNzExYzRjNmRkIn0=	2021-05-15 11:33:23.525737+00
+bqnxju2eqqt8eslysu79ewlsqsuz3m8e	MjAyNjQ5YmQyOWRhMDg1YTA3ZDU3MGQ3Y2FmN2E3MjkxYWVmM2M0NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmMzFkYmRmYTk0ZmZhOTY2N2IzZmU4OGQ0ZTIzNGI2MDBkMDVmODJlIn0=	2021-05-24 12:01:33.549361+00
+\.
+
+
+--
+-- Data for Name: money_money; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.money_money (id, date, amount, incoming, description) FROM stdin;
+65	2020-01-22 00:00:00+00	35.00	f	Əlibabaya laptop üçün servis haqqı (10 azn)+tort
+2	2019-11-28 00:00:00+00	1350.00	t	Biri 450 manatdan 3 ədəd 1921 ruter satışı.\r\nAlan: 055 988 00 22 Elçin
+3	2019-11-28 00:00:00+00	628.00	t	Kassada qaliq 28.11.2019
+5	2019-11-28 00:00:00+00	500.00	t	1 ədəd 1921 ruter satışı.\r\nCoşğun Ünal, 055 488 79 49
+6	2019-11-29 00:00:00+00	134.00	f	Ayaqqabı mağazasına (2617) 84 metr kabel və əlhaqqı 54 manat
+7	2019-11-29 00:00:00+00	250.00	f	Skandiyaya 1 aylıq icarə haqqı
+8	2019-11-30 00:00:00+00	1088.00	f	Bank transfer - hardware üçün Norveçə ödəniş
+9	2019-12-01 00:00:00+00	200.00	f	Centurion - ofis arenda
+10	2019-12-02 00:00:00+00	721.00	f	Gömrük ödəməsi (Server DL 380 Gen 8 + Cisco router 2921)
+11	2019-12-04 00:00:00+00	40.00	t	Musiqi alətləri+N-Telekom\r\nabunə haqqı
+12	2019-12-06 00:00:00+00	500.00	t	Kassaya mədaxil. \r\nVerdi: Renat
+13	2019-12-06 00:00:00+00	200.00	f	Buxalter əməkhaqqı.\r\nAlan nağd Fariz 055253 70 53
+14	2019-12-06 00:00:00+00	300.00	f	Toya nəmər.\r\nAlan: Əlibaba
+15	2019-12-07 00:00:00+00	23.00	f	Ayaqqabı AP-nuntavana vurulması  (5 manat) + AP-ları tavana vurmaq üçün \r\n8 metr profillər + 100 şrup + \r\nprofillərin kəsilməsi (18 manat)
+16	2019-12-07 00:00:00+00	20.00	t	Ayaqqabı (2617) abunə haqqı.
+17	2019-12-09 00:00:00+00	147.00	f	Sabrinaya - 1642 98 metr kabel və əlhaqqı 54 manat
+18	2019-12-10 00:00:00+00	80.00	t	1 aylıq abunə haqqı: \r\nÖdəmə günü: 20\r\nİran kassaları - 40 azn - ssid: 1net35\r\nAysel parfum - 20 azn - ssid: 1net2\r\nWorld Style - 20 azn - ssid: world_style
+19	2019-12-13 00:00:00+00	130.00	f	Kapital Bankda Centurion-un hesabına mədaxil. Rəsmi çek var.
+20	2019-12-14 00:00:00+00	250.00	f	Alikə kredit.
+21	2019-12-16 00:00:00+00	1030.00	t	1 ədəd Sviç C2960G-24 + 1 ədəd Ruter 1901 satışı, alıcı: Vaqif Sadıqov, 055 251 78 89
+22	2019-12-16 00:00:00+00	680.00	f	Alikə mayadəyəri.
+23	2019-12-17 00:00:00+00	100.00	t	Abunə haqları: MEMİ-60+Sabina-20+Market-20=100AZN
+24	2019-12-19 00:00:00+00	5.00	f	6 paket+2 salfetka
+25	2019-12-20 00:00:00+00	190.00	t	2 ədəd 1142 AP satışı.\r\nAlan: Şahin CCIE, 055 660 04 10
+26	2019-12-20 00:00:00+00	160.00	f	Yeni MEMİ-yə 112 metr (0,95 man.) kabel və əlhaqqı 54 manat.\r\nÖdənilib: Azər/055-768-93-87. Nağd
+27	2019-12-20 00:00:00+00	140.00	f	Alik, mayadəyəri. Nağd, Rafiq. (Əlibaba)
+28	2019-12-20 00:00:00+00	40.00	t	1 aylıq abunə: Defterxana və Sevva Butik
+29	2019-12-24 00:00:00+00	900.00	t	2 ədəd Ruter 1921 satışı (No 101-102)\r\nAlan: Elçin, 055 988 00 22
+30	2019-12-24 00:00:00+00	600.00	f	Alik, mayadəyəri.
+31	2019-12-24 00:00:00+00	75.00	f	Cari xərclər.\r\nAlan: Əlibaba
+33	2019-12-25 00:00:00+00	200.00	f	Centurion-un icarə haqqı. Çek var.
+32	2019-12-24 00:00:00+00	30.00	f	ABV-dən Cek vuran (17 azn)+10 kat5\r\ncek, radar. Çek var.
+34	2019-12-26 00:00:00+00	7.00	f	LAN mufta 3 ədəd + Azercell aylıq danışıq haqqı
+35	2019-12-28 00:00:00+00	360.00	t	1 ədəd sviç 2960G 24 port, No 43 satışı.
+36	2019-12-28 00:00:00+00	250.00	f	Alik, mayadəyəri.
+37	2019-12-28 00:00:00+00	3.00	f	Skoçlar+marker.
+38	2019-12-28 00:00:00+00	1170.00	t	2 ədəd 24 və 48 PoE sviç Ultra satışı.
+39	2019-12-28 00:00:00+00	650.00	f	Alik, mayadəyəri
+40	2019-12-29 00:00:00+00	36.00	f	Sədərək: Tayrap-5+2 kq paket-6 + otvertka naboru-3+2 marker-1+2 sverlo-3 15 kompüter kabeli-15+taksi-3
+41	2019-12-30 00:00:00+00	12.00	f	ASAN xidmət etibarnamə üçün. Əlibaba, nağd.
+42	2019-12-30 00:00:00+00	200.00	f	Dekabr ayı üçün Rafiqə bonus.
+43	2020-01-04 00:00:00+00	120.00	t	Dədə Oyuncaq+Musiqi alətləri+MEMİ-2 (60 AZN)+N Telekom abunə haqqı.
+44	2020-01-04 00:00:00+00	300.00	t	No 58, Cisco ASA firewall 5510 satışı. \r\nTarix: 04.01.2020\r\n345 manata satıldı. 45 manat Renata verildi.
+45	2020-01-07 00:00:00+00	300.00	f	Maaş: Nağd, Fariz 055253 70 53
+47	2020-01-08 00:00:00+00	35.00	f	Viko elektrik sayğacı
+46	2020-01-08 00:00:00+00	8.00	f	Abu-ya - (1513) AP-un tavana vurulması (5 azn)+ ASAN imza nömrəsinə kontur (3 azn)
+48	2020-01-04 00:00:00+00	300.00	t	ASA firewall 5510 satışı.
+49	2020-01-04 00:00:00+00	200.00	f	Alik, mayadəyəri.
+50	2020-01-13 00:00:00+00	20.00	t	Aksessuar mağazasından Əliyev Cəlal : 2306 1 aylıq abunə haqqı
+51	2020-01-14 00:00:00+00	157.00	f	Best-Dent-ə - (1139) 108 metr kabel çəkilişi və əlhaqqı 54 manat
+52	2020-01-16 00:00:00+00	80.00	t	MEMİ-1 (60azn) və Sabina-dan 1 aylıq\r\nabunə haqqı
+54	2020-01-16 00:00:00+00	270.00	f	Əlibabaya - Asimin maaşı.
+55	2020-01-18 00:00:00+00	20.00	t	Market-dən 1 aylıq abunə haqqı
+56	2020-01-18 00:00:00+00	673.00	t	1 ədəd ASA 5506 (No113) satışı.\r\nMüştəri: Şahin CCIE
+53	2020-01-16 00:00:00+00	350.00	f	Gömrük haqqı - Əlibabaya.\r\nQEYD: 100 manatı mayadəyrəindən verildi
+57	2020-01-18 00:00:00+00	673.00	t	1 ədəd ASA 5506 (No113) satışı.\r\nMüştəri: Şahin CCİE
+58	2020-01-18 00:00:00+00	20.00	t	Market-dən 1 aylıq abunə haqqı
+59	2020-01-18 00:00:00+00	303.00	f	Gömrük haqqı. Əlibabaya.
+60	2020-01-18 00:00:00+00	450.00	f	Alik, mayadəyəri
+61	2020-01-21 00:00:00+00	180.00	t	Mayadəyərindən kassaya
+62	2020-01-21 00:00:00+00	182.00	f	Rüqəyya Telekom-a - (2313k) 48 metr (82 azn) və vəkilə (3415) 62 metr (100 azn) kabel çəkilişi.
+63	2020-01-21 00:00:00+00	20.00	t	Azeriimport-dan 1 aylıq abunə haqqı
+64	2020-01-22 00:00:00+00	60.00	t	World Parfum+Dəftərxana+Sevva\r\nbutik-dən 1 aylıq abunə haqqı
+66	2020-01-22 00:00:00+00	95.00	f	Azər/055-768-93-87. Nağd. Etro - (2518) 51 metr kabel çəkilişi. (85 azn) + 2 AP-un tavana vurulması (Zamiq)
+67	2020-01-23 00:00:00+00	50.00	t	Mayadəyərindən kassaya transfer
+68	2020-01-23 00:00:00+00	45.00	f	Laptopun kulerinin dəyişdirilməsi. Cyti com şirkəti, Tural, qarantiya kağızı var.
+69	2020-01-23 00:00:00+00	450.00	t	ASA Firewall satışı No40.\r\nAlan: Qamət Cahangirli\r\nTarix: 23.01.2020
+70	2020-01-23 00:00:00+00	400.00	f	Alik, mayadəyəri
+71	2020-01-29 00:00:00+00	15.00	f	Ofisin yığışdırılması (5 azn)+Etro-ya - (2518) AP vurulması (5 azn)+Azercell aylıq danışıq haqqı (5 azn)
+72	2020-01-29 00:00:00+00	450.00	f	Mayadəyərindən: Ofisin (200 azn) və Skandia-nın (250 azn) yanvar icarə haqqı
+73	2020-01-31 00:00:00+00	400.00	t	Kassaya mədaxil. Renat, nağd.
+74	2020-01-31 00:00:00+00	447.00	f	Asimə maaş - 147 manat (yarım aylıq) + Rafiqə maaş - 300 manat
+75	2020-02-01 00:00:00+00	80.00	t	Dədə oyuncaq+Rüqəyya Telekom + Vəkil+Etro-dan 1 aylıq abunə haqqı
+76	2020-02-03 00:00:00+00	120.00	t	MEMİ-2 (60 manat)+Musiqi alətləri+ N-Telekom+ Qadın geyimi 1 aylıq abunə haqqı
+77	2020-02-05 00:00:00+00	19.00	t	Kassaya mədaxil: KapitalBank-dan qalıq, nağd.
+78	2020-02-05 00:00:00+00	180.00	f	Alik borc. Nağd, Natəvan.
+79	2020-02-06 00:00:00+00	250.00	t	2 SFP satışı - No 135-136\r\nDepozit: Nağd, Elçin Qasımlı, 050 253 65 96
+80	2020-02-08 00:00:00+00	287.00	f	Baytarlıq - 66 metr kabel (117man) və 54 manat əlhaqqı + Allsport 122 metr kabel + 54 manat əlhaqqı (170man)
+81	2020-02-10 00:00:00+00	18.00	f	Gömrük xərcləri 10 taksi+2 poçt + 6 My Broker\r\nRafiq. nağd
+82	2020-02-10 00:00:00+00	140.00	t	World Style + İran Kassaları + ABU + Aysel Parfüm +Ayan Farm + Osmanbeyli-də 1 aylıq abunə haqqı
+83	2020-02-10 00:00:00+00	750.00	t	Kassaya mədaxil, Renat
+84	2020-02-10 00:00:00+00	650.00	f	Gömrük xərcləri. My Broker.
+85	2020-02-10 00:00:00+00	100.00	f	Alik, mayadəyəri
+86	2020-02-10 00:00:00+00	5.00	f	Taksi, Rafiq
+87	2020-02-11 00:00:00+00	18.00	f	Baytarlıq Apteki-nə - (1536) AP vurulması (5azn)+ABV-dən kabelsoyan (6man.)+ rezak\r\n(2man.) + möhür mürəkkəbi (3 man.)+ASAN imza nömrəsinə kontur (2azn)
+88	2020-02-13 00:00:00+00	20.00	f	Rüqəyya Telekom-a - (2313k) geri ödəniş
+89	2020-02-10 00:00:00+00	300.00	t	Kassaya mədaxil. Əlibaba
+90	2020-02-15 00:00:00+00	80.00	t	MEMİ-1 və Aksessuar-dan 1 aylıq\r\nabunə haqqı
+91	2020-02-17 00:00:00+00	300.00	f	Maaş: Nağd, Fariz 055253 70 53
+92	2020-02-17 00:00:00+00	20.00	f	Stoyanka xərci (Əlibaba) + Asim: mobil danışıq üçün (5azn)
+93	2020-02-17 00:00:00+00	126.00	f	Ayan Farm Vet-ə (4-cü mərtəbə) 75 metr\r\nkabel çəkilişi
+94	2020-02-17 00:00:00+00	140.00	t	Market-dən + Azəeiimport-dan + Daşqın Həyatov (2626) + Dəftərxana+Sevva Butik+Sabina  + Murad (Anar)-dən 1 aylıq abunə haqqı
+95	2020-02-18 00:00:00+00	20.00	f	Aksessuar - (2306) geri ödəniş
+96	2020-02-26 00:00:00+00	16.00	f	Osmanbəyli - (2617) və Ayanfarm-a AP vurulması + Ofisə salfetka (4 ədəd) (3azn) + Mobil danışıq üçün (Rafiq 3 azn)
+97	2020-02-27 00:00:00+00	2147.00	t	Casian İnvestment (vergisiz cəmi 2010 azn) + Elçin Qasımlıdan (SFP cəmi vergisiz 250  azn)
+98	2020-02-27 00:00:00+00	250.00	f	SFP üçün qaytarılan depozit. Nağd, Elçin Qasımlı, 050 253 65 96
+99	2020-02-27 00:00:00+00	1300.00	f	Alik, mayadəyəri
+100	2020-02-28 00:00:00+00	18.00	f	Ofisin yığışdırılması\r\n24 yanvardan 28 fevrala qədər hər 5-ci gün, 3 manatdan
+101	2020-02-28 00:00:00+00	80.00	f	VMRD Group-a (Panasonic) 46 metr\r\nkabel çəkilişi
+102	2020-02-28 00:00:00+00	12.00	f	Vatman kağız+millimetrovka+kəlbətin (8)
+103	2020-02-29 00:00:00+00	125.00	f	Nərdivan (3,7 metrlik)
+104	2020-03-02 00:00:00+00	300.00	f	Maaş, Rafiq.
+105	2020-03-03 00:00:00+00	120.00	t	MEMİ-2+Musiqi alətləri+ N-Telekom+ Dədə Oyuncaq 1 aylıq abunə haqqı
+106	2020-03-04 00:00:00+00	150.00	f	İlyasa qonorar.
+107	2020-03-05 00:00:00+00	360.00	t	2702 AP satışı.\r\nKamran, Azitservices +994 55 234 44 44
+108	2020-03-06 00:00:00+00	300.00	f	Maaş. Nağd, Fariz 055253 70 53
+109	2020-03-06 00:00:00+00	150.00	t	Kassaya mayadəyərindən mədaxil. Asim
+110	2020-03-06 00:00:00+00	238.00	f	Maaş. Nağd, Asim
+111	2020-03-06 00:00:00+00	64.00	f	06-16 mart, 2020. Xırda xərclər:. Nağd. Rafiq
+112	2020-03-16 00:00:00+00	140.00	t	MEMİ-1 (60azn) və Osmanbəy-dan 1 aylıq abunə haqqı+MEMİ-2-dən 20 azn əlavə+ABU (20azn)+Vəkil (20azn)\r\nAsim, nağd
+113	2020-03-17 00:00:00+00	791.00	t	Kassaya mədaxil (ASA 5520 (486azn brutto)+ AP 2702 (360azn brutto) satışından\r\nNağd, Əlibaba (Renat).
+114	2020-03-17 00:00:00+00	390.00	f	Bank hesabının möhkəmləndirilməsi.\r\nNağd, Əlibaba
+115	2020-03-17 00:00:00+00	400.00	f	Borcun silinməsi. Nağd Əlibaba.
+116	2020-03-17 00:00:00+00	80.00	f	Biznes kart açılması üçün (30azn)+ Telefon balansı (50azn)
+117	2020-03-18 00:00:00+00	500.00	t	Aysel Parfüm 1 aylıq abunə haqqı (20azn)+ 892W-AGN-E-K9 V03 (No 137) satışı (480azn) Sevinc Əlizadə
+118	2020-03-19 00:00:00+00	44.00	f	19-24 mart xırda xərclər
+119	2020-03-19 00:00:00+00	250.00	f	Mart ayı üçün bonus. Nağd, Rafiq.
+120	2020-03-27 00:00:00+00	300.00	f	Mayadəyərinə transfer. Rafiq, nağd.
+121	2020-03-29 00:00:00+00	210.00	t	ASA 5505 firewall satışı, No 139\r\nAnar Ağayev +994 50 382 68 90
+122	2020-03-29 00:00:00+00	210.00	f	Mayadəyərinə transfer. Nağd, Rafiq.
+123	2020-04-03 00:00:00+00	420.00	t	Cisco WS - C3560G - 24TS satışı\r\nMehriban, nağd, Rüstəm İsmayılov, +994502076682, No66
+124	2020-04-03 00:00:00+00	740.00	t	Kassaya mədaxil. Renat, 436$
+125	2020-04-07 00:00:00+00	550.00	t	Kassaya mədaxil. Rafiqdən borc.
+126	2020-04-07 00:00:00+00	1741.00	f	Kapitalbanka hesabın möhkəmləndirilməsi.\r\nRafiq, nağd, çek var.
+127	2020-04-08 00:00:00+00	585.00	t	Switch C3560G-48TS satışı\r\nMehriban, nağd, Emil Səfərov, +994502076682, , No119
+128	2020-04-08 00:00:00+00	375.00	f	Borcun bir hissəsi. Mehriban, Rafiq (MilliÖn)
+129	2020-04-09 00:00:00+00	115.00	t	Kassaya mədaxil. Rafiqdən borc.
+130	2020-04-09 00:00:00+00	105.00	f	Gömrük ödənişləri (49azn + 37azn)+taksi (19azn). Nağd, Rafiq, kartla.
+131	2020-04-13 00:00:00+00	210.00	f	Depozitin qaytarılması. Anar Ağayev +994 50 382 68 90
+132	2020-04-15 00:00:00+00	101.00	t	Kassaya mədaxil. Rafiqdən borc.
+133	2020-04-15 00:00:00+00	100.00	f	Stimul. Asəf Məmmədyarov (+994 55 951 09 08), nağd.
+134	2020-04-20 00:00:00+00	1100.00	t	Kassaya mədaxil. Hesabdan çıxarış (1080) + Rafiqdən borc (20azn)
+135	2020-04-20 00:00:00+00	1100.00	f	Maaşların verilməsi (300azn Fariz +\r\n250azn Asim + 550 Rafiq)
+136	2020-04-24 00:00:00+00	500.00	t	117 No-li 24 portlu PoE sviç satışı. Polad. Mehriban nağd.
+137	2020-04-24 00:00:00+00	416.00	f	Borcun silinməsi. Rafiq nağd.
+138	2020-04-24 00:00:00+00	14.00	f	Xırda xərclər:\r\n40 ədəd fayl (2azn)+Nağdlaşdırma faizi (5azn)+Taksi (5azn) və 2 qovluq (2azn)
+139	2020-04-27 00:00:00+00	485.00	t	Bir ədəd 2960 sviç satışı.
+140	2020-04-30 00:00:00+00	685.00	t	WS-C3560CG 8PC PoE satışı, No120\r\nEyyub Sadıxlı, nağd Rafiq
+141	2020-04-30 00:00:00+00	427.00	t	Router 1921 satışı. No 140\r\nF/ş Əlizadə Məhəmməd, +994555800232
+142	2020-04-30 00:00:00+00	1150.00	f	Mayadəyərinə transfer: 350+800
+143	2020-05-01 00:00:00+00	150.00	f	Orxan Ağayevə (+994 55 700 55 61) HƏ mərkəzi üçün modul alınması.
+144	2020-05-04 00:00:00+00	50.00	f	Rəşad, mohur.az, 055/988-89-31, çek var
+145	2020-05-05 00:00:00+00	55.00	f	Stimul: Fərid Piriyev, +994 51 456 06 13
+146	2020-05-05 00:00:00+00	8.00	f	Paketlər (3 azn) + Mobil telefon üçün kontur (3 azn) + Kserokopyalar (2 azn)
+147	2020-05-07 00:00:00+00	300.00	t	Biznes kartdan çıxarış.
+148	2020-05-07 00:00:00+00	300.00	f	Aprel (2020) ayının maaşın ödənilməsi. Fariz Vəliyev, aprel, 2020 üçün
+149	2020-05-08 00:00:00+00	150.00	t	Depozitin qaytarılması. Orxan Ağayevdən (+994 55 700 55 61) HƏ mərkəzi üçün Cisco C3KX-NM-1G Modul üçün.
+150	2020-05-13 00:00:00+00	538.00	t	Biznes kartdan çıxarış. Rafiq, nağd.
+151	2020-05-13 00:00:00+00	538.00	f	Aprel (2020) ayının maaşın ödənilməsi. Rafiq-300azn+Asim-238azn.
+152	2020-05-13 00:00:00+00	55.00	f	Maya dəyərinə transfer.
+153	2020-05-13 00:00:00+00	3.00	f	Möhür üçün mürəkkəb.
+154	2020-05-18 00:00:00+00	7.00	f	ASAN nömrə üçün kontur (6 azn)+skan(1azn)
+155	2020-05-18 00:00:00+00	100.00	f	Kapitalbank, Avro hesabın möhkəmləndirilməsi.
+156	2020-05-20 00:00:00+00	1670.00	t	3560G-48PS+C2960-24PS+C3560CG 8PC\r\nPoE sviçlərin satışı.\r\nFərid Ağakişiyev, +994 50 225 25 30, IT MCCI\r\nQEYD: 550 azn (depozitdir)
+157	2020-05-20 00:00:00+00	750.00	f	Mayadəyərinə transfer.
+158	2020-05-25 00:00:00+00	943.00	f	2 HP sviçinə görə gömrük rüsumu. Onlayn ödəmə. E-mail-bildiriş var.
+159	2020-05-25 00:00:00+00	50.00	f	Mayadəyərinə transfer
+160	2020-05-27 00:00:00+00	6.00	f	Taksi (5)+kserokopiya (1)
+161	2020-06-03 00:00:00+00	838.00	t	Biznes kartdan çıxarış. Rafiq, nağd, çek var.
+162	2020-06-03 00:00:00+00	837.00	f	May (2020) ayının maaşın ödənilməsi. Rafiq-300azn+Asim-237azn+Fariz(300)
+163	2020-06-09 00:00:00+00	27.00	f	Paketlər (3)+Qidalanma kabeli (16azn - 8 ədəd)+Diplomat-papka (5azn)+Markerlər (2 azn - 5 ədəd)
+164	2020-03-09 00:00:00+00	50.00	f	İlyasa qonorar. Əlibaba, nağd.
+165	2020-06-11 00:00:00+00	2480.00	t	Ultraya 6 sviç və 6 SFP satışı. Əfsər, nağd.
+166	2020-06-11 00:00:00+00	1400.00	f	Mayadəyərinə transfer
+167	2020-06-11 00:00:00+00	200.00	f	Rafiq, iyun ayı üçün bonus
+168	2020-06-12 00:00:00+00	340.00	f	Mayadəyərinə transfer
+169	2020-06-18 00:00:00+00	36.00	f	Kserokopya və skaner (2)+A4 kağız və 4 karton papkalar (14)+Mobil telefon üçün kontur (3)+taksi (12+5)
+170	2020-06-19 00:00:00+00	100.00	f	Benzinpulu, Əlibaba, nağd.
+171	2020-06-20 00:00:00+00	13.00	t	Gömrükdən qalan pul (20 manatdan). Nəriman, nağd.
+172	2020-06-25 00:00:00+00	50.00	f	Alikin Bakcell telefonuna kontur
+173	2020-06-27 00:00:00+00	950.00	t	1 ədəd Cisco sviç WS-C3750X-48P-S satışı [No 165]. Müştəri: Elvin Hüseynli, Mobil: +994 70 811 10 81, Şirkət: AGT
+174	2020-06-29 00:00:00+00	340.00	f	Mayadəyərinə transfer
+175	2020-06-30 00:00:00+00	800.00	f	Depozitin qaytarılması. Aqşin Rəsulov (+994 50 220 52 93), nağd.
+176	2020-07-02 00:00:00+00	10.00	f	Mobil telefon üçün kontur (4)+Paketlər (6)
+177	2020-07-04 00:00:00+00	987.00	t	Borcun qaytarılması. Nəriman (broker) (+994 50 235 25 13), nağd
+178	2020-07-06 00:00:00+00	10.00	f	Paketlər (4 kilo)
+179	2020-07-07 00:00:00+00	1720.00	t	4 ədəd WS-C2960G-24TC (4x323), 1 ədəd WS-C2960G-48TC-L (1x323 güzəştli)+3 ədəd SFP GLC-SX-MM (3x35). Əfsər, nağd.
+180	2020-07-07 00:00:00+00	1020.00	f	Mayadəyərinə transfer
+\.
+
+
+--
+-- Name: money_money_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.money_money_id_seq', 180, true);
+
+
+--
+-- Data for Name: network_networkhardware; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.network_networkhardware (created_at, updated_at, created_by, code, brand, model, serial_number, category, description, purchase_price, selling_price, quantity, image, sold, inventory) FROM stdin;
+2019-11-30 10:54:01.242856+00	2021-01-29 19:42:07.693754+00	rafiq	4	Cisco	1841	FCZ132590KK	Router	Müştəri: Cinema Plaza Hotel\r\nƏlaqədar şəxs: Elmar Xasməmmədov\r\nMobil: +994 50 877 66 56\r\nE-mail: Khasmammadov.e@gmail.com\r\nTarix: 29.01.2021\r\nQEYD: Əvvəl əsas rekdə inventar olub	95.00	180.00	1		t	f
+2019-11-30 11:23:32.051279+00	2020-09-17 11:40:58.621871+00	rafiq	12	Cisco	1841	FCZ105071EA	Router	Müştəri: Onyx şirkəti\r\nƏlaqədar şəxs: Qosqar Sadayzadä\r\nMobil: +994 50 282 75 45\r\nE-mail: qoshqar.s@onyx.az\r\nTarix: 17.09.2020	95.00	180.00	1		t	f
+2019-11-28 14:30:05.056946+00	2020-08-24 09:38:03.725425+00	rafiq	6	Cisco	1841	FCZ104312S8	Router	Alıcı: Xıdır	0.00	250.00	1		t	f
+2019-11-28 14:35:30.434569+00	2020-09-19 13:54:35.190624+00	rafiq	63	Cisco	WS-C2960G-48TC-L	FOC1237V2SR	Switch	None	297.00	340.00	1		t	f
+2019-11-28 14:48:20.165217+00	2020-09-15 10:09:31.58919+00	rafiq	41	Cisco	WS-C2960G-24TC-L	FOC1229U2L7	Switch	Alıcı: Namiq,Ağasıyev\r\nMüəssisə: Gəncliyə Yardım fondu \r\nMobil: 051 589 08 84 / 070 528 99 09\r\nE-mail: namik.agasiyev@mail.ru	400.00	400.00	1		t	f
+2019-11-30 12:19:26.945607+00	2020-08-20 13:13:55.18127+00	rafiq	38	Cisco	1841	FTX1040Z0KG	Router	Alıcı: Matrix Group\r\nƏlaqədar şəxs: Nihat Cəfərli, təchizat rəhbəri \r\nMobil: +994 50 400 85 86\r\ne-mail: Nihad.jafarli@matrixgroup.az\r\nTarix: 20.08.2020	95.00	180.00	1		t	f
+2019-11-30 11:36:44.971729+00	2020-07-06 08:54:26.770316+00	rafiq	19	Cisco	Air-LAP1142N-E-K9 V04	FCZ1519Z1J0	AP	Inventar: bku-2fl-ap003 \r\nVelo AP	0.00	0.00	1		f	t
+2019-11-30 11:40:44.419869+00	2020-07-06 08:55:13.730514+00	rafiq	20	Cisco	Air-LAP1142N-E-K9 V04	FTX1413K10T	AP	İnventar: Qoşqar AP	0.00	0.00	1		f	t
+2019-11-30 11:41:55.004679+00	2020-07-06 08:55:56.278731+00	rafiq	21	Cisco	Air-LAP1142N-E-K9 V04	FCZ1550W0BQ	AP	İnventar: Delux AP	0.00	0.00	1		f	t
+2019-11-30 11:43:20.155543+00	2020-07-06 08:56:34.505629+00	rafiq	22	Cisco	Air-LAP1142N-E-K9 V04	FCZ1406W19B	AP	İnventar: kassalar-2	0.00	0.00	1		f	t
+2019-11-30 11:44:47.00618+00	2020-07-06 08:57:18.74942+00	rafiq	23	Cisco	Air-LAP1142N-E-K9 V04	FTX1413K10U	AP	İnventar: bku-2fl-ap005 - defterxana	0.00	0.00	1		f	t
+2019-11-30 11:49:20.598227+00	2020-07-06 08:58:01.106535+00	rafiq	25	Cisco	Air-LAP1142N-E-K9 V04	FTX1413K10V	AP	İnventar: BKU-1FL-AP002 - Musiqi alətləri	0.00	0.00	1		f	t
+2019-11-30 11:55:29.975179+00	2020-07-06 08:58:38.200216+00	rafiq	28	Cisco	Air-LAP1142N-E-K9	FTX1413S0ZE	AP	None	0.00	0.00	1		f	t
+2019-11-30 11:57:23.113255+00	2020-07-06 08:59:28.200671+00	rafiq	29	Cisco	Air-LAP1142N-E-K9	FTX1413S0Z1	AP	İnventar: Outlet - world_parfum	0.00	0.00	1		f	t
+2019-11-30 12:06:47.935627+00	2020-07-06 09:00:18.995611+00	rafiq	30	Cisco	Air-LAP1131AG-E-K9	FCZ1410Q01E	AP	Inventar: bku-2fl-ap004	100.00	100.00	1		f	t
+2019-11-30 12:13:57.290466+00	2020-07-06 09:01:48.002902+00	rafiq	33	Cisco	Air-LAP1131AG-E-K9	FCZ1410Q01A	AP	İnventar: bku-3fl-ap004 (reg)	100.00	100.00	1		f	t
+2019-11-30 12:17:33.691471+00	2020-07-06 09:02:25.227099+00	rafiq	37	Cisco	Air-LAP1131AG-E-K9	FCZ1005Q1HF	AP	İnventar: Centurion AP	100.00	100.00	1		f	t
+2019-11-30 11:20:53.120361+00	2021-01-06 11:42:56.480303+00	rafiq	10	Cisco	1841	FCZ094412HU	Router	Alıcı: Ruslan\r\nMobil: +994 55 220 01 22\r\nTarix: 06.01.2021	95.00	175.00	1		t	f
+2019-11-30 07:56:52.665336+00	2020-08-24 12:02:13.017327+00	rafiq	99	Cisco	1921	FCZ1735C3N4	Router	Tarix: 28.11.2019\r\nKimə: Elçin Kərimov\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nQiyməti: 450	0.00	450.00	1		t	f
+2019-11-30 07:52:38.844925+00	2020-08-24 12:02:40.097362+00	rafiq	97	Cisco	1921	FCZ2112B0SJ	Router	Tarix: 28.11.2019 \r\nKimə: Elçin Kərimov \r\nMobil: 055 988 00 22 \r\nE-mail: elchin_baku@list.ru \r\nQiyməti: 450	0.00	450.00	1		t	f
+2019-12-05 10:14:23.572808+00	2020-09-15 10:09:17.766499+00	rafiq	24	Cisco	WS-C2960G-24TC-L	FOC1229Y09T	Switch	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	340.00	1		t	f
+2019-12-05 09:59:01.157106+00	2020-09-15 10:10:04.759402+00	rafiq	42	Cisco	WS-C2960G-24TC-L	FOC1237U4ND	Switch	Alıcı: Vaqif Sadıqov\r\nMobil: 055 251 78 89\r\nE-mail: vagif@otech.az\r\nTarix: 15.12.2019	390.00	390.00	1		t	f
+2019-12-05 10:01:05.761904+00	2020-09-15 10:09:02.097188+00	rafiq	43	Cisco	WS-C2960G-24TC-L	FOC1227Y22Y	Switch	Alıcı: Namiq Ağasiyev,\r\nMüəssisə: Gənclik Yardim Fondu Mobil: 051 589 08 84\r\nE-mail: namik.agasiyev@mail.ru \r\nTarixi: 28.12.2019	0.00	360.00	1		t	f
+2019-11-28 14:42:51.960318+00	2020-07-06 11:48:26.28544+00	rafiq	14	Cisco	1921	FCZ172391Q3	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru	450.00	450.00	1		t	f
+2019-12-05 10:16:41.394021+00	2020-07-07 12:52:44.939577+00	rafiq	45	Cisco	2901	FC21446C0E1	Router	Müştəri: "Integrated Services" MMC\r\nƏlaqədar şəxs: Vaqif Sadıqov,\r\nMobil: +994 55 251 78 80 \r\nE-mail: vagif@otech.az\r\nTarix: 15.12.2019	710.00	710.00	1		t	f
+2019-11-30 10:44:21.045078+00	2020-07-06 12:29:07.092791+00	rafiq	58	Cisco	ASA firewall 5510	JMX1125L0SP	Firewall	Tarix: 04.01.2020\r\nAlıcı: Renat\r\nQeyd: 345 manat satıldı, 45 manat Renata verildi.	345.00	345.00	1		t	f
+2019-11-30 10:50:58.132722+00	2020-07-06 12:31:23.514752+00	rafiq	62	Cisco	WS-C3750G-12S-S V04	CAT1006Z0LG	Switch	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	600.00	1		t	f
+2019-11-30 07:21:54.673354+00	2020-07-06 12:36:48.288941+00	rafiq	67	Cisco	WS-2960G-48TC-L V03	FOC1321V4HZ	Switch	None	550.00	550.00	1		t	f
+2019-11-30 07:54:15.204431+00	2020-08-24 12:05:41.737157+00	rafiq	98	Cisco	1921	FCZ173087JQ	Router	Tarix: 28.11.2019\r\nKimə: Elçin Kərimov\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nQiyməti: 450	0.00	450.00	1		t	f
+2019-12-05 13:48:46.116412+00	2020-08-24 12:06:34.190412+00	rafiq	101	Cisco	1921	FCZ1740C3SE	Router	Tarix: 24.12.2019\r\nKimə: Elçin Kərimov\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nQiyməti: 450	0.00	450.00	1		t	f
+2019-12-05 12:22:34.569009+00	2021-01-13 18:01:49.752793+00	rafiq	79	Cisco	Air-CAP2602i-E-K9	FCW1853N39L	AP	Müştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az\r\nTarix: 13.01.2021 \r\nQEYD: Şahin CCIE-yə test üçün verilmişdi.	83.00	150.00	1		t	f
+2019-11-30 10:46:40.801274+00	2021-05-08 07:04:52.128375+00	rafiq	59	Cisco	WS-C3750V2-48PS-S PoE	FD01426X1XV	Switch	None	0.00	350.00	1		f	t
+2019-11-30 11:29:19.116493+00	2021-05-11 08:41:28.378878+00	rafiq	17	Cisco	Air-AP2702i-UX	FCW1905NEJM	AP	Qeyd: Stokda deyil.	150.00	430.00	1		f	f
+2019-11-30 12:11:06.645029+00	2021-05-11 08:59:49.778738+00	rafiq	31	Cisco	Air-LAP1131AG-E	FCZ1109Q0X5	AP	Qeyd: Stokda deyil.	42.00	70.00	1		f	f
+2019-12-05 13:53:05.837093+00	2021-01-13 18:10:01.351181+00	rafiq	103	Cisco	Air-CAP2602i-E-K9	FCW1839JBPM	AP	Alıcı: "Casian İnvestment"\r\nƏlaqədar şəxs: Emin Məhərrəmi\r\nMobil: +994 50 251 59 78\r\nE-mail: emaharrami@azerbaijansupermarket.com\r\nTarix: 27.02.2020\r\nQEYD: "Azerbaijan Supermarket" LLC Əvvəllər Bravo adlandırmışıq. (Caspian Plaza)	83.00	150.00	1		t	f
+2019-12-05 13:38:58.526123+00	2020-08-24 09:43:15.971913+00	rafiq	92	Cisco	1921	FCZ1952C0G3	Router	None	0.00	450.00	1		t	f
+2019-12-19 14:32:07.978943+00	2020-09-20 11:48:25.557643+00	rafiq	112	Cisco	WS-C3560V2-24PS-S PoE	FDO1536X18X	Switch	İnventar: 1ci mərtəbə 2ci rek\r\nQEYD: IT marketdən alınıb	270.00	0.00	1	network_hw/112/WhatsApp_Image_2019-12-19_at_18.19.30.jpeg	f	t
+2019-12-05 11:53:39.292934+00	2020-11-21 09:18:41.733215+00	admin	71	Cisco	WS-C3750X-48T-S	FDO1538V1P1	Switch	None	470.00	850.00	1		f	f
+2019-12-19 14:08:56.791015+00	2020-08-15 09:09:52.176+00	rafiq	111	Cisco	881-K9 V01	FCZ13379167	Router	Gətirilmə tarixi: 17.12.2019\r\nMüştəri: Polad Qulamov Mobil: +994 51 977 10 00 Mobil: +994 50 235 19 09 Tarix: 14.08.2020\r\nQEYD: Muganbank	0.00	190.00	1	network_hw/111/WhatsApp_Image_2019-12-19_at_18.01.10.jpeg	t	f
+2019-12-19 14:06:45.242128+00	2020-08-22 06:10:15.261478+00	rafiq	110	Cisco	881-K9 V01	FCZ1343C24P	Router	Müştəri: Polad Qulamov\r\nMobil: +994 51 977 10 00\r\nMobil: +994 50 235 19 09\r\nTarix: 22.08.2020\r\nQEYD: Muğanbank\r\nGətirilmə tarixi: 17.12.2019	0.00	190.00	1	network_hw/110/WhatsApp_Image_2019-12-19_at_18.01.15.jpeg	t	f
+2019-11-30 10:56:29.230869+00	2020-09-20 11:53:46.359113+00	rafiq	2	Cisco	WS-C3560-48PS-S PoE	CAT1009Z2TT	Switch	QEYD: İnventar. Ofisdəki rekdə 48 portlu əsas PoE sviç	0.00	0.00	1		f	t
+2019-12-05 11:57:20.335416+00	2020-09-19 13:56:56.529481+00	rafiq	73	Cisco	WS-C2960G-48TC-L	FOC1240Y1PQ	Switch	Müştəri: Azər Məmmədov\r\nMobil: +994 51 572 38 82\r\nMobil: +994 50 265 94 76\r\nMüəssisə: "Evro Inshaat"\r\nE-mail: amemmedov@palitro.az\r\nTarix: 17.12.2019	297.00	490.00	1		t	f
+2019-12-05 12:17:38.762382+00	2020-07-06 09:12:27.172447+00	rafiq	78	Cisco	WS-C3560-8PC-PoE	FOC1142Z43B	Switch	inventar: 1-ci mərt. 3-ci sviç bku-1fl-sw-03	0.00	0.00	1		f	t
+2019-12-05 12:23:35.416567+00	2020-07-06 11:09:54.668057+00	rafiq	80	Cisco	Air-LAP1142N-E-K9 V06	FCZ1609Z44Q	AP	None	0.00	0.00	1		f	t
+2019-12-05 12:25:00.647438+00	2020-07-06 11:10:42.453984+00	rafiq	81	Cisco	Air-LAP1142N-E-K9 V03	FCZ1446W2VY	AP	None	0.00	0.00	1		f	t
+2019-12-05 13:20:07.117315+00	2020-07-06 11:11:18.820462+00	rafiq	83	Cisco	Air-LAP1142N-E-K9 V06	FCZ1609W5VV	AP	None	0.00	0.00	1		f	t
+2019-12-05 13:22:17.495627+00	2020-07-06 11:12:34.829833+00	rafiq	85	Cisco	Air-LAP1141N-E-K9 V06	FCZ1623Z1GV	AP	3-cü rek 1ci mərtəbə - Agakisiyev İlham ABU 1513 müştəri	95.00	95.00	1		f	t
+2019-12-05 13:26:30.545096+00	2020-07-06 11:13:12.413101+00	rafiq	86	Cisco	Air-LAP1142N-E-K9 V03	FTX1416K0C2	AP	None	0.00	0.00	1		f	t
+2019-12-05 13:33:26.145494+00	2020-07-06 11:16:34.977224+00	rafiq	89	Cisco	Air-LAP1142N-E-K9 V01	FTX1405S039	AP	None	0.00	0.00	1		f	t
+2019-12-05 13:29:57.279139+00	2020-07-06 11:16:01.645997+00	rafiq	87	Cisco	Air-LAP1142N-E-K9 V06	FCZ1623Z1GK	AP	None	0.00	0.00	1		f	t
+2019-12-05 16:46:51.398532+00	2020-09-04 19:27:56.806782+00	rafiq	104	Cisco	2921	FGL1650106A	Router	Müştəri: Abdul Abbasov\r\nMobil: +994 51 206 35 60\r\nE-mail: Abdul_abbasov@hotmail.com \r\nQEYD: Fiziki şəxs. \r\nTarix: 04.09.2020\r\nQEYD: Əvvəl ofisdəki rekə quraşdırılmışdı.	550.00	800.00	1		t	f
+2019-12-05 11:52:35.948813+00	2020-11-21 09:17:24.591765+00	admin	70	Cisco	WS-C3560X-24T-S	FDO1652W2L9	Switch	None	370.00	550.00	1		f	f
+2019-12-05 10:21:30.876299+00	2020-07-06 12:26:00.049257+00	rafiq	48	Cisco	Air-LAP1142N-E-K9 V04	FCZ1019Z1HW	AP	Alıcı: Şahin Mirabutalıbov CCIE,\r\nMobil: +994 55 660 04 10 \r\nTarix: 19.12.2019\r\nE-mail: mirabutalibov.shahin@gmail.com	95.00	95.00	1		t	f
+2019-12-17 15:32:35.301701+00	2020-07-07 08:15:12.101548+00	rafiq	107	Cisco	881	FCZ1519C1M3	Router	Model: 881-K9 V01\r\ntarix: 17.12.2019\r\nAlıcı Renat\r\nQEYD: Burger King üçün\r\nИмеет внешний блок питания	170.00	350.00	1	network_hw/107/WhatsApp_Image_2019-12-17_at_19.16.01.jpeg	t	f
+2019-12-05 13:51:16.996054+00	2020-12-10 16:48:06.468773+00	rafiq	102	Cisco	1921	FCZ1630209E	Router	Alınıb: İT Market\r\nTarix: 29.11.2019\r\nAlıcı: Elçin Kərimov\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nQiyməti: 450\r\nTarix: 24.12.2019	0.00	450.00	1		t	f
+2019-12-05 11:46:01.655736+00	2020-07-06 12:34:12.900547+00	rafiq	65	Cisco	WS-C3560G-48TS-S V03	FOC1122W028	Switch	Alıcı: Şahin Mirabutalıbov CCIE\r\nMobil: +994 55 660 04 10\r\nE-mail: mirabutalibov.shahin@gmail.com Tarix: 11.01.2020	600.00	600.00	1		t	f
+2019-12-05 12:03:18.219815+00	2020-09-19 13:57:30.721456+00	rafiq	75	Cisco	WS-C2960G-48TC-L	FOC1330X2XC	Switch	Tarix: 27.04.2020\r\nMüştəri: Fərrux Rəcəbli\r\nMobil: +994 55 598 97 28\r\nE-mail: farrukhrajabli@technogen.az	293.00	490.00	1		t	f
+2019-12-05 11:54:51.720842+00	2021-01-21 12:13:01.26321+00	rafiq	72	Cisco	WS-C2960G-48TC-L	FOC1236X20U	Switch	None	297.00	490.00	1		f	t
+2019-12-05 13:45:24.199299+00	2021-02-06 16:12:48.470098+00	rafiq	95	Cisco	Air-CAP3602i-E-K9	FGL1709Z4JD	AP	Satıcı: Namazov Elnur / 055 386 26 41	98.00	250.00	1		f	f
+2019-12-17 15:36:37.735953+00	2020-07-07 08:16:01.021578+00	rafiq	108	Cisco	881	FCZ1611C1TZ	Router	Model: 881-K9 V01\r\ntarix: 17.12.2019\r\nAlıcı Renat\r\nQEYD: Burger King üçün\r\nИмеет внешний блок питания	170.00	350.00	1	network_hw/108/WhatsApp_Image_2019-12-17_at_19.15.54.jpeg	t	f
+2019-12-05 13:39:53.963905+00	2020-08-24 12:03:05.171219+00	rafiq	93	Cisco	1921	FCZ172391PZ	Router	None	0.00	450.00	1		t	f
+2019-12-05 13:42:22.050006+00	2020-07-06 12:53:11.998134+00	rafiq	94	Cisco	WS-C2960S-24PD-L V04 PoE	FOC1727X0P2	Switch	Tarix: 20.12.2019\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az\r\nQEYD: Əvvəl İnventar: 1nd floor 1nd swich\r\nAlınıb: Namazov Elnur\r\nMobil: 055 386 26 41	550.00	550.00	1		t	f
+2019-12-05 10:33:42.287987+00	2021-01-13 18:00:46.767867+00	rafiq	55	Cisco	Air-CAP2602i-E-K9	FCZ1821V1D6	AP	Müştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az\r\nTarix: 13.01.2021 \r\nQEYD: Satıcı: Ramin 050 316 33 38	83.00	150.00	1		t	f
+2020-03-23 19:38:50.002404+00	2020-07-26 21:46:06.921169+00	admin	150	HP	ProCurve 1810G-8 Switch J9449A	SN9522F0HX	Switch	None	81.00	190.00	1		f	f
+2020-03-14 12:17:21.978563+00	2021-01-21 12:14:23.19362+00	rafiq	144	Cisco	WS-C2960G-48TC-L	FOC1230X61C	Switch	None	297.00	490.00	1		f	t
+2020-07-26 13:48:25.326738+00	2020-09-15 10:12:48.000175+00	rafiq	223	Cisco	WS-C2960G-24TC-L	FOC1319V25L	switch	Inetreco	250.00	390.00	1		f	f
+2020-01-16 13:44:26.362769+00	2021-05-11 09:06:21.401315+00	rafiq	128	Cisco	Air-CAP1702i-E	FCW2115N6T6	AP	Qeyd: Stokda deyil.	102.00	260.00	1		f	f
+2020-03-23 19:24:02.769068+00	2021-03-04 11:21:40.302966+00	rafiq	148	Cisco	Air-CAP2602i-E-K9	FCW1915NTOY	AP	Qeyd: Kimə satıldığı qeyd olunmayıb.	83.00	150.00	1		t	f
+2020-07-26 13:51:09.592717+00	2021-05-06 13:43:21.074876+00	rafiq	225	Cisco	WS-C2960G-24TC-L	FOC1441Y4N4	switch	Müəssisə: Azertexnolayn\r\nƏlaqədar şəxs: Ehtiram Eyvazov\r\nMobil: +994 50 254 06 94\r\nE-mail: ehtiram.eyvazov@azertexnolayn.com\r\nTarix: 26.04.2021\r\nQEYD: Inetreco\r\nQEYD: 5 faiz güzəşt olunub.\r\nQEYD: Eyni zavoddan kod 222 eyni sviç təkrar alınıb.	250.00	370.00	1		t	f
+2020-03-23 19:26:18.563289+00	2021-01-13 18:05:14.086847+00	rafiq	149	Cisco	Air-CAP2602i-E-K9	FCW1902N1NT	AP	Müştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az\r\nTarix: 13.01.2021 \r\nQEYD: 5 ədəd AP bir yerdə satılıb.	83.00	150.00	1		t	f
+2020-01-16 10:23:40.874628+00	2020-09-19 13:32:10.794853+00	rafiq	116	Cisco	WS-C2960S-48TS-S	FOC1627Y2DH	Switch	None	303.00	590.00	1		f	f
+2020-03-14 10:19:07.900335+00	2020-09-19 13:27:59.572585+00	rafiq	143	Cisco	WS-C2960S-48FPS-L PoE	FOC1743Z0TU	Switch	Müştəri: Paşa İnşaat\r\nƏlaqədar şəxs: Teymur Qasımov\r\nvə Tariyel Quliyev \r\nMobil: +994 55 266 22 22\r\nMobil: +994 50 289 22 27\r\nTarix: 14.04.2020	0.00	712.50	1		t	f
+2020-01-16 10:09:32.461232+00	2020-10-09 18:34:06.524761+00	rafiq	113	Cisco	5506	JMX1916Z0AU	Firewall	Tarix: 18.01.2020\r\nAlıcı: Şahin Mirabutalıbov CCIE\r\nMobil: +994 55 660 04 10\r\nE-mail: mirabutalibov.shahin@gmail.com \r\nИмеет внешний блок питания	0.00	673.00	1		t	f
+2020-01-16 11:48:20.525373+00	2020-07-06 11:21:43.718414+00	rafiq	126	Cisco	AIR-AP1142N-E-K9	FCZ1642W17U	AP	1536 Baytarlıq apteki -1-ci mərtəbə, 2-ci rek.	0.00	0.00	1		f	t
+2020-01-16 13:11:08.686101+00	2020-07-06 11:23:12.422372+00	rafiq	130	Cisco	AIR-AP1142N-E-K9	F0Z1504WBYD	AP	Etro 2518 Tural Məmmədov, 2-ci mərtəbə, 2-ci rek	0.00	0.00	1		f	t
+2020-03-14 12:20:48.611791+00	2020-09-19 13:56:10.565006+00	rafiq	146	Cisco	WS-C2960G-48TC-L	FOC1319W2RL	Switch	Tarix: 08.06.2020\r\nMüştəri: Mais Rəsulov\r\nMobil: +994 55 861 67 25\r\nE-mail: mais.rasulov@adsgarden.com\r\nŞirkət: "O.M.M." MMC	297.00	466.00	1		t	f
+2020-01-16 12:57:16.573276+00	2020-07-06 11:24:08.428374+00	rafiq	134	Cisco	AIR-AP1142N-E-K9	FCZ1420W293	AP	Ali Bagirov EMHM 3415, Ofisin rekinə qoşulub.	0.00	0.00	1		f	t
+2019-12-05 11:48:00.898401+00	2020-08-17 09:13:36.549152+00	rafiq	66	Cisco	WS-C3560G-24TS-S V03	FOC1125Y1CF	Switch	Müştəri: Rüstəm İsmayılov\r\nMobil: +994 50 207 66 82\r\nMüştəri: Emil Səfərov\r\nMobil: +994 55 763 00 33\r\nTarix: 03.04.2020\r\nMəbləğ: 420 azn	303.00	420.00	1		t	f
+2019-12-05 09:56:00.963804+00	2020-07-06 11:37:51.834733+00	rafiq	39	Cisco	ASA 5520 V06	JMX1417L3QS	Firewall	Alıcı: Uniser Group\r\nTarix: 14.03.2020\r\nMəsul şəxs: Asəf Məmmədyarov\r\nE-mail: pb.asef@gmail.com\r\nMobil: +994 55 951 09 08	0.00	486.00	1		t	f
+2019-12-05 09:57:28.751426+00	2020-07-06 11:40:57.274916+00	rafiq	40	Cisco	ASA 5520 V02	JMX1215L1M5	Firewall	Alıcı: Qamət Cahangirli\r\nTarix: 22.01.2020\r\nMobil: +994 50 274 82 78\r\nE-mail: gamet.jahangirli@gmail.com	0.00	450.00	1		t	f
+2019-11-30 11:53:59.497425+00	2020-07-06 11:53:20.520084+00	rafiq	27	Cisco	Air-LAP1142N-E-K9	FCZ1551W157	AP	Alıcı: Şahin Mirabutalıbov CCIE\r\nMobil: +994 55 660 04 10\r\nE-mail: mirabutalibov.shahin@gmail.com\r\nTarix: 19.12.2019	90.00	90.00	1		t	f
+2020-01-16 10:34:04.134247+00	2020-09-20 11:50:02.355201+00	rafiq	118	Cisco	WS-C2960-24PC-L POE	FOC124270A0	Switch	None	0.00	0.00	1		f	t
+2020-01-16 13:04:54.711621+00	2021-01-13 18:04:22.954868+00	rafiq	131	Cisco	AIR-CAP2602i-E-K9	FCW1839JBHT	AP	Müştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az\r\nTarix: 13.01.2021 \r\nQEYD: 5 ədəd AP bir yerdə satılıb.\r\nQEYD: Renat üçün ayrılmışdı - 31.01.2020	83.00	150.00	1		t	f
+2020-01-16 10:39:56.861989+00	2020-07-07 08:24:17.081508+00	rafiq	119	Cisco	WS-C3560G-48TS-S V03	FOC1310W3MF	Switch	Müştəri: Rüstəm İsmayılov\r\nMobil: +994 50 207 66 82\r\nMüştəri: Emil Səfərov\r\nMobil: +994 55 763 00 33\r\nTarix: 08.04.2020\r\nMəbləğ: 585 azn\r\nQEYD: Hansı səbəbdənsə bu seriya nömrəsi də qeyd olunmuşdu.\r\nSN: FOC1125Y1CF	585.00	585.00	1		t	f
+2020-01-16 12:20:12.177422+00	2020-07-07 08:26:17.578085+00	rafiq	121	Cisco	WS-C3560CG-8PC-S V03, POE	FOC1752Y41G	Switch	Müştəri: Fərid Ağakişiyev\r\nE-mail: farid.agakishiyev@gmail.com\r\nMobil: +994 50 225 25 30\r\nTarix: 20.05.2020\r\nŞirkət: İT MCCI	0.00	645.00	1		t	f
+2020-02-06 16:36:10.026279+00	2020-07-07 10:28:44.727307+00	rafiq	135	Cisco	SFP-10G-LR	SPC182301J6	SFP modul	Alıcı: Orxan Ağayev\r\nMobil: +994 55 700 55 61\r\nE-mail: Orik211@mail.ru	0.00	125.00	1		t	f
+2020-02-06 16:37:29.952301+00	2020-07-07 10:29:51.303563+00	rafiq	136	Cisco	SFP-10G-LR	SPC182301J7	SFP modul	Alıcı: Orxan Ağayev\r\nMobil: +994 55 700 55 61\r\nE-mail: Orik211@mail.ru	0.00	125.00	1		t	f
+2020-03-13 13:50:40.888803+00	2020-09-17 08:30:32.598274+00	rafiq	137	Cisco	Router ISR 892	FCZ1641C608	Router	Müştəri: Sevinc Əlizadə\r\nMobil: 050 210-80-79\r\nTarix: 19.03.2020\r\nQEYD-1: Renatın fiziki şəxs qaiməsi və 1 illik zəmanət arayışı verilib.\r\nQEYD-2: 3 antennası var.\r\nQEYD-3: Müştəri Nizami m.-nun yaxınlığında laboratoriyada işləyir.	0.00	480.00	1		t	f
+2020-03-14 12:19:36.914009+00	2020-09-15 10:09:48.616672+00	rafiq	145	Cisco	WS-C2960G-24TC-L	FOC1145W2MT	Switch	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	340.00	1		t	f
+2020-03-14 09:30:02.468353+00	2020-09-15 10:10:55.820875+00	rafiq	141	Cisco	WS-C2960G-24TC-L	FOC1417X14F	Switch	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	340.00	1		t	f
+2020-01-16 10:28:44.479294+00	2020-09-20 08:44:26.989954+00	rafiq	117	Cisco	WS-C2960S-24PS-L POE	FOC1509W58F	Switch	Müştəri: Polad Qulamov\r\nMobil: +994 51 977 10 00\r\nMobil: +994 50 235 19 09\r\nTarix: 24.04.2020	0.00	500.00	1		t	f
+2020-06-07 12:35:50.413005+00	2020-06-07 12:35:50.413058+00	admin	173	Fiberworks	SFP-L50D-C53-C	0	SFP modul	https://www.fiberworks.no/fiberworks/sfp-l50d-cxx/sfp-125-gbps-gige-ddm-50km-cwdm-1271nm-1611nm-19db-sm-mm	0.00	0.00	1		f	f
+2020-04-12 14:13:58.0945+00	2020-09-19 13:44:31.099965+00	rafiq	156	Cisco	WS-C3560G-48PS-S PoE	FOC1352W1LE	Switch	Tonitrus\r\nMüştəri: Professional Solution (İT MCCI)\r\nƏlaqədar şəxs: Fərid Ağakişiyev\r\nE-mail: farid.agakishiyev@gmail.com\r\nMobil: +994 50 225 25 30\r\nTarix: 31.05.2020	0.00	650.00	1		t	f
+2020-04-12 18:41:00.647677+00	2020-09-20 08:38:46.312394+00	rafiq	163	Cisco	WS-C3750X-48P-S PoE	FDO1508P0FQ	Switch	Tonitrus\r\nMüştəri: "Uniser Group"\r\nƏlaqədar şəxs: Asəf Məmmədyarov\r\nMobil: +994 55 951 09 08\r\nTarix: 13.04.2020	0.00	850.00	1		t	f
+2020-07-26 19:53:28.567457+00	2020-09-20 08:54:56.333953+00	rafiq	237	Cisco	WS-C2960G-48TC-L	FOC1251W04E	switch	Inetreco	303.00	490.00	1		f	f
+2020-04-12 14:33:03.915344+00	2020-09-19 13:40:15.195423+00	rafiq	158	Cisco	WS-C3560G-48PS-S PoE	FOC1143Z6HY	Switch	Tonitrus\r\nMüştəri: “Innovativ Layihələr Mərkəzi” MMC\r\nƏlaqədar şəxs: Fərid Piriyev\r\nMobil: +994 51 456 06 13\r\nTarix: 05.05.2020\r\nQEYD: Heydər Əliyev Mərkəzinə təhvil verilib.	0.00	650.00	1		t	f
+2020-01-16 10:49:27.726268+00	2020-07-07 08:25:32.345752+00	rafiq	120	Cisco	WS-C3560CG-8PC-S, POE	FOC1801Z0HA	Switch	Müştəri: Eyyub Sadıxlı \r\nTarix: 30.04.2020\r\nMobil: +994 55 847 27 10\r\nEmail: Sadigov.eyyub@gmail.com	0.00	685.00	1		t	f
+2020-03-13 15:11:03.848748+00	2020-07-07 10:35:52.18309+00	rafiq	140	Cisco	1921	FCZ18499383	Router	Müştəri: Məhəmməd Əlizadə\r\nTarix: 30.04.2020\r\nMobil: +994 55 580 02 32\r\nE-mail: xezer.m.aliyev@gmail.com\r\nQeyd: Şüvəlanlı, "Araz" supermarketi üçün işləyir	0.00	427.00	1		t	f
+2020-03-14 09:59:07.064708+00	2020-07-07 10:38:09.04711+00	rafiq	142	Cisco	WS-C2960G-48FPS-L  V04 PoE	FOC1747Z1G6	Switch	Müştəri: Paşa İnşaat\r\nƏlaqədar şəxs: Teymur Qasımov\r\nvə Tariyel Quliyev \r\nMobil: +994 55 266 22 22\r\nMobil: +994 50 289 22 27\r\nTarix: 14.04.2020	0.00	712.50	1		t	f
+2019-12-17 11:32:15.937105+00	2021-04-06 13:46:46.519468+00	rafiq	106	Cisco	WS-C3560G-24PS-S PoE	FOC1419Z2SY	Switch	Müştəri: Fərid Ağakişiyev\r\nE-mail: farid.agakishiyev@gmail.com\r\nMobil: +994 50 225 25 30\r\nTarix: 20.05.2020\r\nŞirkət:Professional Solution (İT MCCI)	0.00	465.00	1		t	f
+2020-03-13 14:37:00.769677+00	2021-04-10 07:21:01.448124+00	rafiq	138	Cisco	5505	JMX171140U3	Firewall	Alici: +99 450 675 59 99	121.20	200.00	1		t	f
+2020-04-12 12:54:27.777369+00	2020-07-07 10:41:50.179744+00	rafiq	151	Cisco	WS-C2960S-48FPS-L PoE	FOC1540X1MS	Switch	Tonitrus\r\nTarix: 09.06.2020\r\nMüştəri: Paşa İnşaat\r\nƏlaqədar şəxs: Teymur Qasımov və Tariyel Quliyev\r\nMobil: +994 55 266 22 22\r\nMobil: +994 50 289 22 27	0.00	750.00	1		t	f
+2020-04-12 13:02:06.408128+00	2020-07-07 10:42:22.072645+00	rafiq	152	Cisco	WS-C2960S-48FPS-L PoE	FOC1543Z16S	Switch	Tonitrus\r\nTarix: 05.06.2020\r\nMüştəri: Paşa İnşaat\r\nƏlaqədar şəxs: Teymur Qasımov və Tariyel Quliyev\r\nMobil: +994 55 266 22 22\r\nMobil: +994 50 289 22 27	0.00	712.00	1		t	f
+2020-04-12 13:31:19.738604+00	2020-07-07 10:43:13.423817+00	rafiq	154	Cisco	WS-C3560G-48PS-S PoE	FOC1350W6AY	Switch	Tonitrus\r\nMüştəri: Təlatum Zahidov\r\nTarix: 21.05.2020\r\nMobil: +994 50 285 55 80\r\nemail: tt@pcs.az\r\nemail: talatumz@gmail.com	0.00	650.00	1		t	f
+2020-04-12 14:45:00.916636+00	2020-07-07 12:00:38.426473+00	rafiq	157	Cisco	WS-C2960S-48FPS-L PoE	FOC1548Y14Z	Switch	Tonitrus\r\nTarix: 04.06.2020\r\nMüştəri: Paşa İnşaat\r\nƏlaqədar şəxs: Teymur Qasımov və Tariyel Quliyev\r\nMobil: +994 55 266 22 22\r\nMobil: +994 50 289 22 27	0.00	712.00	1		t	f
+2020-04-12 14:06:27.807683+00	2020-07-07 10:47:03.897474+00	rafiq	155	Cisco	WS-C3560G-48PS-S PoE	FOC1143Z6HD	Switch	Tonitrus\r\nMüştəri: Professional Solution (İT MCCI)\r\nƏlaqədar şəxs: Fərid Ağakişiyev\r\nE-mail: farid.agakishiyev@gmail.com\r\nMobil: +994 50 225 25 30\r\nTarix: 20.05.2020	0.00	550.00	1		t	f
+2020-04-12 15:32:18.998779+00	2020-09-19 13:42:13.740593+00	rafiq	160	Cisco	WS-C3560G-48PS-S PoE	FOC1548Y14W	Switch	Tonitrus	305.00	600.00	1		f	f
+2020-05-05 16:12:03.16205+00	2020-07-07 12:03:43.493498+00	rafiq	168	Cisco	GLC-SX-MM	AGM1051J75S	SFP	Müştəri: “Innovativ Layihələr Mərkəzi” MMC\r\nƏlaqədar şəxs: Fərid Piriyev\r\nMobil: +994 51 456 06 13\r\nTarix: 05.05.2020\r\nQEYD: Heydər Əliyev Mərkəzinə təhvil verilib.	0.00	50.00	1		t	f
+2020-04-12 15:07:54.160346+00	2020-07-07 12:09:32.454856+00	rafiq	159	Cisco	WS-C2960S-48FPS-L PoE	FOC1617Z5KT	Switch	Tonitrus\r\nTarix: 09.06.2020\r\nMüştəri: Paşa İnşaat\r\nƏlaqədar şəxs: Teymur Qasımov və Tariyel Quliyev\r\nMobil: +994 55 266 22 22\r\nMobil: +994 50 289 22 27\r\nQEYD: Qoşulma problemləri vardı	0.00	750.00	1		t	f
+2020-05-05 16:15:02.731632+00	2020-07-07 12:06:49.163894+00	rafiq	169	Cisco	GLC-SX-MM	FNS1009J77A	SFP	Müştəri: “Innovativ Layihələr Mərkəzi” MMC\r\nƏlaqədar şəxs: Fərid Piriyev\r\nMobil: +994 51 456 06 13\r\nTarix: 05.05.2020\r\nQEYD: Heydər Əliyev Mərkəzinə təhvil verilib.	0.00	50.00	1		t	f
+2020-04-13 15:03:31.321824+00	2020-09-20 08:38:08.500764+00	rafiq	167	Cisco	WS-C3750X-48P-S PoE	FDO1741R11Q	Switch	Tonitrus	560.00	950.00	1		f	f
+2020-05-25 15:33:10.790428+00	2020-09-03 08:31:56.312889+00	rafiq	170	HP	6600-24XG	CN036GL054	Switch	P/N: J9265A\r\nQEYD: 4 portu işləmir. Muğanbank-ın qaytardığı (iyunŞ.2020) sviç.	1547.00	2090.00	1		f	f
+2020-04-13 14:54:09.523154+00	2020-09-20 08:39:13.115982+00	rafiq	166	Cisco	WS-C3750X-48P-S PoE	FDO1709Z23D	Switch	Tonitrus	560.00	950.00	1		f	f
+2020-06-12 13:43:00.888526+00	2020-07-07 12:18:54.863121+00	rafiq	178	Cisco	GLC-SX-MM	AGM1103J3UM	SFP	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	35.00	1		t	f
+2020-06-12 13:38:36.299624+00	2020-07-07 12:19:30.564608+00	rafiq	177	Cisco	GLC-SX-MM	AGM1051J5D3	SFP	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	35.00	1		t	f
+2020-06-12 13:43:53.342158+00	2020-07-07 12:20:11.443984+00	rafiq	179	Cisco	GLC-SX-MM	AGM11511B3E	SFP	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	35.00	1		t	f
+2020-06-12 13:45:51.919973+00	2020-07-07 12:20:41.090425+00	rafiq	180	Cisco	GLC-SX-MM	AGM1051J60C	SFP	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	35.00	1		t	f
+2020-06-12 13:47:24.710008+00	2020-07-07 12:23:11.447369+00	rafiq	181	Cisco	GLC-SX-MM	AGM1103J3VZ	SFP	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	35.00	1		t	f
+2020-04-12 16:25:21.687219+00	2020-09-20 08:37:49.672207+00	rafiq	161	Cisco	WS-C3750X-48P-S PoE	FDO1709Z1X3	Switch	Tonitrus\r\nQEYD: 47-48-ci portlar əzilmişdi.	560.00	950.00	1		f	f
+2020-04-12 17:01:13.996212+00	2021-01-25 17:21:29.191932+00	rafiq	162	Cisco	WS-C3750X-48P-S PoE	FDO1526K0ZZ	Switch	Tonitrus	560.00	950.00	1		f	f
+2019-11-28 10:27:53.2705+00	2020-07-05 15:47:42.757194+00	admin	5	Cisco	WS-2960G-48TC-L V04	FOC1204W1UC	Switch	Tarix: 04.11.2019 \r\nKimə: Gəncliyə Yardım fondu Namiq \r\n051 589 08 84 \r\n070 528 99 09\r\nNeçəyə: ?	550.00	550.00	1		t	f
+2020-01-16 12:24:52.566932+00	2020-07-06 11:20:46.683193+00	rafiq	122	Cisco	AIR-LAP1142N-E-K9	FTX1416K0BX	AP	Rüqayya Telefon, Qasimov Ilham 2313K, 2-ci mərtəbə, 2-ci rek	0.00	0.00	1		f	t
+2019-11-30 07:58:59.150862+00	2020-08-24 12:06:12.044222+00	rafiq	100	Cisco	1921	FCZ193494TG	Router	Tarix: 28.11.2019\r\nAlıcı: Coşqun Ünal\r\nMobil: 055 488 79 49\r\nMobil: 055 409 95 18 \r\nQiyməti: 500	0.00	500.00	1		t	f
+2019-11-30 11:28:31.441029+00	2020-07-06 11:50:13.411673+00	rafiq	16	Cisco	Air-AP2702I-UXK9	FCW1930NTGV	AP	Alıcı: Kamran Qasımzadə\r\nMüəssisə: Azitservices\r\nMobil: +994 55 234 44 44\r\nE-mail: Sales@itservices.az	430.00	430.00	1		t	f
+2019-11-30 11:18:12.042987+00	2020-09-19 13:56:34.575484+00	rafiq	61	Cisco	WS-C2960G-48TC-L	FOC1240Y3R4	Switch	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	297.00	440.00	1		t	f
+2019-12-05 12:11:05.422481+00	2020-07-06 12:44:51.979026+00	rafiq	77	Cisco	WS-C2960G-48FPS-L - PoE	FOC1439X0EQ	Switch	Tarix: 20.12.2019\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az\r\nQEYD: Əvvəl Inventar: 1-ci mərt. 2-ci sviç bku-1fl-sw-02	680.00	680.00	1		t	f
+2019-11-30 11:24:16.016615+00	2020-07-07 08:01:53.431077+00	rafiq	13	Cisco	1841	FCZ121892LW	Router	Alıcı: "Casian İnvestment"\r\nƏlaqədar şəxs: Emin Məhərrəmi\r\nMobil: +994 50 251 59 78\r\nE-mail: emaharrami@azerbaijansupermarket.com\r\nTarix: 20.12.2019\r\nQEYD: "Azerbaijan Supermarket" LLC Əvvəllər Bravo adlandırmışıq. (Caspian Plaza)	180.00	180.00	1		t	f
+2020-06-12 13:49:30.384732+00	2020-07-07 12:23:55.08737+00	rafiq	182	Cisco	GLC-SX-MM	FNS114507SE	SFP	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	35.00	1	network_hw/182/sfp.jpg	t	f
+2020-06-25 19:16:47.723039+00	2020-09-15 10:11:58.399376+00	rafiq	184	Cisco	WS-C2960G-24TC-L	FOC1221V6HZ	Switch	Tarix: 25.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	323.00	323.00	1		t	f
+2020-06-25 19:21:44.585167+00	2020-09-15 10:12:16.20014+00	rafiq	186	Cisco	WS-C2960G-24TC-L	FOC1125Z94N	Switch	Tarix: 25.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	323.00	323.00	1		t	f
+2020-06-25 19:19:33.82192+00	2020-09-15 10:11:42.379496+00	rafiq	185	Cisco	WS-C2960G-24TC-L	FOC1048Z4JB	Switch	Tarix: 25.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	323.00	323.00	1		t	f
+2020-06-28 09:37:01.95095+00	2020-09-17 08:28:07.470596+00	rafiq	187	Cisco	1921	FGL183122SD	Router	QEYD: Router 2921-in əvəzinə ofisin rekinə qoyulub. Aliter Network, iyun, 2020	0.00	450.00	1		f	t
+2020-07-26 16:51:39.59044+00	2020-09-06 15:34:41.205185+00	admin	233	ATOP	SFP-10G-MM-300-HP	None	SFP	Cisco compatible\r\nSFP+\r\n10 Gb\r\nMM\r\n300 m	71.00	132.00	12		f	f
+2019-12-05 11:58:56.726073+00	2020-09-19 13:55:04.874929+00	rafiq	74	Cisco	WS-C2960G-48TC-L	FOC1251W05D	Switch	Tarix: 03.07.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az\r\nQEYD: Paşa İnşaata test üçün verilmişdi.\r\nQEYD: Ultaraya güzəşt olaraq 24 portlu sviçin qiymətinə satılıb.	297.00	323.00	1		t	f
+2020-06-30 08:07:32.354508+00	2020-09-19 13:40:50.942026+00	rafiq	191	Cisco	WS-C3560G-48PS-S PoE	FOC1223Z4SB	Switch	Tarix: 30.06.2020\r\nMüştəri: Paşa İnşaat\r\nƏlaqədar şəxs: Teymur Qasımov və Tariyel Quliyev\r\nE-mail: tariyel.guliyev@pashaconstruction.com\r\nMobil: +994 55 266 22 22\r\nMobil: +994 50 289 22 27	0.00	550.00	1		t	f
+2020-06-30 07:49:07.641961+00	2020-09-19 13:40:35.637312+00	rafiq	189	Cisco	WS-C3560G-48PS-S PoE	FOC1616Y1D7	Switch	Tarix: 30.06.2020\r\nMüştəri: Paşa İnşaat\r\nƏlaqədar şəxs: Teymur Qasımov və Tariyel Quliyev\r\nE-mail: tariyel.guliyev@pashaconstruction.com\r\nMobil: +994 55 266 22 22\r\nMobil: +994 50 289 22 27	0.00	550.00	1		t	f
+2020-07-03 13:26:36.747163+00	2020-07-07 12:31:38.057471+00	rafiq	192	Cisco	GLC-SX-MM	FNS1009J76Q	SFP	Tarix: 03.07.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	35.00	1	network_hw/192/sfp-1.jpg	t	f
+2020-07-03 13:27:33.044773+00	2020-07-07 12:32:18.997389+00	rafiq	193	Cisco	GLC-SX-MM	FNS1009QQN8	SFP	Tarix: 03.07.2020\r\nMüştəri: Ultra Technologies Əlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	35.00	1		t	f
+2020-07-03 13:31:21.374797+00	2020-07-07 12:33:19.654334+00	rafiq	195	Cisco	GLC-SX-MM	FNS11170B2H	SFP	Tarix: 03.07.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	35.00	1	network_hw/195/sfp-2.jpg	t	f
+2020-07-26 15:15:04.761267+00	2020-07-26 20:52:33.584703+00	admin	230	ATOP	SFP-1250-MM-550-D	S1CO85MA1300665	SFP	SFP-1250-MM-550/D\r\nCisco Compatible GLC-SX-MM \r\nMultimode LC\r\n550 m	36.00	80.00	50		f	f
+2020-06-30 08:07:00.355184+00	2020-09-19 13:39:27.694501+00	rafiq	190	Cisco	WS-C3560G-48PS-S PoE	FOC1120Y4KP	Switch	Tarix: 30.06.2020\r\nMüştəri: Paşa İnşaat\r\nƏlaqədar şəxs: Teymur Qasımov və Tariyel Quliyev\r\nE-mail: tariyel.guliyev@pashaconstruction.com\r\nMobil: +994 55 266 22 22\r\nMobil: +994 50 289 22 27	0.00	550.00	1		t	f
+2020-01-16 10:15:10.565956+00	2020-09-19 13:31:42.487653+00	rafiq	114	Cisco	WS-C3560G-48TS-S	FOC1408Z66G	Switch	None	303.00	540.00	1		f	f
+2020-07-28 15:39:05.004955+00	2020-10-29 08:56:36.389619+00	rafiq	240	Cisco	1921	FCZ1946901D	Router	Müştəri: Akınsoft\r\nƏlaqədar şəxs: Seyfi Bal\r\nMobil: +994 55 409 35 38\r\nE-mail: s.bal@akinsoft.az\r\nTarix: 28.10.2020\r\nQEYD: Aliter\r\nQEYD-2: Çek vurulub	238.00	450.00	1		t	f
+2020-07-28 15:39:47.274617+00	2020-08-26 11:42:31.204936+00	rafiq	241	Cisco	1921	FCZ1946903U	Router	Alıcı: Elçin Kərimov Müəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22 \r\nE-mail: elchin_baku@list.ru\r\nTarix: 26.08.2020\r\nQEYD: Aliter	255.00	405.00	1		t	f
+2020-06-25 14:27:14.373644+00	2020-09-15 10:11:15.027128+00	rafiq	183	Cisco	WS-C2960G-24TC-L	FOC1202Y0YE	Switch	Tarix: 25.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	323.00	323.00	1		t	f
+2020-06-30 07:48:21.214719+00	2020-09-19 13:42:29.652889+00	rafiq	188	Cisco	WS-C3560G-48PS-S PoE	FOC1205Y37S	Switch	Tarix: 30.06.2020\r\nMüştəri: Paşa İnşaat\r\nƏlaqədar şəxs: Teymur Qasımov və Tariyel Quliyev\r\nE-mail: tariyel.guliyev@pashaconstruction.com\r\nMobil: +994 55 266 22 22\r\nMobil: +994 50 289 22 27	0.00	550.00	1		t	f
+2019-12-05 13:37:54.963319+00	2020-07-07 08:06:28.231308+00	rafiq	90	Cisco	WS-C3560X-8PC-S V04	FOC2017Z1JH	Switch	Alıcı: "Casian İnvestment"\r\nƏlaqədar şəxs: Emin Məhərrəmi\r\nMobil: +994 50 251 59 78\r\nE-mail: emaharrami@azerbaijansupermarket.com\r\nTarix: 27.02.2020\r\nQEYD: "Azerbaijan Supermarket" LLC Əvvəllər Bravo adlandırmışıq. (Caspian Plaza)	350.00	350.00	1		t	f
+2019-12-05 13:47:31.956081+00	2020-07-07 08:08:05.714025+00	rafiq	96	Cisco	2504	PSZ1643OAE4	Wireless Controller	Alıcı: "Casian İnvestment"\r\nƏlaqədar şəxs: Emin Məhərrəmi\r\nMobil: +994 50 251 59 78\r\nE-mail: emaharrami@azerbaijansupermarket.com\r\nTarix: 27.02.2020\r\nQEYD: "Azerbaijan Supermarket" LLC Əvvəllər Bravo adlandırmışıq. (Caspian Plaza)\r\nQEYD-2: Alınıb: Namazov Elnur\r\nMobil: 055 386 26 41	300.00	300.00	1		t	f
+2020-07-17 09:47:53.994604+00	2020-07-17 09:49:25.807421+00	rafiq	196	Cisco	ISR 4321/K9	FDO2106A2K5	Router	Müştəri: AGT\r\nƏlaqədar şəxs: Elvin Hüseynli \r\nE-mail: 8111081@gmail.com\r\nMobil: +994 70 811 10 81\r\nTarix: 16.07.2020\r\nQEYD: Müvəqqəti istifadə üçün 147 No-li Cisco Router 2921 geri götürüldü..	0.00	1750.00	1		t	f
+2019-11-30 11:21:58.936326+00	2020-07-17 09:50:17.931989+00	rafiq	11	Cisco	1841	FCZ104611HD	Router	Müştəri: TaxiMax şirkəti, 5550 taksi \r\nLocation: https://maps.google.com/?q=40.375255,49.834646\r\nƏlaqədar şəxs: Mirze İsgəndərov\r\nTarix: 16.07.2020\r\nE-mail: mirza.iskandarov@gmail.com\r\nMobil: +994 70 202 42 82\r\nQEYD: +994 99 800 55 50 - Kamran qəbul etdi.	0.00	160.00	1		t	f
+2020-07-21 20:52:48.602467+00	2020-11-25 08:54:10.96426+00	rafiq	199	Cisco	WS-C3560G-48PS-S PoE	FOC1209Z2YE	switch	Müştəri: Crucel \r\nƏlaqədar şəxs: Konstantin: Mobil: +994 50 409 12 83  \r\nTarix: 24.10.2020\r\nQeyd: 10 faiz güzəşt edilib\r\nQeyd: Tonitrus	367.00	540.00	1		t	f
+2020-07-26 15:25:21.327011+00	2020-07-26 20:53:10.998569+00	admin	231	ATOP	SFP-1250-SM-20-D	S1CO312A1300015	SFP	SFP-1250-SM-20/D\r\nCisco Compatible\r\nGLC-LH-SM\r\nSinglemode\r\nLC, 20 km.	40.00	90.00	50		f	f
+2020-07-21 21:20:46.136914+00	2020-09-19 13:44:04.389491+00	rafiq	213	Cisco	WS-C3560G-48PS-S PoE	FOC1120ZAL6	switch	Tonitrus	360.00	600.00	1		f	f
+2020-07-26 13:49:30.593896+00	2020-09-20 08:50:52.407193+00	rafiq	224	Cisco	WS-C2960G-48TC-L	FOC1230X5QM	switch	Inetreco	303.00	490.00	1		f	f
+2020-07-21 20:50:01.887627+00	2020-09-19 13:44:49.694675+00	rafiq	198	Cisco	WS-C3560G-48PS-S PoE	FOC1133Y282	switch	Tonitrus	367.00	600.00	1		f	f
+2020-07-21 21:19:13.066558+00	2020-09-20 08:46:55.128566+00	rafiq	211	Cisco	WS-C3560G-48PS-S PoE	FOC1401Z3QM	switch	Tonitrus	360.00	600.00	1		f	f
+2020-07-21 21:03:06.478697+00	2020-09-20 08:44:39.877865+00	rafiq	205	Cisco	WS-C2960S-24PS-L PoE	FOC1843W4ZX	switch	Tonitrus	420.00	600.00	1		f	f
+2019-12-05 10:35:15.940714+00	2021-01-13 18:09:05.265657+00	rafiq	56	Cisco	Air-CAP2602i-E-K9	FCZ1821V1DL	AP	Alıcı: "Casian İnvestment"\r\nƏlaqədar şəxs: Emin Məhərrəmi\r\nMobil: +994 50 251 59 78\r\nE-mail: emaharrami@azerbaijansupermarket.com\r\nTarix: 27.02.2020\r\nQEYD: "Azerbaijan Supermarket" LLC Əvvəllər Bravo adlandırmışıq. (Caspian Plaza)\r\nQEYD-2: Alınıb: Ramin 050 316 33 38	83.00	150.00	1		t	f
+2020-07-26 13:36:20.468359+00	2020-07-26 20:29:06.708746+00	admin	216	Cisco	ASA 5505	JMX12484126	firewall	Inetreco	97.00	220.00	1		f	f
+2020-07-28 15:37:25.893198+00	2020-12-11 19:11:53.974905+00	rafiq	238	Cisco	1921	FCZ1728C1NC	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22 \r\nE-mail: elchin_baku@list.ru\r\nTarix: 11.12.2020\r\nQEYD: Aliter\r\nQEYD: Çek vurulub\r\nQEYD: Eyni gündə 2 ədəd satılıb	238.00	405.00	1		t	f
+2020-07-26 13:43:50.182892+00	2020-09-20 08:52:46.89593+00	rafiq	219	Cisco	WS-C3560CG-8TC-S	FOC1924Z1ZV	switch	Inetreco	345.00	570.00	1		f	f
+2020-07-26 13:40:37.565279+00	2020-09-20 08:52:34.204762+00	rafiq	217	Cisco	WS-C3560CG-8TC-S	FOC1620Y1MQ	switch	Inetreco	345.00	570.00	1		f	f
+2020-07-26 13:47:22.762777+00	2021-05-03 19:06:53.437582+00	rafiq	222	Cisco	WS-C2960G-24TC-L	FOC1524X0KB	switch	Müəssisə: Azertexnolayn\r\nƏlaqədar şəxs: Səməndər İsgəndərov \r\nMobil: +994 51 225 00 74\r\nE-mail: semender.iskenderov@azertexnolayn.com\r\nTarix: 04.05.2021\r\nQEYD: Inetreco\r\nQEYD: 5 faiz güzəşt olunub.	250.00	370.00	1		t	f
+2020-07-21 21:14:18.352756+00	2021-05-08 08:25:56.217055+00	rafiq	208	Cisco	WS-C3560G-48PS-S PoE	FOC1401Z3RC	switch	Şirkət: Rabitə nazirliyi\r\nMüştəri: Ərrəhman müəllim\r\nTarix: 08.05.2021\r\nTonitrus	360.00	600.00	1		t	f
+2020-07-26 13:53:29.736128+00	2020-09-18 12:36:37.763426+00	rafiq	227	Cisco	ASA 5505	JMX1235Z06F	Firewall	Müştəri: Rahat Telekom\r\nƏlaqədar şəxs: Elvin Həbibov\r\nMobil: +994 50 250 00 53 \r\nE-mail: elvin.habibov@rahattelecom.az \r\nTarix: 18.09.2020	97.00	200.00	1		t	f
+2020-07-21 20:47:55.411468+00	2020-09-19 13:39:51.004529+00	rafiq	197	Cisco	WS-C3560G-48PS-S PoE	FOC1510Y2JR	switch	Tonitrus	367.00	600.00	1		f	f
+2020-07-26 13:44:55.771193+00	2020-09-03 07:35:21.166034+00	rafiq	220	Cisco	WS-C2960G-48TC	FOC1442X4TE	switch	Alıcı: Sultan Həsənov\r\nMobil: +994 50 372 93 85\r\nMüəssisə: “Azerbaijan Ground Services" MMC\r\nTarix: 02.09.2020\r\nQEYD: Inetreco	303.00	850.00	1		t	f
+2020-07-21 21:04:08.052921+00	2020-09-20 08:45:11.38036+00	rafiq	206	Cisco	WS-C2960S-24PS-L PoE	FOC1751Z2BR	switch	Tonitrus	420.00	600.00	1		f	f
+2020-07-21 21:02:11.290688+00	2020-09-20 08:44:57.603946+00	rafiq	204	Cisco	WS-C2960S-24PS-L PoE	FOC1822W1XF	switch	Tonitrus	420.00	600.00	1		f	f
+2020-07-26 13:42:35.757902+00	2021-02-05 18:57:32.527179+00	rafiq	218	Cisco	ASA 5506	JMX2147G37Z	firewall	Inetreco	430.00	750.00	1		f	f
+2020-07-26 13:33:24.524336+00	2020-09-03 07:36:00.763118+00	rafiq	214	Cisco	WS-C2960G-48TC	FOC1237V2ST	switch	Alıcı: Sultan Həsənov\r\nMobil: +994 50 372 93 85\r\nMüəssisə: “Azerbaijan Ground Services" MMC\r\nTarix: 02.09.2020\r\nQEYD: Inetreco	303.00	850.00	1		t	f
+2020-07-21 20:53:51.509636+00	2020-09-19 13:41:20.239392+00	rafiq	200	Cisco	WS-C3560G-48PS-S PoE	FOC1223Z4RV	switch	Tonitrus	367.00	600.00	1		f	f
+2020-07-21 21:20:05.446594+00	2020-09-19 13:41:50.827598+00	rafiq	212	Cisco	WS-C3560G-48PS-S PoE	FOC1416Y4ZL	switch	Tonitrus	360.00	600.00	1		f	f
+2020-07-21 20:55:03.65065+00	2020-09-19 13:43:11.69022+00	rafiq	201	Cisco	WS-C3560G-48PS-S PoE	FOC1223Z4RZ	switch	Tonitrus	367.00	600.00	1		f	f
+2020-07-21 21:15:25.240969+00	2020-09-19 13:43:49.419635+00	rafiq	209	Cisco	WS-C3560G-48PS-S PoE	FOC1249W133	switch	Tonitrus	360.00	600.00	1		f	f
+2020-04-12 18:52:47.349955+00	2020-09-20 08:38:59.87293+00	rafiq	165	Cisco	WS-C3750X-48P-S PoE	FDO1602K3BC	Switch	Tonitrus\r\nMüştəri: AGT\r\nƏlaqədar şəxs: Elvin Hüseynli \r\nE-mail: 8111081@gmail.com\r\nMobil: +994 70 811 10 81\r\nTarix: 26.06.2020\r\nQEYD: Üstündə müvəqqəti istifadə üçün 147 No-li Cisco Router 2921 verildi.	0.00	950.00	1		t	f
+2020-07-21 21:17:42.115974+00	2020-09-20 08:44:04.141443+00	rafiq	210	Cisco	WS-C2960S-24PS-L PoE	FOC1822W1X8	switch	Tonitrus	420.00	600.00	1		f	f
+2020-07-26 19:49:11.839737+00	2020-09-03 07:34:58.596482+00	rafiq	234	Cisco	WS-C2960G-48TC	FOC1240Y1S2	switch	Alıcı: Sultan Həsənov\r\nMobil: +994 50 372 93 85\r\nMüəssisə: “Azerbaijan Ground Services" MMC\r\nTarix: 02.09.2020\r\nQEYD: Inetreco	303.00	850.00	1		t	f
+2020-07-26 13:34:27.900202+00	2020-08-17 09:15:27.103004+00	rafiq	215	Cisco	WS-C2960G-48TC	FOC1240Y3QZ	switch	VACİB QEYD:\r\n60 No-li sviçlə dəyişdirilib (bax 60 No-li sviçin qeydlərinə). \r\n\r\nInetreco\r\nTarix: 14.08.2020\r\nMüştəri: Mais Rəsulov\r\nMobil: +994 55 861 67 25\r\nE-mail: mais.rasulov@adsgarden.com\r\nŞirkət: "O.M.M." MMC	303.00	466.00	1		t	f
+2019-12-17 15:39:09.150717+00	2020-08-22 06:10:33.593373+00	rafiq	109	Cisco	881-K9 V01	FCZ1347COPW	Router	Müştəri: Polad Qulamov\r\nMobil: +994 51 977 10 00\r\nMobil: +994 50 235 19 09\r\nTarix: 22.08.2020\r\nQEYD: Muğanbank\r\nGətirilmə tarixi: 17.12.2019	0.00	190.00	1	network_hw/109/WhatsApp_Image_2019-12-17_at_19.15.49.jpeg	t	f
+2019-11-30 07:28:24.32411+00	2020-08-24 09:42:47.725115+00	rafiq	91	Cisco	1921	FCZ1952C0FH	Router	Tarix: noyabr, 2019\r\nAlıcı: Coşqun Ünal,\r\nMobil: 055 488 79 49\r\nMobil: 055 409 95 18\r\nQiymət: 550 azn	0.00	550.00	1		t	f
+2020-05-25 15:34:33.169421+00	2020-09-03 08:26:36.892396+00	rafiq	171	HP	6600-24XG	CN032GL001	Switch	P/N: J9265A\r\nMüştəri: Muğanbank\r\nƏlaqədar şəxs: Polad Qulamov\r\nMobil: +994 51 977 10 00\r\nMobil: +994 50 235 19 09\r\nTarix: 26.05.2020\r\nE-mail: Pg@itf.az\r\nQEYD: 24 port 10 Gbps SFP switch	1547.00	2090.00	1		t	f
+2020-09-03 08:18:01.126734+00	2020-09-03 08:33:34.083877+00	rafiq	248	HP	6600-24XG	CN910GL02P	Switch	P/N: J9265A\r\nMüştəri: Polad Qulamov\r\nMobil: +994 51 977 10 00\r\nMobil: +994 50 235 19 09\r\nMüəssisə: Muğanbank ASC\r\nTarix: 04.05.2020\r\nE-mail: Pg@itf.az\r\nQEYD: 24 port 10 Gbps SFP switch\r\nQEYD: İki HP sviçin 1-ndə problem çıxdığından (4 port işləmirdi) onun dəyişdirilməsi avqust ayına qədər çəkdi.	1547.00	2090.00	1		t	f
+2020-09-03 08:23:45.283315+00	2020-09-03 08:34:50.594147+00	rafiq	249	HP	6600-24XG	CN032GL001	Switch	P/N: J9265A\r\nMüştəri: Polad Qulamov\r\nMobil: +994 51 977 10 00\r\nMobil: +994 50 235 19 09\r\nMüəssisə: Muğanbank ASC\r\nTarix: 04.05.2020\r\nE-mail: Pg@itf.az\r\nQEYD: 24 port 10 Gbps SFP switch\r\nQEYD: İki HP sviçin 1-ndə problem çıxdığından (4 port işləmirdi) onun dəyişdirilməsi avqust ayına qədər çəkdi.	1547.00	2090.00	1		t	f
+2020-07-28 15:41:40.832192+00	2020-10-10 07:48:11.249933+00	rafiq	244	Cisco	1921	FTX155182MZ	Router	Müştəri: Digitalks\r\nƏlaqədar şəxs: David Xripunov\r\nMobil: +994 50 200 13 34\r\nE-mail: david@digitalks.az \r\nTarix: 09.10.2020\r\n\r\nQeyd: Aliter\r\nAdı əvvəl 1941 olub.	255.00	450.00	1		t	f
+2020-03-16 07:54:48.302482+00	2020-08-26 11:37:38.768502+00	rafiq	147	Cisco	2921	FCZ1836601V	Router	Alıcı: Rəhim Əbrürrəhimov\r\nMobil: +994 50 251 72 42\r\nTarix: 26.08.2020\r\nQEYD: Əvvəl İnventar olub. 26.06.2020-də müvəqqəti olaraq satılmış 165 No-li Sviçin üstündə AGT şirkətinə, Elvin Hüseynliyə verilmişdi.	550.00	850.00	1		t	f
+2020-07-28 15:41:05.122876+00	2020-08-26 11:44:10.593295+00	rafiq	243	Cisco	1921	FCZ200592XT	Router	Alıcı: Elçin Kərimov Müəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22 \r\nE-mail: elchin_baku@list.ru\r\nTarix: 26.08.2020\r\nQEYD: Aliter	255.00	405.00	1		t	f
+2020-07-28 15:42:24.616227+00	2020-08-27 20:09:47.269078+00	rafiq	245	Cisco	1921	FCZ1639C4UP	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22 \r\nE-mail: elchin_baku@list.ru\r\nTarix: 27.08.2020\r\nQEYD: Aliter	255.00	405.00	1		t	f
+2020-07-28 15:40:20.172673+00	2020-08-27 20:10:14.619449+00	rafiq	242	Cisco	1921	FCZ1832930U	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22 \r\nE-mail: elchin_baku@list.ru\r\nTarix: 27.08.2020\r\nQEYD: Aliter	255.00	405.00	1		t	f
+2020-07-26 19:53:04.646752+00	2020-09-03 07:34:23.123482+00	rafiq	236	Cisco	WS-C2960G-48TC	FOC1442X4VJ	switch	Alıcı: Sultan Həsənov\r\nMobil: +994 50 372 93 85\r\nMüəssisə: “Azerbaijan Ground Services" MMC\r\nTarix: 02.09.2020\r\nQEYD: Inetreco	303.00	850.00	1		t	f
+2020-07-26 19:50:30.061057+00	2020-09-03 07:37:18.596373+00	rafiq	235	Cisco	WS-C2960G-48TC	FOC1442X4T7	switch	Alıcı: Sultan Həsənov\r\nMobil: +994 50 372 93 85\r\nMüəssisə: “Azerbaijan Ground Services" MMC\r\nTarix: 02.09.2020\r\nQEYD: Inetreco	303.00	850.00	1		t	f
+2020-07-26 13:45:58.141944+00	2020-09-03 07:38:22.841215+00	rafiq	221	Cisco	WS-C2960G-48TC	FOC1240Y3QK	switch	Alıcı: Sultan Həsənov\r\nMobil: +994 50 372 93 85\r\nMüəssisə: “Azerbaijan Ground Services" MMC\r\nTarix: 02.09.2020\r\nQEYD: Inetreco	303.00	850.00	1		t	f
+2020-10-02 10:54:30.685141+00	2020-10-02 10:54:30.685183+00	rafiq	282	Cisco	2921	FCZ1603708Z	Router	Tonitrus, sentyabr, 2020	550.00	800.00	1		f	f
+2020-07-21 20:57:24.165663+00	2021-03-04 11:10:51.02548+00	rafiq	203	Cisco	WS-C3560G-48PS-S PoE	FOC1347Y066	switch	Müştəri: Crucel\r\nƏlaqədar şəxs: Konstantin\r\nMobil: +994 50 409 12 83\r\nTarix: 04.03.2021\r\nQeyd: 10 faiz güzəşt edilib\r\nQeyd: Tonitrus	367.00	540.00	1		t	f
+2020-07-26 13:55:18.723019+00	2021-04-10 07:20:25.07313+00	rafiq	229	Cisco	5505	JMX1847Z0MR	firewall	Müştəri: Kamran Şeyxov (fiziki şəxs)\r\nMobil: +994 50 218 88 97\r\nE-mail: Sheykhov@gmail.com\r\nTarix: 22.03.2021\r\nTarix: 24.03.2021 Çek vurulub\r\nInetreco	121.20	200.00	1		t	f
+2020-07-26 13:54:20.949471+00	2021-04-03 13:23:26.565176+00	rafiq	228	Cisco	ASA 5505	JMX1208Z08D	firewall	Qeyd: Kimə satıldığı qeyd olunmayıb\r\nQeyd-2: Inetreco	97.00	220.00	1		t	f
+2020-07-28 15:43:21.615798+00	2020-12-11 19:10:53.655438+00	rafiq	246	Cisco	1921	FCZ162691XR	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22 \r\nE-mail: elchin_baku@list.ru\r\nTarix: 11.12.2020\r\nQEYD: Aliter\r\nQEYD: Çek vurulub\r\nQEYD: Eyni gündə 2 ədəd satılıb	238.00	405.00	1		t	f
+2020-09-04 06:54:28.510886+00	2020-09-06 15:31:56.678035+00	admin	270	Cisco	WS-C2960S-48FPS-L PoE	FOC1701W1SH	Switch	Curvature	0.00	850.00	1		f	f
+2020-09-06 10:30:32.191509+00	2020-09-06 10:38:11.103909+00	rafiq	274	HP	Refurbished HPE 32GB (1x32GB) Dual Rank x4 DDR4-24	0	RAM	Müştəri: Polad Qulamov \r\nMobil: +994 51 977 10 00 \r\nMobil: +994 50 235 19 09 \r\nMüəssisə: Muğanbank ASC \r\nTarix: 04.05.2020\r\nE-mail: Pg@itf.az\r\nQEYD: Zip faylda 16 ramın hamısəının o tərəfli-bu tərəfli ketfiyyətli şəkilləri var.	0.00	520.00	16	network_hw/274/RAM.ZIP	t	f
+2020-09-04 06:59:03.741996+00	2020-09-06 15:31:24.244255+00	admin	273	Cisco	WS-C2960S-48FPS-L PoE	FOC1701ZM37	Switch	Curvature	0.00	850.00	1		f	f
+2020-09-04 06:53:00.060284+00	2020-09-06 15:32:07.500992+00	admin	269	Cisco	WS-C2960S-48FPS-L PoE	FOC1837W1QC	Switch	Curvature	0.00	850.00	1		f	f
+2019-12-05 10:14:23.572808+00	2020-09-15 10:10:18.101498+00	rafiq	44	Cisco	WS-C2960G-24TC-L	FOC1229Y09T	Switch	Tarix: 05.02.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az	0.00	340.00	1		t	f
+2019-12-05 10:14:23.572808+00	2020-09-15 10:10:30.911093+00	rafiq	115	Cisco	WS-C2960G-24TC-L	FOC1237V3NN	Switch	Tarix: 09.06.2020\r\nMüştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az \r\nQeyd: Səhvən seriya nömrəsi  FOC1229Y09T yazılmışdı.	0.00	340.00	1		t	f
+2019-11-30 11:19:45.495643+00	2020-11-21 09:15:52.97273+00	admin	60	Cisco	WS-C2960G-48TC-L	FOC1417V0R0	Switch	VACİB QEYD:\r\nƏvvəl 08.06.2020 tarixində "O.M.M." MMC-yə satılıb.\r\n14.08.2020-də konsolu işləmədiyindən 215 no-li sviçlə dəyişdirilib. Korpusu 215 No-li sviçin korpusudur.	297.00	490.00	1		f	f
+2020-10-02 10:31:01.797947+00	2020-10-02 10:31:01.797993+00	rafiq	279	Cisco	2921	FCZ163070UH	Router	Tonitrus, sentyabr, 2020	550.00	800.00	1		f	f
+2020-07-26 13:52:35.736554+00	2020-09-28 12:20:29.651901+00	rafiq	226	Cisco	ASA 5505	JMX1138Z1HV	firewall	Müştəri: Prosys\r\nƏlaqədar şəxs: Sadiq Həbubullayev\r\nE-mail: sadig@prosys.az\r\nMobil: +994 50 240 50 25\r\nTarix: 28.09.2020\r\nQeyd-1: 210 manatlıq kassa çeki veriluib..\r\nQeyd-2: Inetreco\r\n"Qoç Ət" şirkətinə müvəqqəti iütifadəyə verilmişdi.\r\n27.07.2020	82.13	210.00	1		t	f
+2020-10-02 10:38:12.766361+00	2020-10-02 10:38:12.766402+00	rafiq	280	Cisco	2921	FCZ163070TX	Router	Tonitrus, sentyabr, 2020	550.00	800.00	1		f	f
+2020-10-02 10:44:06.17419+00	2020-10-02 10:44:06.174241+00	rafiq	281	Cisco	2921	FCZ173071S9	Router	Tonitrus, sentyabr, 2020	550.00	800.00	1		f	f
+2020-09-04 06:51:33.207519+00	2021-03-16 13:36:27.137389+00	rafiq	268	Cisco	WS-C2960S-48FPS-L PoE	FOC1904Z1KL	Switch	Curvature	0.00	850.00	1		f	f
+2020-09-03 09:32:13.741958+00	2021-03-04 04:43:27.435717+00	rafiq	251	ATOP	SFP-1250D-SM-20/D	S1CO532A2100405	SFP	1.25G DDM TX: 1550nm RX: 1310nm 20 km\r\nQEYD: Norveç məhsuludur\r\nQEYD-2: SN: S1CO632A2100406 (5 əvəzinə 6 oxunur)	39.00	133.00	48		f	f
+2020-09-04 06:57:25.465679+00	2021-03-16 13:45:48.365748+00	rafiq	272	Cisco	WS-C2960S-48FPS-L PoE	FOC1701W1RA	Switch	Müştəri: Azərkosmos\r\nƏlaqədar şəxs: Ərrəhman/Rüfət\r\nMobil: +994 50 513 16 17\r\nMobil: +994 50 251 40 15\r\nTarix: 16.03.2021\r\nQeyd: Curvature	0.00	800.00	1		t	f
+2020-09-04 06:53:00.060284+00	2021-03-16 13:46:09.886943+00	rafiq	266	Cisco	WS-C2960S-48FPS-L PoE	FOC1837W1QC	Switch	Müştəri: Azərkosmos\r\nƏlaqədar şəxs: Ərrəhman\r\nMobil: +994 50 513 16 17\r\nMobil: +994 50 251 40 15\r\nTarix: 11.02.2021\r\nQeyd: Curvature	0.00	800.02	1		t	f
+2020-09-04 06:49:50.004077+00	2021-03-16 13:46:28.83792+00	rafiq	267	Cisco	WS-C2960S-48FPS-L PoE	FOC1701ZM2H	Switch	Müştəri: Azərkosmos\r\nƏlaqədar şəxs: Ərrəhman/Rüfət\r\nMobil: +994 50 513 16 17\r\nMobil: +994 50 251 40 15\r\nTarix: 16.03.2021\r\nQeyd: Curvature	0.00	800.00	1		t	f
+2020-09-04 06:55:49.638309+00	2021-03-16 13:56:07.180592+00	rafiq	271	Cisco	WS-C2960S-48FPS-L PoE	FOC1701ZM2K	Switch	Müştəri: Azərkosmos\r\nƏlaqədar şəxs: Ərrəhman/Rüfət\r\nMobil: +994 50 513 16 17\r\nMobil: +994 50 251 40 15\r\nTarix: 16.03.2021\r\nQeyd: Curvature\r\nQEYD: Səhvən SN FOC1701ZM2R yazılmışdı.	0.00	800.00	1		t	f
+2020-09-26 08:56:38.173022+00	2021-04-06 13:29:29.947408+00	rafiq	277	Cisco	1941	FGL151726N3	Router	Müştəri: Baku Electronics\r\nƏlaqədar şəxs: Mahir Ağayev\r\nE-mail: mahir.aghayev@bakuelectronics.az\r\nMobil: +994 55 202 50 15\r\nMobil: +994 51 843 11 11\r\nTarix: 28.09.2020	0.00	500.00	1	network_hw/277/IMG_20200925_193910.jpg	t	f
+2020-09-26 08:59:04.734771+00	2021-04-06 13:30:12.615188+00	rafiq	278	Cisco	1941	FCZ181892Q3	Router	Müştəri: Baku Electronics\r\nƏlaqədar şəxs: Mahir Ağayev\r\nE-mail: mahir.aghayev@bakuelectronics.az\r\nMobil: +994 55 202 50 15\r\nMobil: +994 51 843 11 11\r\nTarix: 28.09.2020	0.00	500.00	1		t	f
+2020-10-02 11:21:45.177874+00	2020-10-02 11:21:45.177922+00	rafiq	285	Cisco	2921	FCZ173160RA	Router	Tonitrus, sentyabr, 2020	550.00	800.00	1		f	f
+2020-10-02 11:48:21.176365+00	2020-10-02 11:48:21.176404+00	rafiq	287	Cisco	2921	FCZ16337MD8	Router	Tonitrus, sentyabr, 2020	550.00	800.00	1		f	f
+2020-10-02 11:52:47.615958+00	2020-10-02 11:52:47.616014+00	rafiq	288	Cisco	2921	FCZ1603708X	Router	Tonitrus, sentyabr, 2020	550.00	800.00	1		f	f
+2020-10-05 11:42:29.704755+00	2021-01-07 20:24:23.037148+00	rafiq	292	Cisco	1921	FCZ164590D7	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nTarix: 07.01.2021\r\nQEYD: Çek vurulub\r\nQEYD: Eyni gündə 2 ədəd (No292 və No293) satılıb\r\nQeyd: Tonitrus. sentyabr, 2020	238.00	400.00	1		t	f
+2020-10-30 17:55:07.016286+00	2021-01-13 17:53:21.189924+00	rafiq	307	Cisco	1941	FCZ164091PM	Router	Müştəri: Baku Electronics\r\nƏlaqədar şəxs: Mahir Ağayev\r\nE-mail: mahir.aghayev@bakuelectronics.az\r\nMobil: +994 55 202 50 15\r\nMobil: +994 51 843 11 11\r\nTarix: 13.01.2021\r\nQEYD: Tonitrus	0.00	500.00	1		t	f
+2020-09-16 21:11:35.008968+00	2021-02-01 09:16:38.761125+00	rafiq	276	Cisco	ASA 5515x	FTX203611H8	Firewall	Tonitrus	1100.00	1700.00	1	network_hw/276/asa-2.jpg	f	f
+2020-09-16 21:05:54.384657+00	2020-10-10 07:47:31.927336+00	rafiq	275	Cisco	5515x	FTX2018118S	Firewall	Müştəri: Digitalks\r\nƏlaqədar şəxs: David Xripunov\r\nMobil: +994 50 200 13 34\r\nE-mail: david@digitalks.az \r\nTarix: 16.09.2020	1100.00	1700.00	1	network_hw/275/asa-1.jpg	t	f
+2020-10-28 18:39:23.318409+00	2020-10-28 18:40:15.906451+00	rafiq	299	Cisco	1941	FCZ1550C3MA	Router	Müştəri: Baku Electronics\r\nƏlaqədar şəxs: Mahir Ağayev\r\nE-mail: mahir.aghayev@bakuelectronics.az\r\nMobil: +994 55 202 50 15\r\nMobil: +994 51 843 11 11\r\nTarix: 28.10.2020	0.00	500.00	1		t	f
+2020-10-28 18:46:56.472233+00	2020-10-28 18:46:56.472294+00	rafiq	300	Cisco	1941	FCZ171960JQ	Router	Müştəri: Baku Electronics\r\nƏlaqədar şəxs: Mahir Ağayev\r\nE-mail: mahir.aghayev@bakuelectronics.az\r\nMobil: +994 55 202 50 15\r\nMobil: +994 51 843 11 11\r\nTarix: 28.10.2020	0.00	500.00	1		t	f
+2020-10-28 18:51:18.138271+00	2020-10-28 18:51:18.138319+00	rafiq	301	Cisco	1941	FCZ164091P8	Router	Müştəri: Baku Electronics\r\nƏlaqədar şəxs: Mahir Ağayev\r\nE-mail: mahir.aghayev@bakuelectronics.az\r\nMobil: +994 55 202 50 15\r\nMobil: +994 51 843 11 11\r\nTarix: 28.10.2020	0.00	500.00	1		t	f
+2020-10-30 17:49:36.414237+00	2020-10-30 17:49:36.414284+00	rafiq	302	Cisco	1941	FCZ152220LX	Router	Tonitrus	0.00	500.00	1		f	f
+2020-10-30 17:51:29.956719+00	2020-10-30 17:51:29.956752+00	rafiq	304	Cisco	1941	FCZ1729C000	Router	Tonitrus	0.00	500.00	1		f	f
+2020-10-30 17:52:37.854321+00	2020-10-30 17:52:37.854356+00	rafiq	305	Cisco	1941	FCZ1828C1P8	Router	Tonitrus	0.00	500.00	1		f	f
+2020-10-30 17:53:29.989083+00	2020-10-30 17:53:29.989127+00	rafiq	306	Cisco	1941	FCZ1851925F	Router	Tonitrus	0.00	500.00	1		f	f
+2020-07-28 15:38:20.982588+00	2020-12-11 18:23:50.54412+00	rafiq	239	Cisco	1921	FGL185222RW	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22 \r\nE-mail: elchin_baku@list.ru\r\nTarix: 09.12.2020\r\nQEYD: Aliter\r\nQEYD: Çek vurulub	238.00	405.00	1		t	f
+2020-10-05 10:16:00.172286+00	2021-01-22 10:50:22.621692+00	rafiq	290	Cisco	1921	FCZ164590DD	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nTarix:22.01.2021\r\nQEYD: Çek vurulub\r\nQeyd: Tonitrus. sentyabr, 2020	254.33	400.00	1		t	f
+2019-12-05 13:19:00.95254+00	2021-01-13 18:03:06.145962+00	rafiq	82	Cisco	Air-CAP2602i-E-K9	FCW1839JBML	AP	Müştəri: Ultra Technologies\r\nƏlaqədar şəxs: Əfsər Qurbanov\r\nMobil: +994 55 663 72 52\r\nE-mail: q.efser@ultra.az\r\nTarix: 13.01.2021 \r\nQEYD: 5 ədəd AP bir yerdə satılıb.	83.00	150.00	1		t	f
+2020-10-05 11:44:32.752585+00	2021-01-07 20:23:58.573759+00	rafiq	293	Cisco	1921	FCZ2043411A	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nTarix: 07.01.2021\r\nQEYD: Çek vurulub\r\nQEYD: Eyni gündə 2 ədəd (No292 və No293) satılıb\r\nQeyd: Tonitrus. sentyabr, 2020	238.00	400.00	1		t	f
+2019-12-05 13:21:05.492676+00	2021-01-13 18:07:52.250279+00	rafiq	84	Cisco	Air-CAP2602i-E-K9	FCW1839JBLM	AP	Alıcı: "Casian İnvestment"\r\nƏlaqədar şəxs: Emin Məhərrəmi\r\nMobil: +994 50 251 59 78\r\nE-mail: emaharrami@azerbaijansupermarket.com\r\nTarix: 27.02.2020\r\nQEYD: "Azerbaijan Supermarket" LLC Əvvəllər Bravo adlandırmışıq. (Caspian Plaza)	83.00	150.00	1		t	f
+2019-12-05 13:31:27.827222+00	2021-01-13 18:09:35.724166+00	rafiq	88	Cisco	Air-CAP2602i-E-K9	FCW1853N39V	AP	Alıcı: "Casian İnvestment"\r\nƏlaqədar şəxs: Emin Məhərrəmi\r\nMobil: +994 50 251 59 78\r\nE-mail: emaharrami@azerbaijansupermarket.com\r\nTarix: 27.02.2020\r\nQEYD: "Azerbaijan Supermarket" LLC Əvvəllər Bravo adlandırmışıq. (Caspian Plaza)	83.00	150.00	1		t	f
+2020-10-05 12:16:05.210871+00	2021-01-25 16:15:49.34897+00	rafiq	294	Cisco	1921	FCZ1613C6AW	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nTarix: 25.01.2021\r\nQEYD: Çek vurulub\r\nQeyd: Tonitrus. sentyabr, 2020	254.33	400.00	1		t	f
+2020-10-05 12:21:21.970373+00	2021-01-13 18:36:25.839469+00	rafiq	297	Cisco	1921	FTX164082RN	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nTarix:13.01.2021\r\nQEYD: Çek vurulub\r\nQeyd: Tonitrus. sentyabr, 2020	254.33	400.00	1		t	f
+2020-10-05 12:17:49.964732+00	2021-01-15 12:20:31.962154+00	rafiq	295	Cisco	1921	FCZ2124B0CB	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nTarix:15.01.2021\r\nQEYD: Çek vurulub\r\nQeyd: Tonitrus. sentyabr, 2020	254.33	400.00	1		t	f
+2020-10-30 17:50:31.625467+00	2021-01-29 19:43:27.317428+00	rafiq	303	Cisco	1941	FCZ1642C0FW	Router	Qeyd: 29.01.2021 tarixindən əsas rekdə inventar\r\nQeyd: Tonitrus	0.00	500.00	1		f	t
+2020-10-05 12:19:42.20123+00	2021-02-05 11:58:27.565274+00	rafiq	296	Cisco	1921	FCZ2044B06W	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nTarix:05.02.2021\r\nQEYD: Çek vurulub\r\nQeyd: Tonitrus. sentyabr, 2020	254.33	400.00	1		t	f
+2020-10-02 11:11:49.765+00	2021-03-10 06:53:12.093165+00	rafiq	284	Cisco	2921	FCZ16302144	Router	Müştəri: “Life Elektroniks” MMC\r\nƏlaqədar şəxs (direktor): Elcin Həsənov\r\nMobil: +994 50 385 07 72\r\nE-mail: hasanovelchin@l-e.az\r\nTarix: 09.03.2021\r\nQeyd: Ultra vasitəsi ilə satış (50 manat güzəştli)\r\nTonitrus, sentyabr, 2020\r\nQeyd: 900 manata sənədləşdirilib.	550.00	800.00	1		t	f
+2020-10-05 09:47:02.501807+00	2021-04-08 17:36:46.585218+00	rafiq	289	Cisco	1921	FCZ185290HL	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nAlıcı (rəis): Rövşən \r\nMobil: 050 675 81 01\r\nTarix: 08.04.2021\r\nQEYD: Çek vurulub\r\nQEYD: Eyni gündə 2 ədəd (No289 və No291) satılıb\r\nQeyd: Tonitrus. sentyabr, 2020	254.33	400.02	1		t	f
+2020-08-28 18:47:45.893125+00	2021-05-08 07:05:54.374415+00	rafiq	247	Cisco	5540	JMX1419L45N	Firewall	Alıcı: Mail Məmmədov\r\nMüəssisə: Qoç Ət\r\nMobil: +994 51 585 85 15\r\nE-mail: mail@qocet.az\r\nTarix: 31.08.2020\r\nQEYD: Çek 08.05.2021-də vurulub	700.00	740.00	1		t	f
+2020-10-05 12:22:54.998778+00	2021-02-05 11:59:05.729483+00	rafiq	298	Cisco	1921	FCZ1639C16Q	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nTarix:05.02.2021\r\nQEYD: Çek vurulub\r\nQeyd: Tonitrus. sentyabr, 2020	254.33	400.00	1		t	f
+2019-11-30 11:03:19.390951+00	2021-02-11 22:36:55.698557+00	rafiq	64	Cisco	WS-C3750V2-48PS-S PoE	FD01426X1XQ	Switch	Müştəri: Crusel\r\nƏlaqədar şəxs: Yan (Konstantin və ya Çingiz)\r\nMobil: +994 50 327 15 02\r\nTarix: 12.02.2021\r\nQeyd: Əvvəl inventar olub: 2-ci rek, 2-ci mərtəbə (Qoşqargil)	0.00	350.00	1		t	f
+2020-07-21 21:12:39.681057+00	2021-02-12 07:21:25.93624+00	rafiq	207	Cisco	WS-C2960S-24PS-L PoE	FOC1751Z442	switch	Müştəri: Crucel \r\nƏlaqədar şəxs: Konstantin\r\nMobil: +994 50 409 12 83  \r\nTarix: 24.10.2020\r\nQeyd: 10 faiz güzəşt edilib\r\nQeyd: Tonitrus	420.00	540.00	1		t	f
+2021-03-02 20:20:19.224417+00	2021-03-02 20:20:19.224441+00	rafiq	310	Cisco	1921	FCZ2107B0B9	Router	Tonitrus, 01.03.2021	255.00	450.00	1		f	f
+2021-03-02 20:22:57.669345+00	2021-03-02 20:22:57.669369+00	rafiq	311	Cisco	1921	FCZ2104B128	Router	Tonitrus, 01.03.2021	255.00	450.00	1		f	f
+2021-03-02 20:25:48.613049+00	2021-03-02 20:25:48.613073+00	rafiq	312	Cisco	1921	FCZ2109B0Y5	Router	Tonitrus, 01.03.2021	255.00	450.00	1		f	f
+2021-03-02 20:30:19.617138+00	2021-03-02 20:30:19.617162+00	rafiq	313	Cisco	1921	FCZ172871NK	Router	Tonitrus, 01.03.2021	255.00	450.00	1		f	f
+2021-03-02 20:47:46.751956+00	2021-03-02 20:50:09.902264+00	rafiq	316	Cisco	1921	FCZ183991ER	Router	Tonitrus, 01.03.2021	255.00	450.00	1		f	f
+2021-03-02 20:59:42.139676+00	2021-03-02 20:59:42.139699+00	rafiq	318	Cisco	1921	FCZ1833C0PJ	Router	Tonitrus, 01.03.2021	255.00	450.00	1		f	f
+2020-10-30 17:56:00.007551+00	2021-03-02 21:12:13.018752+00	rafiq	308	Cisco	1941	FCZ1715C122	Router	Tonitrus	255.00	450.00	1		f	f
+2021-03-02 21:15:53.922462+00	2021-03-02 21:15:53.922486+00	rafiq	319	ATOP	SFP-10G-MM-300-HP	STPH85SA1300201	SFP	Müştəri: Polad Qulamov\r\nMobil: +994 51 977 10 00\r\nMobil: +994 50 235 19 09\r\nMüəssisə: Muğanbank ASC\r\nQEYD: Pulu köçürülmüş 14 SFP əvəzinə 12 SFP təhvil verilib. 266 manat geri qaytarılıb.\r\nTarix: 23.12.2020\r\nE-mail: Pg@itf.az\r\nQEYD: Norveç məhsuludur\r\nSeriya nömrələri:\r\nSTPH85SA1300201\r\nSTPH85SA1300202\r\nSTPH85SA1300203\r\nSTPH85SA1300204\r\nSTPH85SA1300205\r\nSTPH85SA1300206\r\n\r\nSTPH85SA1300207\r\nSTPH85SA1300208\r\nSTPH85SA1300209\r\nSTPH85SA1300210\r\nSTPH85SA1300245\r\nSTPH85SA1300246	71.00	133.00	12	network_hw/309/HP-SFP-ler.jpg	t	f
+2020-12-23 08:44:56.914956+00	2021-03-02 21:23:06.888317+00	rafiq	309	Cisco	1921	FCZ211640MK	Router	Tonitrus, 01.03.2021	255.00	450.00	1	network_hw/309/HP-SFP-ler.jpg	f	f
+2020-09-03 09:25:47.448372+00	2021-03-03 19:37:09.654796+00	rafiq	250	ATOP	SFP+10GMM-300	STPH85SA0300191	SFP	Seriya nömrələri:\r\nSTPH85SA0300191\r\nSTPH85SA0300192\r\nSTPH85SA0300193\r\nSTPH85SA0300194\r\nSTPH85SA0300195\r\nSTPH85SA0300196\r\nSTPH85SA0300197\r\nSTPH85SA0300198\r\nSTPH85SA0300199\r\nSTPH85SA0300200\r\nSTPH85SA0300201\r\nSTPH85SA0300202\r\n\r\nMüştəri: Polad Qulamov\r\nMobil: +994 51 977 10 00\r\nMobil: +994 50 235 19 09\r\nMüəssisə: Muğanbank ASC\r\nQEYD: Əvvəlki 12 SFP HP compatable deyildi deyə bu SFP-lər təzədən gətirilib.\r\nTarix: 02.09.2020\r\nE-mail: Pg@itf.az\r\nQEYD: Norveç məhsuludur	39.00	133.00	12	network_hw/250/12.jpg	t	f
+2019-11-30 11:27:15.759026+00	2021-03-04 11:17:17.740829+00	rafiq	15	Cisco	Air - AP2702i - UXK9	FCW1905NEGJ	AP	Müştəri: Crucel\r\nƏlaqədar şəxs: Konstantin\r\nMobil: +994 50 409 12 83\r\nTarix: 04.03.2021\r\nQeyd: 10 faiz güzəşt edilib	150.00	300.00	1		t	f
+2020-07-26 16:01:57.144819+00	2021-03-04 04:44:19.353329+00	rafiq	232	ATOP	SFP-1250U-SM-20/D	S1C0632A2100406	SFP	SFP-1250U-SM-20/D\r\nSingle mode, BIDI, tək jila\r\nCisco compatible\r\nBIDI Tx1310/Rx1550	104.00	140.00	48		f	f
+2019-12-05 10:24:53.848914+00	2021-03-04 11:17:34.929895+00	rafiq	50	Cisco	Air - AP2702i - UXK9	FCW1905NEJV	AP	Müştəri: Crucel\r\nƏlaqədar şəxs: Konstantin\r\nMobil: +994 50 409 12 83\r\nTarix: 04.03.2021\r\nQeyd: 10 faiz güzəşt edilib	150.00	300.00	1		t	f
+2019-12-05 10:30:24.990608+00	2021-03-04 11:18:01.021005+00	rafiq	53	Cisco	Air - AP2702i - UXK9	FCW1930NTKH	AP	Müştəri: Crucel\r\nƏlaqədar şəxs: Konstantin\r\nMobil: +994 50 409 12 83\r\nTarix: 04.03.2021\r\nQeyd: 10 faiz güzəşt edilib	150.00	300.00	1		t	f
+2020-04-12 13:11:26.793806+00	2021-03-04 06:25:15.127834+00	rafiq	153	Cisco	WS-C2960S-48FPS-L PoE	FOC1347Y066	Switch	Tonitrus\r\n\r\nQeyd: FOC1347Y066 - Bu SN 203 kodlu Cisco Switch WS-C3560G-48PS PoE ilə eynidir.	520.00	850.00	1		f	f
+2021-03-03 20:28:40.747789+00	2021-03-04 11:13:37.949787+00	rafiq	252	ATOP	SFP-1250D-SM-20/D	S1CO532A2100406	SFP	Müştəri: Crucel\r\nƏlaqədar şəxs: Konstantin\r\nMobil: +994 50 409 12 83\r\nTarix: 04.03.2021\r\nQeyd: 10 faiz güzəşt edilib\r\nQeyd: Tonitrus\r\nQeyd-2: 2 ədəd SFP-1250U-SM-20/D (Kod: 253) ilə cüt satılıb.\r\n\r\nSN: S1CO532A2100406\r\nSN: S1CO532A2100401\r\n\r\n1.25G DDM TX: 1550nm RX: 1310nm 20 km\r\nQEYD: Norveç məhsuludur	39.00	65.00	2		t	f
+2021-03-03 20:10:04.722942+00	2021-03-04 11:14:41.783007+00	rafiq	253	ATOP	SFP-1250U-SM-20/D	S1CO35294400221	SFP	Müştəri: Crucel\r\nƏlaqədar şəxs: Konstantin\r\nMobil: +994 50 409 12 83\r\nTarix: 04.03.2021\r\nQeyd: 10 faiz güzəşt edilib\r\nQeyd: Tonitrus\r\nQeyd-2: 2 ədəd SFP-1250D-SM-20/D (Kod: 252) ilə cüt satılıb.\r\nSingle mode, BIDI, tək jila\r\nCisco compatible\r\nBIDI Tx1310/Rx1550\r\n\r\nSN: S1CO35294400226\r\nSN: S1CO35294400221	39.00	65.00	2		t	f
+2021-03-01 21:28:51.494524+00	2021-03-10 21:13:45.673724+00	admin	262	Cisco	881	FCZ1334C0BM	Router	Tonitrus\r\nModel: Cisco Router 881-K9 V01\r\nTarix: 01.03.2021\r\nQeyd: Adaptersiz	170.00	220.00	1		f	f
+2019-12-05 11:50:06.145322+00	2021-03-10 06:52:14.378391+00	rafiq	68	Cisco	WS-C2960S-48TS-L	FOC1427Z272	Switch	Müştəri: “Life Elektroniks” MMC\r\nƏlaqədar şəxs (direktor): Elcin Həsənov\r\nMobil: +994 50 385 07 72\r\nE-mail: hasanovelchin@l-e.az\r\nTarix: 09.03.2021\r\nQeyd: Ultra vasitəsi ilə satış (50 manat güzəştli)\r\nQeyd: 675 manata sənədləşdirilib.	303.00	540.00	1		t	f
+2021-03-01 21:34:46.70742+00	2021-03-10 21:14:03.173062+00	admin	263	Cisco	881	FCZ1353C007	Router	Tonitrus\r\nModel: Cisco Router 881-K9 V01\r\nTarix: 01.03.2021\r\nQeyd: Adaptersiz	170.00	220.00	1		f	f
+2021-03-01 21:46:37.968512+00	2021-03-10 21:14:24.515138+00	admin	264	Cisco	881	FCZ1822C26P	Router	Tonitrus\r\nModel: Cisco Router 881-K9 V01\r\nTarix: 01.03.2021\r\nQeyd: Adaptersiz	170.00	220.00	1		f	f
+2021-03-01 21:48:58.636732+00	2021-03-10 21:14:30.18745+00	admin	265	Cisco	881	FCZ1331956K	Router	Tonitrus\r\nModel: Cisco Router 881-K9 V01\r\nTarix: 01.03.2021\r\nQeyd: Adaptersiz	170.00	220.00	1		f	f
+2021-03-01 21:16:06.356038+00	2021-03-10 21:15:15.296742+00	admin	194	Cisco	881	FCZ1338926U	Router	Tonitrus\r\nModel: Cisco Router 881-K9 V01\r\nTarix: 01.03.2021\r\nQeyd: Adaptersiz	170.00	220.00	1		f	f
+2019-11-30 11:00:22.454265+00	2021-05-11 08:27:24.740302+00	rafiq	3	Cisco	Air-LAP1142N-E	FCZ1519Z1HV	AP	Qeyd: Stokda deyil.	67.00	95.00	1		f	f
+2021-03-02 20:37:05.026488+00	2021-04-28 14:36:45.341758+00	rafiq	315	Cisco	1921	FGL171323KQ	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nAlıcı (rəis): Rövşən\r\nMobil: 050 675 81 01\r\nTarix: 22.04.2021\r\nQEYD: Çek vurulub\r\nQEYD: Eyni gündə 2 ədəd (No314, No315) satılıb\r\nQeyd: Tonitrus, 01.03.2021	179.26	400.00	1		t	f
+2021-03-02 20:56:18.239252+00	2021-05-09 19:38:10.9255+00	rafiq	317	Cisco	1921	FGL180721FQ	Router	Müəssisə: Veysəloğlu\r\nƏlaqədar şəxs: Kənan Məmmədov\r\nMobil: +994 55 206 63 01\r\nE-mail: kenan.mammadov@retail.az\r\nTarix: 28.04.2012\r\nQEYD: Tonitrus, 01.03.2021	179.26	450.00	1		t	f
+2019-12-05 11:51:39.725358+00	2021-03-10 06:52:32.292957+00	rafiq	69	Cisco	WS-C2960S-48TS-L	FOC1726Z15Z	Switch	Müştəri: “Life Elektroniks” MMC\r\nƏlaqədar şəxs (direktor): Elcin Həsənov\r\nMobil: +994 50 385 07 72\r\nE-mail: hasanovelchin@l-e.az\r\nTarix: 09.03.2021\r\nQeyd: Ultra vasitəsi ilə satış (50 manat güzəştli)\r\nQeyd: 675 manata sənədləşdirilib.	303.00	540.00	1		t	f
+2020-10-02 11:05:29.494649+00	2021-03-10 06:52:56.596557+00	rafiq	283	Cisco	2921	FCZ171561AZ	Router	Müştəri: “Life Elektroniks” MMC\r\nƏlaqədar şəxs (direktor): Elcin Həsənov\r\nMobil: +994 50 385 07 72\r\nE-mail: hasanovelchin@l-e.az\r\nTarix: 09.03.2021\r\nQeyd: Ultra vasitəsilə satış (50 manat güzəştli)\r\nQeyd: Tonitrus, sentyabr, 2020\r\nQeyd: 900 manata sənədləşdirilib.	550.00	800.00	1		t	f
+2021-03-20 07:47:19.769388+00	2021-03-20 07:47:19.769412+00	rafiq	255	Cisco	4321	FDO2151A0UB	Router	Tonitrus\r\nKonfiq olunub	1100.00	1750.00	1		f	f
+2021-03-20 07:48:31.511123+00	2021-03-20 07:48:31.511147+00	rafiq	256	Cisco	4321	FDO2151A0TQ	Router	Tonitrus\r\nQeyd: İçində şrup çıqqıldayırdı.	1100.00	1750.00	1		f	f
+2021-03-20 06:08:21.732967+00	2021-03-20 09:48:57.733332+00	rafiq	254	Cisco	4321	FDO2221A2VD	Router	Müştəri: Azərkosmos\r\nƏlaqədar şəxs: Ərrəhman/Rüfət\r\nMobil: +994 50 513 16 17\r\nMobil: +994 50 251 40 15\r\nTarix: 18.03.2021\r\nTonitrus\r\n50 manat güzəşt olunub	1100.00	1700.00	1		t	f
+2021-03-20 09:58:55.016115+00	2021-03-20 10:03:59.270474+00	rafiq	257	Cisco	GLC-SX-MMD	0	SFP	Müştəri: Azərkosmos\r\nƏlaqədar şəxs: Ərrəhman/Rüfət\r\nMobil: +994 50 513 16 17\r\nMobil: +994 50 251 40 15\r\nTarix: 18.03.2021\r\n\r\nQEYD: 11 ədəddən 10-nu götürdülər, SN-lər şəkildədir. GLC-SX-MMD\r\n1 ədəd satılmamışın SN: AGA1742R1Z0	25.00	50.00	10	network_hw/257/GLC-SX-MMD-11-eded.jpg	t	f
+2020-04-12 18:45:52.756361+00	2021-03-20 12:47:29.169066+00	rafiq	164	Cisco	WS-C3750X-48P-S PoE	FDO1741P23S	Switch	Müştəri: “Baker Tilly Audit Azərbaycan” Qapalı Səhmdar Cəmiyyəti\r\nƏlaqədar şəxs: İsa İsrafilov\r\nMobil: +994 50 555 25 00\r\nE-mail: it.services@bakertilly.az\r\nQEYD: Heydər Əliyev Mərkəzi başqa sviçə dəyişdirib.\r\nQeyd: Tonitrus	560.00	950.00	1		t	f
+2020-03-13 14:52:49.162248+00	2021-03-23 16:19:21.50674+00	rafiq	139	Cisco	ASA 5505	JMX1218Z2RF	Firewall	Müştəri Anar Ağayev\r\nE-mail: anar.aghayev@aeunion.az\r\nMüəssisə: "AEunion" MMC\r\nMobil: +994 50 382 68 90\r\nTarix: 29.03.2020	0.00	210.00	1		t	f
+2020-10-05 11:40:18.690366+00	2021-04-08 17:37:36.987488+00	rafiq	291	Cisco	1921	FCZ2107B0BG	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nAlıcı (rəis): Rövşən \r\nMobil: 050 675 81 01\r\nTarix: 08.04.2021\r\nQEYD: Çek vurulub\r\nQEYD: Eyni gündə 2 ədəd (No289 və No291) satılıb\r\nQeyd: Tonitrus. sentyabr, 2020	254.33	400.00	1		t	f
+2021-04-10 06:44:57.355356+00	2021-04-10 06:44:57.35538+00	rafiq	320	Cisco	1921	FCZ1952C0G0	Router	Alik, Norveç, 09.04.2021	255.00	450.00	1		f	f
+2021-04-10 06:57:09.233357+00	2021-04-10 06:57:09.23338+00	rafiq	321	Cisco	1841	FCZ0937226J	Router	Alik, Norveç, 09.04.2021	0.00	180.00	1		f	f
+2021-04-10 07:12:45.685761+00	2021-04-10 07:12:45.685785+00	rafiq	258	Cisco	WS-C2960G-48TC-L	FOC1251W04D	Switch	Alik, Norveç, 09.04.2021	297.00	490.00	1		f	f
+2021-04-10 07:14:00.039455+00	2021-04-10 07:14:00.039478+00	rafiq	259	Cisco	WS-C2960G-48TC-L	FOC1243W3NZ	Switch	Alik, Norveç, 09.04.2021	297.00	490.00	1		f	f
+2021-04-10 07:14:55.472991+00	2021-04-10 07:14:55.473019+00	rafiq	260	Cisco	WS-C2960G-48TC-L	FOC1224V1SB	Switch	Alik, Norveç, 09.04.2021	297.00	490.00	1		f	f
+2021-04-10 07:19:10.242492+00	2021-04-10 07:20:00.534646+00	rafiq	261	Cisco	5505	JMX1612Z14L	Firewall	Alik, Norveç, 09.04.2021	121.20	220.00	1		f	f
+2021-04-19 06:55:36.156488+00	2021-05-11 10:54:11.636657+00	rafiq	323	Cisco	Air-CAP2602i-E	FCW1853N3CF	AP	Alıcı: Mail Məmmədov\r\nMüəssisə: Qoç Ət\r\nMobil: +994 51 585 85 15\r\nE-mail: mail@qocet.az\r\nTarix: 17.04.2021\r\nQeyd: Alik, Norveç, 09.04.2021\r\nQeyd: 6 ədəd alıb (kodlar: 323, 343, 344, 345, 346, 347) 5 ədədinə çek vurulub.	23.00	150.00	1		t	f
+2021-04-10 07:36:55.428723+00	2021-05-11 09:34:40.259239+00	rafiq	322	Cisco	Air-CAP2602i-E	FGL1708Z91Y	AP	Alik, Norveç, 09.04.2021	23.00	150.00	1		f	f
+2020-07-21 20:56:24.33501+00	2021-04-26 14:15:10.76213+00	rafiq	202	Cisco	WS-C3560G-48PS-S PoE	FOC1209Z2ZG	switch	Alıcı: Mail Məmmədov\r\nMüəssisə: Qoç Ət\r\nMobil: +994 51 585 85 15\r\nE-mail: mail@qocet.az\r\nTarix: 17.04.2021\r\nQeyd: Tonitrus	367.00	650.00	1		t	f
+2021-03-02 20:33:10.320367+00	2021-04-28 13:37:15.735528+00	rafiq	314	Cisco	1921	FCZ201370L6	Router	Alıcı: Elçin Kərimov\r\nMüəssisə: "Matrix Logistics"\r\nMobil: 055 988 00 22\r\nE-mail: elchin_baku@list.ru\r\nAlıcı (rəis): Rövşən\r\nMobil: 050 675 81 01\r\nTarix: 22.04.2021\r\nQEYD: Çek vurulub\r\nQEYD: Eyni gündə 2 ədəd (No314, No315) satılıb\r\nQeyd: Tonitrus, 01.03.2021	179.26	400.00	1		t	f
+2020-10-02 11:26:46.457612+00	2021-05-06 13:35:27.535267+00	rafiq	286	Cisco	2921	FCZ151120SX	Router	Müəssisə: Trans Caspian HIt MMC\r\nƏlaqədar şəxs: Daşqın Lazımov\r\nMobil: +994 55 201 47 70\r\nE-mail: dlazimov@portofbaku.com\r\nQEYD: Tonitrus, sentyabr, 2020\r\nQEYD: 15 aprel tarixində test üçün Port of Baku-ya verilmişdi.\r\nQEYD: Üstü gömrükdə cızılıb. Qara markerlə cızığı rənglənib.	550.00	850.00	1		t	f
+2021-05-09 19:07:16.384609+00	2021-05-09 19:07:16.384637+00	rafiq	18	Cisco	2811	FHK1306F42C	Router	Alınıb: Orxan Ağayev (fiziki şəxs)\r\nQiyməti: 300 manat\r\nMobil: +994 55 700 55 61\r\ne-mail: Orik211@mail.ru\r\nTarix: 09.05.2021\r\nSatılıb: Rabitə nazirliyi\r\nƏlaqədar şəxs: Ərrəhman\r\nMobil: +994 50 513 16 17	300.00	500.00	1	network_hw/18/IMG_20210509_175627.jpg	t	f
+2021-05-10 19:59:33.341921+00	2021-05-10 19:59:33.341944+00	rafiq	32	Cisco	GLC-SX-MMD	AGA1742R1Z0	SFP	None	25.00	50.00	1		f	f
+2021-05-10 20:04:19.093111+00	2021-05-10 20:04:19.093134+00	rafiq	35	Cisco	GLC-SX-MMD-C	0	SFP	None	0.00	0.00	1		f	f
+2021-05-10 20:16:20.716382+00	2021-05-10 20:16:20.716405+00	rafiq	36	Cisco	GLC-EX-SMD	0	SFP	none	0.00	0.00	4		f	f
+2021-05-10 20:17:13.967132+00	2021-05-10 20:17:13.967155+00	rafiq	46	Cisco	GLC-LH-SM	0	SFP	none	0.00	0.00	1		f	f
+2021-05-10 20:17:55.33205+00	2021-05-10 20:17:55.332078+00	rafiq	47	Cisco	GLC-LH-SMD	0	SFP	npne	0.00	0.00	1		f	f
+2021-05-10 20:18:28.925577+00	2021-05-10 20:18:28.925599+00	rafiq	49	Cisco	SFP-10G-LR	0	SFP	npne	0.00	0.00	4		f	f
+2021-05-10 20:19:23.931048+00	2021-05-10 20:19:23.931073+00	rafiq	51	Cisco	GLC-T	0	SFP	none	25.00	50.00	4		f	f
+2021-05-10 20:20:17.954494+00	2021-05-10 20:20:17.954518+00	rafiq	52	Cisco	XFP-10GLR-OS192SR	0	SFP	none	0.00	0.00	2		f	f
+2021-05-10 20:21:14.234658+00	2021-05-10 20:21:14.234681+00	rafiq	54	Cisco	X2-10GB-SR	0	SFP	none	0.00	0.00	3		f	f
+2021-05-10 20:24:45.850933+00	2021-05-10 20:24:45.85097+00	rafiq	123	Cisco	FET-10G	0	SFP	none	0.00	0.00	14		f	f
+2021-05-10 20:21:55.571144+00	2021-05-10 20:31:17.770361+00	rafiq	124	Cisco	XFP-10GER-192IR+	0	SFP	none	0.00	0.00	4		f	f
+2021-05-10 20:02:14.626772+00	2021-05-10 20:40:56.550437+00	rafiq	34	Cisco	GLC-SX-MMD-O	0	SFP	None	0.00	0.00	1		f	f
+2021-05-11 08:19:14.175872+00	2021-05-11 08:19:14.175896+00	rafiq	127	Cisco	Air-LAP1142N-E	FCZ1519W1R7	AP	Qeyd: Stokda deyil.	67.00	95.00	1		f	f
+2021-05-11 08:16:51.662712+00	2021-05-11 08:19:56.486879+00	rafiq	125	Cisco	Air-LAP1142N-E	FCZ1550Z0A0	AP	Qeyd: Stokda deyil.	67.00	95.00	1		f	f
+2021-05-10 19:54:54.933369+00	2021-05-11 08:42:15.570254+00	rafiq	26	Cisco	GLC-SX-MM	0	SFP	none	25.00	50.00	8		f	f
+2021-05-11 08:21:06.060103+00	2021-05-11 08:21:06.060131+00	rafiq	129	Cisco	Air-LAP1142N-E	FCZ1548Z4EN	AP	Qeyd: Stokda deyil.	67.00	95.00	1		f	f
+2021-05-11 08:22:06.785197+00	2021-05-11 08:22:06.785221+00	rafiq	132	Cisco	Air-LAP1142N-E	FCZ1420W294	AP	Qeyd: Stokda deyil.	67.00	95.00	1		f	f
+2021-05-11 08:23:00.966321+00	2021-05-11 08:23:00.966345+00	rafiq	133	Cisco	Air-LAP1142N-E	FCZ1420W28L	AP	Qeyd: Stokda deyil.	67.00	95.00	1		f	f
+2021-05-11 08:24:03.54114+00	2021-05-11 08:24:03.541163+00	rafiq	325	Cisco	Air-LAP1142N-E	FTX1416K0C1	AP	Qeyd: Stokda deyil.	67.00	95.00	1		f	f
+2021-05-11 08:35:35.838389+00	2021-05-11 08:35:35.838413+00	rafiq	326	Cisco	Air-AP2702i-UX	FCW1905NEJ5	AP	Qeyd: Stokda deyil.	150.00	430.00	1		f	f
+2021-05-11 08:36:38.647668+00	2021-05-11 08:36:38.647691+00	rafiq	327	Cisco	Air-AP2702i-UX	FCW1905NEH4	AP	Qeyd: Stokda deyil.	150.00	430.00	1		f	f
+2021-05-11 08:37:40.514509+00	2021-05-11 08:37:40.514533+00	rafiq	328	Cisco	Air-AP2702i-UX	FCW1905NEK2	AP	Qeyd: Stokda deyil.	150.00	430.00	1		f	f
+2021-05-11 08:38:52.175981+00	2021-05-11 08:38:52.176006+00	rafiq	329	Cisco	Air-AP2702i-UX	FCW1905NEK1	AP	Qeyd: Stokda deyil.	150.00	430.00	1		f	f
+2021-05-11 08:39:47.743098+00	2021-05-11 08:39:47.74312+00	rafiq	330	Cisco	Air-AP2702i-UX	FCW1930NTGD	AP	Qeyd: Stokda deyil.	150.00	430.00	1		f	f
+2021-05-11 08:40:46.50412+00	2021-05-11 08:40:46.504143+00	rafiq	331	Cisco	Air-AP2702i-UX	FCW1930NTGQ	AP	Qeyd: Stokda deyil.	150.00	430.00	1		f	f
+2021-05-11 08:55:16.930699+00	2021-05-11 08:55:52.708242+00	rafiq	332	Cisco	Air-LAP1131AG-E	FCZ1109Q0X5	AP	Qeyd: Stokda deyil.	42.00	70.00	1		f	f
+2021-05-11 08:56:55.908126+00	2021-05-11 08:56:55.908151+00	rafiq	333	Cisco	Air-LAP1131AG-E	FCZ1414Q0LF	AP	Qeyd: Stokda deyil.	42.00	70.00	1		f	f
+2021-05-11 08:57:51.998361+00	2021-05-11 08:57:51.998384+00	rafiq	334	Cisco	Air-LAP1131AG-E	FCZ1046Q1J2	AP	Qeyd: Stokda deyil.	42.00	70.00	1		f	f
+2021-05-11 08:59:14.381033+00	2021-05-11 08:59:14.381057+00	rafiq	335	Cisco	Air-LAP1131AG-E	FCZ1410Q01B	AP	Qeyd: Stokda deyil.	42.00	70.00	1		f	f
+2021-05-11 09:04:40.805823+00	2021-05-11 09:04:40.805847+00	rafiq	336	Cisco	Air-CAP1702i-E	FGL1921X56Z	AP	Qeyd: Stokda deyil.	102.00	260.00	1		f	f
+2021-05-11 09:05:36.487035+00	2021-05-11 09:05:36.487059+00	rafiq	337	Cisco	Air-CAP1702i-E	FGL1924XD4A	AP	Qeyd: Stokda deyil.	102.00	260.00	1		f	f
+2021-04-30 13:13:27.776337+00	2021-05-11 09:14:28.821019+00	rafiq	324	Fortinet	Fortigate - 200D	FG200D3914807879	Firewall	Norveç, 30.04.2021\r\nMüəssisə: Azərkosmos\r\nƏlaqədar şəxs: Rüfət\r\nQeyd: Razılaşdırılmış qiymət 3720 manat olub.\r\nQEYD: İnetreco (Renat) vasitəsi ilə 3900 manata satılıb	1483.00	3800.00	1		t	f
+2021-05-11 09:22:56.338619+00	2021-05-11 09:24:19.081304+00	rafiq	338	Cisco	Air-CAP2602i-E	FCW1902N1Q5	AP	Qeyd: Rəsmi stokdadır.\r\nQeyd: Alik, Norveç, 09.04.2021	23.00	150.00	1		f	f
+2021-05-11 09:25:33.881498+00	2021-05-11 09:25:33.881523+00	rafiq	339	Cisco	Air-CAP2602i-E	FGL1651Z1U5	AP	Qeyd: Rəsmi stokdadır.\r\nQeyd: Alik, Norveç, 09.04.2021	23.00	150.00	1		f	f
+2021-05-11 09:26:27.415866+00	2021-05-11 09:26:27.41589+00	rafiq	340	Cisco	Air-CAP2602i-E	FCZ1744P0JL	AP	Qeyd: Rəsmi stokdadır.\r\nQeyd: Alik, Norveç, 09.04.2021	23.00	150.00	1		f	f
+2021-05-11 09:27:41.975567+00	2021-05-11 09:27:41.975594+00	rafiq	341	Cisco	Air-CAP2602i-E	FCZ1745U1K1	AP	Qeyd: Rəsmi stokdadır.\r\nQeyd: Alik, Norveç, 09.04.2021	23.00	150.00	1		f	f
+2021-05-11 09:29:33.045996+00	2021-05-11 09:29:33.046025+00	rafiq	342	Cisco	Air-CAP2602i-E	FCW1839JBMN	AP	Qeyd: Köhnə partiyadan qalıb, amma rəsmi stokdadır.\r\nQeyd: Maya dəyəri 83 manat\r\nQEYD: Konfiqurasiya olunub.	83.00	150.00	1		f	f
+2021-05-11 10:49:08.499377+00	2021-05-11 10:49:08.4994+00	rafiq	343	Cisco	Air-CAP2602i-E	FGL1651Z1LQ	AP	Alıcı: Mail Məmmədov\r\nMüəssisə: Qoç Ət\r\nMobil: +994 51 585 85 15\r\nE-mail: mail@qocet.az\r\nTarix: 17.04.2021\r\nQeyd: Alik, Norveç, 09.04.2021\r\nQeyd: 6 ədəd alıb (kodlar: 323, 343, 344, 345, 346, 347) 5 ədədinə çek vurulub.	23.00	150.00	1		t	f
+2021-05-11 10:50:26.73075+00	2021-05-11 10:50:26.730775+00	rafiq	344	Cisco	Air-CAP2602i-E	FCZ1745U1K8	AP	Alıcı: Mail Məmmədov\r\nMüəssisə: Qoç Ət\r\nMobil: +994 51 585 85 15\r\nE-mail: mail@qocet.az\r\nTarix: 17.04.2021\r\nQeyd: Alik, Norveç, 09.04.2021\r\nQeyd: 6 ədəd alıb (kodlar: 323, 343, 344, 345, 346, 347) 5 ədədinə çek vurulub.	23.00	150.00	1		t	f
+2021-05-11 10:51:24.632565+00	2021-05-11 10:51:24.632589+00	rafiq	345	Cisco	Air-CAP2602i-E	FCW1839JBMQ	AP	Alıcı: Mail Məmmədov\r\nMüəssisə: Qoç Ət\r\nMobil: +994 51 585 85 15\r\nE-mail: mail@qocet.az\r\nTarix: 17.04.2021\r\nQeyd: Alik, Norveç, 09.04.2021\r\nQeyd: 6 ədəd alıb (kodlar: 323, 343, 344, 345, 346, 347) 5 ədədinə çek vurulub.	23.00	150.00	1		t	f
+2021-05-11 10:52:26.253866+00	2021-05-11 10:52:26.253889+00	rafiq	346	Cisco	Air-CAP2602i-E	FCZ1727D02G	AP	Alıcı: Mail Məmmədov\r\nMüəssisə: Qoç Ət\r\nMobil: +994 51 585 85 15\r\nE-mail: mail@qocet.az\r\nTarix: 17.04.2021\r\nQeyd: Alik, Norveç, 09.04.2021\r\nQeyd: 6 ədəd alıb (kodlar: 323, 343, 344, 345, 346, 347) 5 ədədinə çek vurulub.	23.00	150.00	1		t	f
+2021-05-11 10:53:35.726303+00	2021-05-11 10:53:35.726326+00	rafiq	347	Cisco	Air-CAP2602i-E	FCZ1807W0M9	AP	Alıcı: Mail Məmmədov\r\nMüəssisə: Qoç Ət\r\nMobil: +994 51 585 85 15\r\nE-mail: mail@qocet.az\r\nTarix: 17.04.2021\r\nQeyd: Alik, Norveç, 09.04.2021\r\nQeyd: 6 ədəd alıb (kodlar: 323, 343, 344, 345, 346, 347) 5 ədədinə çek vurulub.	23.00	150.00	1		t	f
+\.
+
+
+--
+-- Data for Name: server_serverhardware; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.server_serverhardware (created_at, updated_at, created_by, code, brand, model, category, memory, cpu, storage, description, purchase_price, selling_price, quantity, image, sold, inventory) FROM stdin;
+2019-12-05 16:41:27.203956+00	2019-12-05 16:41:54.515129+00	admin	105	HP	DL380	server	20 GB	Xeon E5-2620	2	2.0GHz Hex-Core Intel Xeon CPU, 15MB Level 3 Cache E5-2620\r\n20GB RAM\r\nHP Smart Array P420i\r\n2 x 300GB 10k SAS 2,5" HP Hard Drive\r\n2xPSU\r\nMS Server 2008 R2 5 CAL	2100.00	2100.00	1		t	f
+2020-02-11 11:01:55.228365+00	2020-02-11 11:07:41.694694+00	rafiq	137	HP	Proilant DL 380 Gen 9	Server	0	0	0	SN: TC51NQ2017    R\r\nSN: Q24CCQ2765    R	0.00	0.00	1		t	f
+\.
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: client_client client_client_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.client_client
+    ADD CONSTRAINT client_client_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: money_money money_money_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.money_money
+    ADD CONSTRAINT money_money_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: network_networkhardware network_networkhardware_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.network_networkhardware
+    ADD CONSTRAINT network_networkhardware_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: server_serverhardware server_serverhardware_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.server_serverhardware
+    ADD CONSTRAINT server_serverhardware_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
