@@ -6,6 +6,7 @@ services:
            - POSTGRES_HOST_AUTH_METHOD=trust
            #- POSTGRES_USER:'postgres'
            #- POSTGRES_PASSWORD:'Ordan55Burdan'
+        restart: always
     elastic:
         #Haystack doesnt support the newer versions yet
         #image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
@@ -15,6 +16,7 @@ services:
         ports:
             - 9400:9400
             - 9500:9500
+        restart: always
     web:
         build: .
         ports:
@@ -24,4 +26,5 @@ services:
         depends_on:
             - db
             - elastic
+        restart: always
         command: bash -c "./wait.sh db && python manage.py makemigrations && python manage.py migrate && sleep 5 &&python manage.py rebuild_index --noinput && python manage.py runserver 0.0.0.0:9000"
